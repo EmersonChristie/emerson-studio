@@ -49,9 +49,10 @@ export default function Modal({
                   ref={desktopModalRef}
                   key="desktop-modal"
                   className="fixed inset-0 z-40 hidden min-h-screen items-center justify-center md:flex"
-                  initial={{ scale: 0.95 }}
-                  animate={{ scale: 1 }}
-                  exit={{ scale: 0.95 }}
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  transition={{ delay: 0.2, duratrion: 0.3 }}
                   onMouseDown={(e) => {
                     if (desktopModalRef.current === e.target) {
                       setShowModal(false);
@@ -63,9 +64,10 @@ export default function Modal({
               </FocusTrap>
               <motion.div
                 key="desktop-backdrop"
-                className="fixed inset-0 z-30 bg-gray-100 bg-opacity-10 backdrop-blur"
+                className="fixed inset-0 z-30 bg-black bg-opacity-90 backdrop-blur"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
+                transition={{ duration: 0.1 }}
                 exit={{ opacity: 0 }}
                 onClick={() => setShowModal(false)}
               />
