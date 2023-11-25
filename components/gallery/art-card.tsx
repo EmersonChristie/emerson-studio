@@ -12,6 +12,10 @@ import useShadow from "@/lib/hooks/use-box-shadow";
 import useIntersectionObserver from "@/lib/hooks/use-intersection-observer";
 import { useEffect, useRef, useState } from "react";
 
+import { FADE_UP_ANIMATION_VARIANTS } from "@/lib/constants";
+/**
+ * Props for the ArtCard component.
+ */
 interface ArtCardProps {
   id: string;
   title: string;
@@ -19,6 +23,9 @@ interface ArtCardProps {
   image: string;
 }
 
+/**
+ * The ArtCard component displays an art card with an image, title, and dimensions.
+ */
 const ArtCard = ({ id, title, dimensions, image }: ArtCardProps) => {
   const { isMobile, isDesktop } = useWindowSize();
 
@@ -39,29 +46,11 @@ const ArtCard = ({ id, title, dimensions, image }: ArtCardProps) => {
     threshold: 0,
   });
 
-  // Define motion variants for animation.
-  const variants = {
-    hidden: { opacity: 0, y: 100 },
-    show: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        type: "cubic-bezier",
-        duration: 4, // transform duration
-        ease: [0.18, 1, 0.21, 1],
-        opacity: {
-          duration: 2.5, // opacity duration
-          ease: [0.18, 1, 0.21, 1],
-        },
-      },
-    },
-  };
-
   return (
     <motion.div
       ref={ref}
       className="md:mb-30 mb-20 flex flex-col items-start justify-center lg:mb-40"
-      variants={variants}
+      variants={FADE_UP_ANIMATION_VARIANTS}
       initial="hidden"
       animate={entry?.isIntersecting ? "show" : "hidden"}
     >

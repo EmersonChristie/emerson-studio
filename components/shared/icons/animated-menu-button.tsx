@@ -59,7 +59,7 @@ const MenuButton = ({
     transition,
     ...lineProps,
   };
-  const unitHeight = 4;
+  const unitHeight = 5;
   const unitWidth = (unitHeight * (width as number)) / (height as number);
 
   return (
