@@ -14,17 +14,26 @@ export default function Modal({
   children,
   showModal,
   setShowModal,
+  handleClose,
 }: {
   children: React.ReactNode;
   showModal: boolean;
   setShowModal: Dispatch<SetStateAction<boolean>>;
+  handleClose?: () => void;
 }) {
   const desktopModalRef = useRef(null);
+
+  const closeButton = () => {
+    if (handleClose) {
+      handleClose();
+    }
+  };
 
   const onKeyDown = useCallback(
     (e: KeyboardEvent) => {
       if (e.key === "Escape") {
         setShowModal(false);
+        closeButton();
       }
     },
     [setShowModal],
@@ -56,6 +65,7 @@ export default function Modal({
                   onMouseDown={(e) => {
                     if (desktopModalRef.current === e.target) {
                       setShowModal(false);
+                      closeButton();
                     }
                   }}
                 >
@@ -69,7 +79,10 @@ export default function Modal({
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.1 }}
                 exit={{ opacity: 0 }}
-                onClick={() => setShowModal(false)}
+                onClick={() => {
+                  setShowModal(false);
+                  closeButton();
+                }}
               />
             </>
           )}

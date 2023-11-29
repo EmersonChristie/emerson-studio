@@ -38,9 +38,11 @@ const items = [
 const NavModal = ({
   showNavModal,
   setShowNavModal,
+  handleClose,
 }: {
   showNavModal: boolean;
   setShowNavModal: Dispatch<SetStateAction<boolean>>;
+  handleClose: () => void;
 }) => {
   const [signInClicked, setSignInClicked] = useState(false);
 
@@ -54,7 +56,11 @@ const NavModal = ({
   };
 
   return (
-    <Modal showModal={showNavModal} setShowModal={setShowNavModal}>
+    <Modal
+      showModal={showNavModal}
+      setShowModal={setShowNavModal}
+      handleClose={handleClose}
+    >
       <div key="nav-modal-container" className=" overflow-hidden">
         <div
           key="navigation-modal"
@@ -76,14 +82,18 @@ const NavModal = ({
   );
 };
 
-export function useNavModal() {
+export function useNavModal(handleClose: () => void) {
   const [showNavModal, setShowNavModal] = useState(false);
 
   const NavModalCallback = useCallback(() => {
     return (
-      <NavModal showNavModal={showNavModal} setShowNavModal={setShowNavModal} />
+      <NavModal
+        showNavModal={showNavModal}
+        setShowNavModal={setShowNavModal}
+        handleClose={handleClose}
+      />
     );
-  }, [showNavModal, setShowNavModal]);
+  }, [showNavModal, setShowNavModal, handleClose]);
 
   return useMemo(
     () => ({ setShowNavModal, NavModal: NavModalCallback }),

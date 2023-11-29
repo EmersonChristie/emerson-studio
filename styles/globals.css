@@ -1,3 +1,11 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Unica One Font Face Declaration */
+@font-face {
+  font-family: "UnicaOne";
+  src: url("/UnicaOne-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+}

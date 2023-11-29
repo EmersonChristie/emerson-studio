@@ -11,6 +11,35 @@ module.exports = {
   },
   theme: {
     extend: {
+      fontWeight: {
+        100: "100",
+        200: "200",
+        300: "300",
+        400: "400",
+        500: "500",
+        600: "600",
+        700: "700",
+        800: "800",
+      },
+      letterSpacing: {
+        tighter: "-0.02em",
+        tight: "-0.01em",
+        wide: "0.1em",
+        wider: "0.2em",
+        widest: "0.8em",
+      },
+      scale: {
+        10: "1.1",
+        20: "1.2",
+        30: "1.3",
+        40: "1.4",
+        50: "1.5",
+        60: "1.6",
+        70: "1.7",
+        80: "1.8",
+        90: "1.9",
+      },
+
       maxHeight: {
         "1/2": "50%",
         "1/3": "33.333333%",
@@ -39,7 +68,8 @@ module.exports = {
         1920: "1920px",
       },
       fontFamily: {
-        display: ["var(--font-sf)", "system-ui", "sans-serif"],
+        // display: ["var(--font-sf)", "system-ui", "sans-serif"],
+        display: ["UnicaOne", "system-ui", "sans-serif"], // Adding Unica One
         default: ["var(--font-inter)", "system-ui", "sans-serif"],
       },
       animation: {

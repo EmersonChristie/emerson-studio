@@ -10,7 +10,8 @@ import { useSignInModal } from "./sign-in-modal";
 import { useNavModal } from "./nav-modal";
 import useWindowSize from "@/lib/hooks/use-window-size";
 import UserDropdown from "./user-dropdown";
-import { MenuButton } from "../shared/icons/animated-menu-button";
+import { MenuButton } from "@/components/shared/icons";
+import DisplayText from "@/components/shared/display-text";
 
 interface LayoutProps {
   meta?: {
@@ -23,21 +24,21 @@ interface LayoutProps {
 
 export default function Layout({ meta, children }: LayoutProps) {
   const { data: session, status } = useSession();
-  const { NavModal, setShowNavModal } = useNavModal();
   const scrolled = useScroll(50);
   const { windowSize } = useWindowSize();
   const { width, height } = windowSize;
 
   const [isOpen, setOpen] = useState(false);
 
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const { NavModal, setShowNavModal } = useNavModal(handleClose);
+
   const toggleOpen = () => {
     setShowNavModal(!isOpen);
     setOpen(!isOpen);
-  };
-
-  const handleClose = () => {
-    setShowNavModal(false);
-    setOpen(false);
   };
 
   const getButtonDimensions = () => {
@@ -94,7 +95,7 @@ export default function Layout({ meta, children }: LayoutProps) {
   return (
     <>
       <Meta {...meta} />
-      <NavModal />
+      <NavModal handleClose={handleClose} />
       <div id="container" className="flex h-screen flex-col">
         <div
           className={`fixed top-0 z-30  w-full transition-all ${
@@ -103,11 +104,18 @@ export default function Layout({ meta, children }: LayoutProps) {
               : "bg-white/0"
           } `}
         >
-          <div className="lg:text-md mx-5 flex h-14 items-center justify-between text-sm xl:text-2xl">
+          <div className="lg:text-md flex items-center justify-between p-6 text-sm md:mx-2 xl:text-2xl">
             <Link href="/" className="flex items-center font-display">
-              <p>EMERSON STUDIO</p>
+              {/* <p>EMERSON STUDIO</p> */}
+              <DisplayText
+                text="EMERSON"
+                fontWeight="100"
+                letterSpacing="widest"
+                scale="90"
+                className="font-bold tracking-widest text-gray-600"
+              />
             </Link>
-            <div>
+            <div className="overflow-visible">
               {!session && status !== "loading" ? (
                 renderMenuButton()
               ) : (
@@ -116,7 +124,7 @@ export default function Layout({ meta, children }: LayoutProps) {
             </div>
           </div>
         </div>
-        <main className="flex h-full w-full max-w-1920 flex-grow items-start justify-start self-center overflow-auto">
+        <main className="flex h-full w-full max-w-1920 flex-grow items-start justify-start self-center overflow-auto pt-3">
           {children}
         </main>
       </div>
