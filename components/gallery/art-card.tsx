@@ -11,23 +11,37 @@ import useWindowSize from "@/lib/hooks/use-window-size";
 import useShadow from "@/lib/hooks/use-box-shadow";
 import useIntersectionObserver from "@/lib/hooks/use-intersection-observer";
 import { useEffect, useRef, useState } from "react";
+import { ArtworkType } from "types/global";
 
 import { FADE_UP_ANIMATION_VARIANTS } from "@/lib/constants";
+
+import { useGalleryContext } from "@/lib/context/gallery-context";
 /**
  * Props for the ArtCard component.
  */
 interface ArtCardProps {
-  id: string;
+  id: number;
   title: string;
   dimensions: string;
   image: string;
+
+  toggleLikeArtwork?: (artworkId: number) => void;
 }
 
 /**
  * The ArtCard component displays an art card with an image, title, and dimensions.
  */
-const ArtCard = ({ id, title, dimensions, image }: ArtCardProps) => {
+const ArtCard = ({
+  id,
+  title,
+  dimensions,
+  mainImageUrlMedium,
+  liked,
+}: ArtworkType) => {
   const { isMobile, isDesktop } = useWindowSize();
+
+  // Use context to toggle like
+  const { toggleLikeArtwork } = useGalleryContext();
 
   const boxShadow = useShadow(7, {
     angle: 40,
@@ -57,20 +71,23 @@ const ArtCard = ({ id, title, dimensions, image }: ArtCardProps) => {
       <div className="">
         <Image
           className="mx-auto self-center"
-          src={image}
+          src={mainImageUrlMedium}
           alt={title}
           style={{ maxWidth: "100%", maxHeight: "25%", boxShadow: boxShadow }}
           width={1000}
           height={1000}
         />
       </div>
-      <div className="mt-6 font-sans font-light">
-        <h2 className="lg:text-md text-xs leading-loose text-gray-800 md:text-sm ">
+      <div className="mt-8 w-full font-sans">
+        <h2 className="lg:text-md md:text-md text-xs font-400 uppercase leading-loose tracking-wider text-gray-600">
           {title}
         </h2>
         <p className="lg:text-md text-xs leading-loose text-gray-600 md:text-sm">
           {dimensions.split(";")[0]}
         </p>
+        <button onClick={() => toggleLikeArtwork(id)}>
+          {liked ? "Unlike" : "Like"}
+        </button>
       </div>
     </motion.div>
   );

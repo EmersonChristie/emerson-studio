@@ -17,3 +17,16 @@ export interface ArtCardProps {
   dimensions: string;
   image: string;
 }
+
+export interface ArtworkType {
+  id: number;
+  title: string;
+  year: number;
+  medium: string;
+  dimensions: string;
+  genre: string;
+  importanceRating: number;
+  price: number;
+  mainImageUrlMedium: string;
+  liked: boolean;
+}

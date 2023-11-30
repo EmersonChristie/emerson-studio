@@ -13,6 +13,8 @@ import UserDropdown from "./user-dropdown";
 import { MenuButton } from "@/components/shared/icons";
 import DisplayText from "@/components/shared/display-text";
 
+import { GalleryProvider } from "@/lib/context/gallery-context";
+
 interface LayoutProps {
   meta?: {
     title?: string;
@@ -92,42 +94,45 @@ export default function Layout({ meta, children }: LayoutProps) {
     );
   };
 
+  console.log("scrolled", scrolled);
+
   return (
     <>
-      <Meta {...meta} />
-      <NavModal handleClose={handleClose} />
-      <div id="container" className="flex h-screen flex-col">
-        <div
-          className={`fixed top-0 z-30  w-full transition-all ${
-            scrolled
-              ? "border-b border-gray-200 bg-white/50 backdrop-blur-xl"
-              : "bg-white/0"
-          } `}
-        >
-          <div className="lg:text-md flex items-center justify-between p-6 text-sm md:mx-2 xl:text-2xl">
-            <Link href="/" className="flex items-center font-display">
-              {/* <p>EMERSON STUDIO</p> */}
-              <DisplayText
-                text="EMERSON"
-                fontWeight="100"
-                letterSpacing="widest"
-                scale="90"
-                className="font-bold tracking-widest text-gray-600"
-              />
-            </Link>
-            <div className="overflow-visible">
-              {!session && status !== "loading" ? (
-                renderMenuButton()
-              ) : (
-                <UserDropdown />
-              )}
+      <GalleryProvider>
+        <Meta {...meta} />
+        <NavModal handleClose={handleClose} />
+        <div id="container" className="flex h-screen flex-col">
+          <div
+            className={`fixed top-0 z-30  w-full transition-all ${
+              scrolled
+                ? "border-b border-gray-200 bg-white/50 backdrop-blur-xl"
+                : "bg-white/0"
+            } `}
+          >
+            <div className="flex items-center justify-between p-6 md:mx-2 ">
+              <Link href="/" className="flex items-center font-display">
+                <DisplayText
+                  text="EMERSON"
+                  fontWeight="100"
+                  letterSpacing="widest"
+                  scale="90"
+                  className="lg:text-md text-sm font-bold tracking-widest text-gray-600 xl:text-3xl"
+                />
+              </Link>
+              <div className="overflow-visible">
+                {!session && status !== "loading" ? (
+                  renderMenuButton()
+                ) : (
+                  <UserDropdown />
+                )}
+              </div>
             </div>
           </div>
+          <main className="flex h-full w-full flex-grow items-start justify-start self-center overflow-auto pt-3">
+            {children}
+          </main>
         </div>
-        <main className="flex h-full w-full max-w-1920 flex-grow items-start justify-start self-center overflow-auto pt-3">
-          {children}
-        </main>
-      </div>
+      </GalleryProvider>
     </>
   );
 }
