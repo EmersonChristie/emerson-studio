@@ -1,23 +1,17 @@
 import { motion } from "framer-motion";
 import ArtCard from "./art-card";
-
-// import { ArtworkProps } from "../../types/global";
+import useWindowSize from "@/lib/hooks/use-window-size";
 import { ArtworkType } from "../../types/global";
 
 interface ColumnProps {
   artworks: ArtworkType[];
   index: number;
-  isMobile: boolean;
-  toggleLikeArtwork: (artworkId: number) => void;
 }
 
-const Column: React.FC<ColumnProps> = ({
-  artworks,
-  index,
-  isMobile,
-  toggleLikeArtwork,
-}) => {
+const Column: React.FC<ColumnProps> = ({ artworks, index }) => {
   let style = {};
+
+  const { isMobile } = useWindowSize();
 
   if (!isMobile) {
     if (index === 1) {

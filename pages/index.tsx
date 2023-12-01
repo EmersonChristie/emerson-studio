@@ -1,24 +1,35 @@
+// pages/index.tsx
+import { ArtworkType } from "../types/global";
+import GalleryContainer from "@/components/gallery"; // Adjust the import path as necessary
 import Layout from "@/components/layout";
-import Balancer from "react-wrap-balancer";
-import { motion } from "framer-motion";
-import { DEPLOY_URL, FADE_DOWN_ANIMATION_VARIANTS } from "@/lib/constants";
-import { Github, Twitter } from "@/components/shared/icons";
-import Image from "next/image";
+import artworksData from "../public/data/artlogic-artworks.json"; // Adjust the path to your JSON file
 
-import Artworks from "../public/data/emersonartworks.json";
+interface HomePageProps {
+  artworks: ArtworkType[];
+}
 
-import Slider from "@/components/slider";
-import Gallery from "@/components/gallery";
-
-const Main: React.FC = () => {
+export default function HomePage({ artworks }: HomePageProps) {
   return (
-    <>
-      <Layout>
-        {/* <Slider /> */}
-        <Gallery />
-      </Layout>
-    </>
+    // <Layout
+    //   meta={{
+    //     title: "ArtLogic Gallery",
+    //     description: "A sample gallery built with Next.js and ArtLogic.",
+    //   }}
+    // >
+    <GalleryContainer initialArtworks={artworks} />
+    // </Layout>
   );
-};
+}
 
-export default Main;
+export async function getStaticProps() {
+  // TODO: Fetch artworks from API
+  const artworks = await artworksData;
+  console.log("Artworks prop in HomePage:", artworks);
+
+  return {
+    props: {
+      artworks: artworks,
+    },
+    // Omit revalidate if not needed
+  };
+}

@@ -3,9 +3,11 @@ import { AnimatePresence, motion, useAnimation } from "framer-motion";
 
 export default function Leaflet({
   setShow,
+  handleClose,
   children,
 }: {
   setShow: Dispatch<SetStateAction<boolean>>;
+  handleClose?: () => void;
   children: ReactNode;
 }) {
   const leafletRef = useRef<HTMLDivElement>(null);
@@ -25,6 +27,9 @@ export default function Leaflet({
     const height = leafletRef.current?.getBoundingClientRect().height || 0;
     if (offset > height / 2 || velocity > 800) {
       await controls.start({ y: "100%", transition: transitionProps });
+      if (handleClose) {
+        handleClose();
+      }
       setShow(false);
     } else {
       controls.start({ y: 0, transition: transitionProps });
@@ -61,7 +66,12 @@ export default function Leaflet({
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
-        onClick={() => setShow(false)}
+        onClick={() => {
+          if (handleClose) {
+            handleClose();
+          }
+          setShow(false);
+        }}
       />
     </AnimatePresence>
   );

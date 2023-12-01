@@ -1,16 +1,9 @@
 import Image from "next/image";
-
-import cx from "classnames";
-import {
-  motion,
-  useScroll,
-  useMotionValueEvent,
-  useMotionValue,
-} from "framer-motion";
-import useWindowSize from "@/lib/hooks/use-window-size";
+import { motion } from "framer-motion";
+import { useRouter } from "next/router";
 import useShadow from "@/lib/hooks/use-box-shadow";
 import useIntersectionObserver from "@/lib/hooks/use-intersection-observer";
-import { useEffect, useRef, useState } from "react";
+import { useRef } from "react";
 import { ArtworkType } from "types/global";
 
 import { FADE_UP_ANIMATION_VARIANTS } from "@/lib/constants";
@@ -38,7 +31,7 @@ const ArtCard = ({
   mainImageUrlMedium,
   liked,
 }: ArtworkType) => {
-  const { isMobile, isDesktop } = useWindowSize();
+  const router = useRouter();
 
   // Use context to toggle like
   const { toggleLikeArtwork } = useGalleryContext();
@@ -60,6 +53,12 @@ const ArtCard = ({
     threshold: 0,
   });
 
+  // Route to the artwork detail page when the user clicks on the card.
+  const handleClick = () => {
+    // Navigate to the artwork detail page
+    router.push(`/artworks/${id}`);
+  };
+
   return (
     <motion.div
       ref={ref}
@@ -68,7 +67,7 @@ const ArtCard = ({
       initial="hidden"
       animate={entry?.isIntersecting ? "show" : "hidden"}
     >
-      <div className="">
+      <div className="cursor-pointer" onClick={handleClick}>
         <Image
           className="mx-auto self-center"
           src={mainImageUrlMedium}
@@ -79,10 +78,17 @@ const ArtCard = ({
         />
       </div>
       <div className="mt-8 w-full font-sans">
-        <h2 className="lg:text-md md:text-md text-xs font-400 uppercase leading-loose tracking-wider text-gray-600">
+        {/* <h2 className="lg:text-md md:text-md text-xs font-400 uppercase leading-loose tracking-normal text-gray-600 md:tracking-wider">
+          {title}
+        </h2> */}
+        <h2
+          className="md:text-md cursor-pointer text-xs font-400 uppercase leading-loose tracking-wide text-gray-600 md:tracking-wider lg:text-lg "
+          onClick={handleClick}
+        >
           {title}
         </h2>
-        <p className="lg:text-md text-xs leading-loose text-gray-600 md:text-sm">
+
+        <p className="md:text-md text-xs leading-loose text-gray-600 lg:text-lg xl:text-xl">
           {dimensions.split(";")[0]}
         </p>
         <button onClick={() => toggleLikeArtwork(id)}>

@@ -8,6 +8,9 @@ import cx from "classnames";
 import localFont from "@next/font/local";
 import { Inter } from "@next/font/google";
 
+import Layout from "@/components/layout";
+import { GalleryProvider } from "@/lib/context/gallery-context";
+
 const sfPro = localFont({
   src: "../styles/SF-Pro-Display-Medium.otf",
   variable: "--font-sf",
@@ -26,7 +29,11 @@ export default function MyApp({
     <SessionProvider session={session}>
       <RWBProvider>
         <div className={cx(sfPro.variable, inter.variable)}>
-          <Component {...pageProps} />
+          <GalleryProvider>
+            <Layout>
+              <Component {...pageProps} />
+            </Layout>
+          </GalleryProvider>
         </div>
       </RWBProvider>
       <Analytics />

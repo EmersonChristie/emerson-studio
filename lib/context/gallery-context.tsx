@@ -1,4 +1,10 @@
-import React, { createContext, useState, useContext, ReactNode } from "react";
+import React, {
+  createContext,
+  useState,
+  useContext,
+  ReactNode,
+  useEffect,
+} from "react";
 import { ArtworkType } from "../../types/global";
 
 // Artwork type definition (adjust according to your data structure)
@@ -30,6 +36,22 @@ export const GalleryProvider: React.FC<GalleryProviderProps> = ({
   children,
 }) => {
   const [artworks, setArtworks] = useState<Artwork[]>([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch("/data/artlogic-artworks.json");
+        const data = await response.json();
+        setArtworks(data);
+      } catch (err) {
+        console.error("Failed to fetch artworks:", err);
+      }
+    };
+
+    if (artworks.length === 0) {
+      fetchData();
+    }
+  }, []); // Remove dependencies to run only once on mount
 
   const toggleLikeArtwork = (artworkId: number) => {
     setArtworks((currentArtworks) =>

@@ -1,21 +1,20 @@
 import * as React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useRouter } from "next/router";
 import { motion, AnimatePresence, LayoutGroup } from "framer-motion";
 import { wrap } from "@popmotion/popcorn";
-import galleryWall from "../../public/images/gallery-wall.jpg";
 import useShadow from "@/lib/hooks/use-box-shadow";
 import useWindowSize from "@/lib/hooks/use-window-size";
+import { ArtworkType } from "../../types/global";
+import { FADE_UP_ANIMATION } from "@/lib/constants";
 
-import Artworks from "../../public/data/emersonartworks.json";
-
-// const images = Artworks.map((artwork) => artwork.mediumImage);
+interface SliderProps {
+  artworks: ArtworkType[];
+  currentIndex: number;
+}
 
 interface DescProps {
-  id: number;
-  title: string;
-  dimensions: string;
-  medium: string;
-  year: string;
+  artwork: ArtworkType;
   isOpen: boolean;
   toggleOpen: () => void;
 }
@@ -33,42 +32,32 @@ const descVariants = {
   },
 };
 
-const ArtDescription = ({
-  id,
-  title,
-  year,
-  dimensions,
-  medium,
-  isOpen,
-  toggleOpen,
-}: DescProps) => {
+const ArtDescription = ({ artwork, isOpen, toggleOpen }: DescProps) => {
   return (
     <>
       <motion.div
-        variants={descVariants}
-        initial="closed"
-        animate="open"
-        exit="closed"
-        transition={{ duration: 0.5, ease: "easeInOut" }}
+        {...FADE_UP_ANIMATION}
         className="flex h-auto w-full flex-row"
       >
         <div
-          className=" md:text-md mb-10 ml-10 flex w-full flex-col justify-center text-left text-xs font-light text-gray-700 lg:text-lg xl:text-2xl"
+          className=" md:text-md ml-10 mb-3 flex w-full flex-col justify-center text-left text-xs font-light text-gray-700 md:ml-0 md:mb-0 lg:text-lg xl:text-2xl"
           id="descrition-text"
         >
           <p>
             <span className="font-bold italic leading-tight md:leading-normal">
-              {title}
+              {artwork.title}
             </span>
-            <span className="">, {year}</span>
+            <span className="">, {artwork.year}</span>
           </p>
           <p>
             <span className="leading-normal md:leading-loose">
-              {dimensions}
+              {artwork.dimensions}
             </span>
           </p>
           <p>
-            <span className="leading-normal md:leading-loose">{medium}</span>
+            <span className="leading-normal md:leading-loose">
+              {artwork.medium}
+            </span>
           </p>
         </div>
       </motion.div>
@@ -103,22 +92,41 @@ const swipePower = (offset: number, velocity: number) => {
 };
 
 ///////////////////MAIN FUNCTION//////////////////////////////////////////////
-export default function Slider() {
+export default function Slider({ artworks, currentIndex }: SliderProps) {
+  const router = useRouter();
+
   const [[page, direction], setPage] = useState([0, 0]);
 
   //   const imageIndex = wrap(0, images.length, page);
-  const imageIndex = wrap(1, 10, page);
+  // const imageIndex = wrap(1, 10, page);
 
   const { isMobile, isDesktop } = useWindowSize();
 
+  // Determine the current artwork and adjacent artworks
+  const currentArtwork = artworks[currentIndex];
+  const nextArtwork = artworks[(currentIndex + 1) % artworks.length];
+  const prevArtwork =
+    artworks[(currentIndex - 1 + artworks.length) % artworks.length];
+
+  // Update the paginate function to handle actual artwork navigation
   const paginate = (newDirection: number) => {
-    setPage([page + newDirection, newDirection]);
+    const newIndex =
+      (currentIndex + newDirection + artworks.length) % artworks.length;
+    updateUrl(newIndex);
+    setPage([newIndex, newDirection]); // Update as a tuple
+  };
+
+  // Update the URL when the artwork changes
+  const updateUrl = (newIndex: number) => {
+    const newArtwork = artworks[newIndex];
+    const newUrl = `/artworks/${newArtwork.id}`; // Adjust URL pattern as needed
+    router.replace(newUrl, undefined, { shallow: true });
   };
 
   const arrowStyle = {
     top: "calc(50% - 20px)",
     position: "absolute",
-    background: "white",
+    background: "transparent",
     borderRadius: "30px",
     width: "40px",
     height: "40px",
@@ -141,18 +149,18 @@ export default function Slider() {
     finalTransparency: 0.17,
   });
 
+  // Ensure the URL is updated when the artwork changes
+  useEffect(() => {
+    updateUrl(currentIndex);
+  }, [currentIndex]);
+
   return (
     <>
       <LayoutGroup>
         <div
-          className={`flex h-full w-full flex-row-reverse items-center justify-center bg-gradient-to-b from-gray-100 to-gray-300 pt-14 ${
+          className={`flex h-full w-full flex-row items-center justify-center bg-gradient-to-b from-gray-100 to-gray-300  ${
             isMobile ? "flex-col" : ""
           }`}
-          style={
-            {
-              // backgroundImage: `url(${galleryWall.src})`,
-            }
-          }
         >
           <div
             className={`relative z-0 flex h-full w-full flex-col items-center justify-center overflow-hidden ${
@@ -162,8 +170,8 @@ export default function Slider() {
             <AnimatePresence initial={false} custom={direction}>
               <motion.img
                 className="image "
-                key={page}
-                src={`/images/${imageIndex}.jpg`}
+                key={currentArtwork.id}
+                src={currentArtwork.mainImageUrlMedium}
                 custom={direction}
                 variants={variants}
                 initial="enter"
@@ -219,15 +227,9 @@ export default function Slider() {
               isMobile ? "w-full" : "w-1/4"
             }`} // Adjust for desktop view
           >
-            <div className={`flex ${isDesktop ? "md:ml-10 lg:ml-28" : ""}`}>
+            <div className="flex">
               <AnimatePresence>
-                <ArtDescription
-                  id={imageIndex}
-                  title="Test Title"
-                  year="2021"
-                  dimensions="36 x 48"
-                  medium="Oil on Canvas"
-                />
+                <ArtDescription artwork={currentArtwork} />
               </AnimatePresence>
             </div>
           </div>
