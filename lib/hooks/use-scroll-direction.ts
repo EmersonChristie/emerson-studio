@@ -38,7 +38,6 @@ export default function useScrollDirection(threshold: number): ScrollState {
         window.requestAnimationFrame(updateScrollDir);
         ticking = true;
       }
-      console.log("scroll direction:", scrollDirection);
     };
 
     window.addEventListener("scroll", onScroll);

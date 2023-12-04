@@ -1,12 +1,15 @@
 import * as React from "react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef, MouseEvent, TouchEvent } from "react";
 import { useRouter } from "next/router";
-import { motion, AnimatePresence, LayoutGroup } from "framer-motion";
-import { wrap } from "@popmotion/popcorn";
+import { motion, AnimatePresence, LayoutGroup, Point } from "framer-motion";
 import useShadow from "@/lib/hooks/use-box-shadow";
 import useWindowSize from "@/lib/hooks/use-window-size";
 import { ArtworkType } from "../../types/global";
 import { FADE_UP_ANIMATION } from "@/lib/constants";
+import { ChevronRight, ChevronLeft } from "lucide-react";
+import Divider from "../shared/divider";
+
+import ZoomComponent from "../shared/zoom-component";
 
 interface SliderProps {
   artworks: ArtworkType[];
@@ -19,20 +22,7 @@ interface DescProps {
   toggleOpen: () => void;
 }
 
-const descVariants = {
-  open: {
-    opacity: 1,
-    y: 0,
-    type: "spring",
-  },
-  closed: {
-    opacity: 0,
-    y: -5,
-    type: "spring",
-  },
-};
-
-const ArtDescription = ({ artwork, isOpen, toggleOpen }: DescProps) => {
+const ArtDescription = ({ artwork }: DescProps) => {
   return (
     <>
       <motion.div
@@ -40,17 +30,21 @@ const ArtDescription = ({ artwork, isOpen, toggleOpen }: DescProps) => {
         className="flex h-auto w-full flex-row"
       >
         <div
-          className=" md:text-md ml-10 mb-3 flex w-full flex-col justify-center text-left text-xs font-light text-gray-700 md:ml-0 md:mb-0 lg:text-lg xl:text-2xl"
+          className=" lg:text-md ml-10 mb-5 flex w-full flex-col justify-center text-left text-xs font-light  text-gray-600 md:ml-0 md:mb-0 md:mr-5 md:text-sm xl:text-lg 2xl:text-xl 3xl:text-2xl 4xl:text-3xl"
           id="descrition-text"
         >
-          <p>
-            <span className="font-bold italic leading-tight md:leading-normal">
+          <p className="">
+            <span className="font-bold  uppercase leading-loose tracking-wide text-gray-700 md:leading-loose">
               {artwork.title}
             </span>
-            <span className="">, {artwork.year}</span>
+            <span className="tracking-wide text-gray-500">
+              {" "}
+              / {artwork.year}
+            </span>
           </p>
+          <Divider />
           <p>
-            <span className="leading-normal md:leading-loose">
+            <span className="leading-normal md:leading-loose ">
               {artwork.dimensions}
             </span>
           </p>
@@ -97,8 +91,12 @@ export default function Slider({ artworks, currentIndex }: SliderProps) {
 
   const [[page, direction], setPage] = useState([0, 0]);
 
-  //   const imageIndex = wrap(0, images.length, page);
-  // const imageIndex = wrap(1, 10, page);
+  const imageRef = useRef<HTMLImageElement>(null);
+
+  // Function to open modal on image click
+  const onTap = () => {
+    console.log("image clicked");
+  };
 
   const { isMobile, isDesktop } = useWindowSize();
 
@@ -123,13 +121,37 @@ export default function Slider({ artworks, currentIndex }: SliderProps) {
     router.replace(newUrl, undefined, { shallow: true });
   };
 
+  // State to track if the first image animation has been played
+  const [buttonHasAnimated, setButtonHasAnimated] = useState(false);
+
+  const pulseAnimation = {
+    scale: [1, 1.05, 1], // scale up and down
+    boxShadow: [
+      "0px 0px 8px rgba(0,0,0,0.3)",
+      "0px 0px 12px rgba(0,0,0,0.6)",
+      "0px 0px 8px rgba(0,0,0,0.3)",
+    ], // increase and decrease shadow
+    transition: {
+      duration: 1, // duration of the whole animation
+      repeat: Infinity, // repeat 3 times
+      repeatType: "loop", // repeat in a loop
+    },
+  };
+
+  // Update the state when the first image is animated
+  useEffect(() => {
+    if (!buttonHasAnimated) {
+      setButtonHasAnimated(true);
+    }
+  }, []);
+
   const arrowStyle = {
     top: "calc(50% - 20px)",
     position: "absolute",
+    borderRadius: "50%",
     background: "transparent",
-    borderRadius: "30px",
-    width: "40px",
-    height: "40px",
+    width: "2rem",
+    height: "2rem",
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
@@ -138,15 +160,15 @@ export default function Slider({ artworks, currentIndex }: SliderProps) {
     fontWeight: "bold",
     fontSize: "18px",
     zIndex: 2,
-    visibility: isDesktop ? "visible" : "hidden",
+    // visibility: isDesktop ? "visible" : "hidden",
   };
 
   const boxShadow = useShadow(7, {
-    angle: 40,
+    angle: 38,
     length: 35,
     finalBlur: 20,
     spread: 0,
-    finalTransparency: 0.17,
+    finalTransparency: 0.19,
   });
 
   // Ensure the URL is updated when the artwork changes
@@ -158,17 +180,18 @@ export default function Slider({ artworks, currentIndex }: SliderProps) {
     <>
       <LayoutGroup>
         <div
-          className={`flex h-full w-full flex-row items-center justify-center bg-gradient-to-b from-gray-100 to-gray-300  ${
+          className={`flex h-full w-full flex-row items-center justify-center  ${
             isMobile ? "flex-col" : ""
           }`}
         >
           <div
             className={`relative z-0 flex h-full w-full flex-col items-center justify-center overflow-hidden ${
-              isMobile ? "w-full" : "w-3/4"
+              isMobile ? "w-full" : "w-2/3"
             }`}
           >
             <AnimatePresence initial={false} custom={direction}>
               <motion.img
+                ref={imageRef}
                 className="image "
                 key={currentArtwork.id}
                 src={currentArtwork.mainImageUrlMedium}
@@ -193,6 +216,8 @@ export default function Slider({ artworks, currentIndex }: SliderProps) {
                     paginate(-1);
                   }
                 }}
+                // whileTap={{ scale: 1.3 }}
+                onTap={onTap}
                 style={{
                   position: "absolute",
                   maxHeight: "80%",
@@ -203,24 +228,37 @@ export default function Slider({ artworks, currentIndex }: SliderProps) {
             </AnimatePresence>
           </div>
 
-          <div
-            className="next"
+          <motion.div
+            className="next text-gray-500"
             onClick={() => paginate(1)}
             style={{ ...arrowStyle, right: "15px" }}
+            whileHover={{
+              scale: 1.3,
+              transition: { duration: 0.5 },
+              color: "black",
+            }}
+            whileTap={{ scale: 0.9 }}
+            animate={currentIndex === 0 ? pulseAnimation : {}} // Add pulse animation if at the beginning
           >
-            {"‣"}
-          </div>
-          <div
-            className="prev"
+            <ChevronRight />
+          </motion.div>
+          <motion.div
+            className="prev text-gray-500"
             onClick={() => paginate(-1)}
             style={{
               ...arrowStyle,
               left: "15px",
-              transform: "scale(-1)",
             }}
+            whileHover={{
+              scale: 1.3,
+              transition: { duration: 0.5 },
+              color: "black",
+            }}
+            whileTap={{ scale: 0.9 }}
+            animate={currentIndex === 0 ? pulseAnimation : {}} // Add pulse animation if at the beginning
           >
-            {"‣"}
-          </div>
+            <ChevronLeft />
+          </motion.div>
           <div
             id="description"
             className={`relative flex h-28 w-full flex-row justify-between ${

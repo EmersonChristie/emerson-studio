@@ -32,7 +32,7 @@ const GalleryContainer: React.FC<{ initialArtworks: ArtworkType[] }> = ({
     <LayoutGroup>
       <motion.div
         id="gallery-container"
-        className="flex w-full flex-grow flex-col p-14 md:flex-row md:space-x-16 lg:space-x-36 lg:p-28"
+        className="mt-10 flex w-full flex-grow flex-col p-14 md:m-3 md:flex-row md:space-x-16 lg:m-7 lg:space-x-28 xl:m-10 xl:space-x-36"
       >
         {/* Render each column of artworks */}
         {artworks?.length === 0 ? (

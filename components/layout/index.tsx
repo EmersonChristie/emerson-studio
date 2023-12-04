@@ -13,6 +13,7 @@ import UserDropdown from "./user-dropdown";
 import { MenuButton } from "@/components/shared/icons";
 import DisplayText from "@/components/shared/display-text";
 import Header from "./header";
+import useViewportHeight from "@/lib/hooks/use-viewport-height";
 
 interface LayoutProps {
   meta?: {
@@ -24,14 +25,18 @@ interface LayoutProps {
 }
 
 export default function Layout({ meta, children }: LayoutProps) {
+  // Dynamic view height hook
+  useViewportHeight();
   return (
     <>
       <Meta {...meta} />
-
-      <div id="container" className="flex h-screen flex-col">
+      <div
+        id="container"
+        className="flex h-screen flex-col bg-gradient-to-b from-white to-gray-300"
+        style={{ height: "calc(var(--vh, 1vh) * 100)" }}
+      >
         <Header />
-
-        <main className="flex h-full w-full flex-grow items-start justify-start self-center overflow-auto pt-3">
+        <main className="flex h-full w-full flex-grow items-start justify-start self-center overflow-auto pt-3 lg:mx-10">
           {children}
         </main>
       </div>

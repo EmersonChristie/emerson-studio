@@ -29,7 +29,7 @@ const Column: React.FC<ColumnProps> = ({ artworks, index }) => {
           title={artwork.title}
           dimensions={artwork.dimensions}
           mainImageUrlMedium={artwork.mainImageUrlMedium}
-          liked={artwork.liked}
+          saved={artwork.saved}
         />
       ))}
     </motion.div>

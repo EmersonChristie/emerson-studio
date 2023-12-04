@@ -87,7 +87,7 @@ const Header: React.FC = () => {
               fontWeight="100"
               letterSpacing="widest"
               scale="90"
-              className="lg:text-md text-sm font-bold tracking-widest text-gray-600 xl:text-3xl"
+              className="md:text-md text-sm font-bold tracking-widest text-gray-400 lg:text-lg xl:text-xl 2xl:text-2xl 3xl:text-3xl"
             />
           </Link>
           <div className="overflow-visible">

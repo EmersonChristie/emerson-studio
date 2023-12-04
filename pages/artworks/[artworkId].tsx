@@ -21,11 +21,9 @@ const ArtworkPage = () => {
   const router = useRouter();
   const { artworkId } = router.query;
   const { artworks } = useGalleryContext();
-  console.log("Artworks in artwork page: ", artworks);
   const [currentIndex, setCurrentIndex] = useState<number | null>(null);
 
   useEffect(() => {
-    console.log("In artwork dynamic route with id: ", artworkId);
     if (artworks.length > 0 && artworkId) {
       const index = artworks.findIndex(
         (artwork) => artwork.id.toString() === artworkId,

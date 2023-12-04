@@ -14,14 +14,16 @@ type Artwork = ArtworkType;
 type GalleryContextType = {
   artworks: Artwork[];
   setArtworks: React.Dispatch<React.SetStateAction<Artwork[]>>;
-  toggleLikeArtwork: (artworkId: number) => void;
+  toggleSaveArtwork: (artworkId: number) => void;
+  getSavedArtworks: () => Artwork[]; // Add this line
 };
 
 // Initial context value
 const initialContextValue: GalleryContextType = {
   artworks: [], // Initialize as an empty array
   setArtworks: () => {}, // Placeholder function
-  toggleLikeArtwork: () => {}, // Placeholder function
+  toggleSaveArtwork: () => {}, // Placeholder function
+  getSavedArtworks: () => [], // Add this line
 };
 
 // Creating the context
@@ -29,6 +31,13 @@ const GalleryContext = createContext<GalleryContextType>(initialContextValue);
 
 type GalleryProviderProps = {
   children: ReactNode; // Explicitly typing the children prop
+};
+
+// Function to sort artworks by importanceRating
+const sortArtworksByImportance = (artworks: Artwork[]) => {
+  return artworks.sort(
+    (a: Artwork, b: Artwork) => b.importanceRating - a.importanceRating,
+  );
 };
 
 // Provider component
@@ -42,6 +51,10 @@ export const GalleryProvider: React.FC<GalleryProviderProps> = ({
       try {
         const response = await fetch("/data/artlogic-artworks.json");
         const data = await response.json();
+        // Sort artworks by importanceRating descending
+        sortArtworksByImportance(data);
+        // console log artworks title and importanceRating
+        console.log("Artworks:", data);
         setArtworks(data);
       } catch (err) {
         console.error("Failed to fetch artworks:", err);
@@ -53,20 +66,25 @@ export const GalleryProvider: React.FC<GalleryProviderProps> = ({
     }
   }, []); // Remove dependencies to run only once on mount
 
-  const toggleLikeArtwork = (artworkId: number) => {
+  const toggleSaveArtwork = (artworkId: number) => {
     setArtworks((currentArtworks) =>
       currentArtworks.map((artwork) =>
         artwork.id === artworkId
-          ? { ...artwork, liked: !artwork.liked }
+          ? { ...artwork, saved: !artwork.saved }
           : artwork,
       ),
     );
-    console.log("Toggled like for artwork with id: ", artworkId);
+    console.log("Toggled save for artwork with id: ", artworkId);
+  };
+
+  // Function to get saved artworks
+  const getSavedArtworks = () => {
+    return artworks.filter((artwork) => artwork.saved);
   };
 
   return (
     <GalleryContext.Provider
-      value={{ artworks, setArtworks, toggleLikeArtwork }}
+      value={{ artworks, setArtworks, toggleSaveArtwork, getSavedArtworks }}
     >
       {children}
     </GalleryContext.Provider>

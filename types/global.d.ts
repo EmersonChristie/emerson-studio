@@ -28,5 +28,5 @@ export interface ArtworkType {
   importanceRating: number;
   price: number;
   mainImageUrlMedium: string;
-  liked: boolean;
+  saved: boolean;
 }

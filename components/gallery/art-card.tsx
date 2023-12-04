@@ -5,21 +5,12 @@ import useShadow from "@/lib/hooks/use-box-shadow";
 import useIntersectionObserver from "@/lib/hooks/use-intersection-observer";
 import { useRef } from "react";
 import { ArtworkType } from "types/global";
+import SaveButton from "../shared/save-button";
+import Divider from "../shared/divider";
 
 import { FADE_UP_ANIMATION_VARIANTS } from "@/lib/constants";
 
 import { useGalleryContext } from "@/lib/context/gallery-context";
-/**
- * Props for the ArtCard component.
- */
-interface ArtCardProps {
-  id: number;
-  title: string;
-  dimensions: string;
-  image: string;
-
-  toggleLikeArtwork?: (artworkId: number) => void;
-}
 
 /**
  * The ArtCard component displays an art card with an image, title, and dimensions.
@@ -29,12 +20,12 @@ const ArtCard = ({
   title,
   dimensions,
   mainImageUrlMedium,
-  liked,
+  saved,
 }: ArtworkType) => {
   const router = useRouter();
 
   // Use context to toggle like
-  const { toggleLikeArtwork } = useGalleryContext();
+  const { toggleSaveArtwork } = useGalleryContext();
 
   const boxShadow = useShadow(7, {
     angle: 40,
@@ -67,7 +58,11 @@ const ArtCard = ({
       initial="hidden"
       animate={entry?.isIntersecting ? "show" : "hidden"}
     >
-      <div className="cursor-pointer" onClick={handleClick}>
+      <motion.div
+        className="cursor-pointer"
+        onClick={handleClick}
+        whileTap={{ scale: 0.95 }}
+      >
         <Image
           className="mx-auto self-center"
           src={mainImageUrlMedium}
@@ -76,24 +71,27 @@ const ArtCard = ({
           width={1000}
           height={1000}
         />
-      </div>
-      <div className="mt-8 w-full font-sans">
-        {/* <h2 className="lg:text-md md:text-md text-xs font-400 uppercase leading-loose tracking-normal text-gray-600 md:tracking-wider">
-          {title}
-        </h2> */}
+      </motion.div>
+      <div className=" font-unicaone mt-8 w-full">
         <h2
-          className="md:text-md cursor-pointer text-xs font-400 uppercase leading-loose tracking-wide text-gray-600 md:tracking-wider lg:text-lg "
+          className="font-unicaone xl:text-md lg:text-sm2xl:text-lg cursor-pointer text-xs font-600 uppercase leading-10 tracking-wide text-gray-600 md:text-xs md:tracking-wider 3xl:text-xl 4xl:text-2xl"
           onClick={handleClick}
+          style={{
+            lineHeight: "1.5rem",
+          }}
         >
           {title}
         </h2>
 
-        <p className="md:text-md text-xs leading-loose text-gray-600 lg:text-lg xl:text-xl">
-          {dimensions.split(";")[0]}
-        </p>
-        <button onClick={() => toggleLikeArtwork(id)}>
-          {liked ? "Unlike" : "Like"}
-        </button>
+        <div className="mt-2 flex w-full items-center justify-between">
+          <p className="font-unicaone xl:text-md text-xs leading-10 text-gray-600 md:text-xs lg:text-sm 2xl:text-lg 3xl:text-xl 4xl:text-2xl">
+            {dimensions.split(";")[0]}
+          </p>
+          {/* <button onClick={() => toggleSaveArtwork(id)}>
+          {saved ? "UnSave" : "Save"}
+        </button> */}
+          <SaveButton saved={saved} onClick={() => toggleSaveArtwork(id)} />
+        </div>
       </div>
     </motion.div>
   );

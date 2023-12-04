@@ -9,22 +9,12 @@ interface HomePageProps {
 }
 
 export default function HomePage({ artworks }: HomePageProps) {
-  return (
-    // <Layout
-    //   meta={{
-    //     title: "ArtLogic Gallery",
-    //     description: "A sample gallery built with Next.js and ArtLogic.",
-    //   }}
-    // >
-    <GalleryContainer initialArtworks={artworks} />
-    // </Layout>
-  );
+  return <GalleryContainer initialArtworks={artworks} />;
 }
 
 export async function getStaticProps() {
   // TODO: Fetch artworks from API
   const artworks = await artworksData;
-  console.log("Artworks prop in HomePage:", artworks);
 
   return {
     props: {
