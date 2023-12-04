@@ -47,7 +47,7 @@ export default function NavItem({
     >
       <Link
         href={href}
-        className=" flex items-center py-2 font-display text-5xl md:text-7xl lg:text-8xl xl:text-9xl"
+        className=" font-unicaone flex items-center  py-3 text-5xl tracking-wide md:text-7xl lg:text-8xl xl:text-9xl"
       >
         <p> {title} </p>
       </Link>

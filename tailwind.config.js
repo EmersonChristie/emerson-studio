@@ -28,6 +28,7 @@ module.exports = {
       letterSpacing: {
         tighter: "-0.02em",
         tight: "-0.01em",
+        normal: "0.05",
         wide: "0.1em",
         wider: "0.2em",
         widest: "0.8em",

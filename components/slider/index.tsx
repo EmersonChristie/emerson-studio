@@ -148,7 +148,7 @@ export default function Slider({ artworks, currentIndex }: SliderProps) {
   const arrowStyle = {
     top: "calc(50% - 20px)",
     position: "absolute",
-    borderRadius: "50%",
+    borderRadius: "10%",
     background: "transparent",
     width: "2rem",
     height: "2rem",
@@ -160,7 +160,8 @@ export default function Slider({ artworks, currentIndex }: SliderProps) {
     fontWeight: "bold",
     fontSize: "18px",
     zIndex: 2,
-    // visibility: isDesktop ? "visible" : "hidden",
+    visibility: isDesktop ? "visible" : "hidden",
+    boxShadow: "0px 0px 0px rgba(0,0,0,0)",
   };
 
   const boxShadow = useShadow(7, {
@@ -240,7 +241,7 @@ export default function Slider({ artworks, currentIndex }: SliderProps) {
             whileTap={{ scale: 0.9 }}
             animate={currentIndex === 0 ? pulseAnimation : {}} // Add pulse animation if at the beginning
           >
-            <ChevronRight />
+            <ChevronRight size={48} />
           </motion.div>
           <motion.div
             className="prev text-gray-500"
@@ -257,13 +258,13 @@ export default function Slider({ artworks, currentIndex }: SliderProps) {
             whileTap={{ scale: 0.9 }}
             animate={currentIndex === 0 ? pulseAnimation : {}} // Add pulse animation if at the beginning
           >
-            <ChevronLeft />
+            <ChevronLeft size={48} />
           </motion.div>
           <div
             id="description"
             className={`relative flex h-28 w-full flex-row justify-between ${
               isMobile ? "w-full" : "w-1/4"
-            }`} // Adjust for desktop view
+            }`}
           >
             <div className="flex">
               <AnimatePresence>
