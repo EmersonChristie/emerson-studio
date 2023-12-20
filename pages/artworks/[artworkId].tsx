@@ -3,41 +3,60 @@ import { useEffect, useState } from "react";
 import { GetStaticProps, GetStaticPaths } from "next";
 import { ParsedUrlQuery } from "querystring";
 import Slider from "@/components/slider";
-import { useGalleryContext } from "@/lib/context/gallery-context";
-import { useContext } from "react";
-import { ArtworkType } from "../../types/global";
+import { Artwork } from "../../types/global";
 
-import artworks from "../../public/data/artlogic-artworks.json"; // Adjust the path to your JSON file
-
-interface StaticProps {
-  artwork: ArtworkType | null;
-}
+import {
+  fetchArtworks,
+  fetchArtworkById,
+  fetchAllArtworkIDs,
+} from "@/lib/strapi/artworks";
 
 interface IParams extends ParsedUrlQuery {
   artworkId: string;
 }
 
-const ArtworkPage = () => {
-  const router = useRouter();
-  const { artworkId } = router.query;
-  const { artworks } = useGalleryContext();
+const ArtworkPage: React.FC<{ artwork: Artwork }> = ({ artwork }) => {
+  const [allArtworks, setAllArtworks] = useState<Artwork[]>([]);
   const [currentIndex, setCurrentIndex] = useState<number | null>(null);
 
+  const router = useRouter();
+
   useEffect(() => {
-    if (artworks.length > 0 && artworkId) {
-      const index = artworks.findIndex(
-        (artwork) => artwork.id.toString() === artworkId,
-      );
+    // Fetch all artworks for the slider
+    const getArtworks = async () => {
+      const artworks = await fetchArtworks(1, 10);
+      setAllArtworks(artworks);
+      // Find the index of the current artwork in the slider
+      const index = artworks.findIndex((art) => art.id === artwork.id);
       setCurrentIndex(index);
-    }
-  }, [artworkId, artworks]);
+    };
+
+    getArtworks();
+  }, [artwork.id]);
 
   if (currentIndex === null) {
-    // TODO: Add a loading state page
-    return <div>Loading...</div>; // or any other loading state
+    return <div>Loading...</div>;
   }
 
-  return <Slider artworks={artworks} currentIndex={currentIndex} />;
+  const updateUrl = (newIndex: number) => {
+    const newArtworkId = allArtworks[newIndex].id;
+    const newUrl = `/artworks/${newArtworkId}`;
+    router.replace(newUrl, undefined, { shallow: true });
+  };
+
+  const handleIndexChange = (newIndex: number) => {
+    console.log("newIndex:", newIndex);
+    setCurrentIndex(newIndex);
+    updateUrl(newIndex);
+  };
+
+  return (
+    <Slider
+      artworks={allArtworks}
+      currentIndex={currentIndex}
+      onIndexChange={handleIndexChange}
+    />
+  );
 };
 
 export default ArtworkPage;
@@ -47,35 +66,30 @@ export const getStaticProps: GetStaticProps<StaticProps, IParams> = async (
 ) => {
   const { params } = context;
 
-  // Ensure params and params.artworkId are defined
   if (!params || !params.artworkId) {
-    return {
-      props: {
-        artwork: null, // Return null if the params are not defined
-      },
-    };
+    return { props: { artwork: null } };
   }
 
-  const artwork = artworks.find(
-    (art) => art.id.toString() === params.artworkId,
-  );
+  try {
+    // Assuming fetchArtworkByID is an async function that fetches a specific artwork
+    const artwork = await fetchArtworkById(params.artworkId);
 
-  if (!artwork) {
-    return { notFound: true };
+    return { props: { artwork } };
+  } catch (error) {
+    console.error("Error fetching artwork:", error);
+    return { props: { artwork: null } };
   }
-
-  return {
-    props: {
-      artwork,
-    },
-  };
 };
 
 export async function getStaticPaths() {
-  // Generate paths for each artwork
-  const paths = artworks.map((artwork) => ({
-    params: { artworkId: artwork.id.toString() },
+  const artworkIDs = await fetchAllArtworkIDs();
+
+  const paths = artworkIDs.map((id) => ({
+    params: { artworkId: id.toString() },
   }));
 
-  return { paths, fallback: "blocking" };
+  return {
+    paths,
+    fallback: "blocking", // or 'false' depending on your preference
+  };
 }

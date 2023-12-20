@@ -11,17 +11,11 @@ import Divider from "../shared/divider";
 import { FADE_UP_ANIMATION_VARIANTS } from "@/lib/constants";
 
 import { useUser } from "../../lib/context/user-context";
-
-interface ArtCardProps {
-  index: number;
-  artwork: Artwork;
-}
 /**
- * The ArtCard component displays an art card with an image, title, and dimensions.
+ * The SavedArtworkCard component displays an art card with an image, title, and dimensions.
  */
-const ArtCard: React.FC<ArtCardProps> = ({ index, artwork }) => {
+const SavedArtworkCard = (artwork: Artwork) => {
   const router = useRouter();
-  const { id, title, dimensions, mainImage } = artwork;
 
   // Use context to toggle like
   const { toggleSaveArtwork, isArtworkSaved } = useUser();
@@ -34,17 +28,20 @@ const ArtCard: React.FC<ArtCardProps> = ({ index, artwork }) => {
     finalTransparency: 0.16,
   });
 
+  const { id, title, dimensions, mainImage } = artwork;
+
+  // Create a ref for the element we want to observe.
   const ref = useRef(null);
 
+  // Use the Intersection Observer hook to check when the element comes into view and which direction
+  // it is scrolling in.
   const entry = useIntersectionObserver(ref, {
     threshold: 0,
   });
 
-  /**
-   * Handles the click event for the art card.
-   * Navigates to the artwork detail page.
-   */
+  // Route to the artwork detail page when the user clicks on the card.
   const handleClick = () => {
+    // Navigate to the artwork detail page
     router.push(`/artworks/${id}`);
   };
 
@@ -63,16 +60,14 @@ const ArtCard: React.FC<ArtCardProps> = ({ index, artwork }) => {
       >
         <Image
           className="mx-auto self-center"
-          src={mainImage?.data.attributes.url}
+          src={mainImage.url}
           alt={title}
           style={{ maxWidth: "100%", maxHeight: "25%", boxShadow: boxShadow }}
           width={1000}
           height={1000}
-          loading={index < 6 ? "eager" : "lazy"}
-          {...(index < 6 && { priority: true })}
         />
       </motion.div>
-      <div className="font-unicaone mt-8 w-full flex-col space-y-1 leading-loose md:space-y-6">
+      <div className=" font-unicaone mt-8 w-full">
         <h2
           className="font-unicaone xl:text-md cursor-pointer text-xs font-600 uppercase leading-10 tracking-wide text-gray-600 md:text-xs md:tracking-wider lg:text-sm 2xl:text-lg"
           onClick={handleClick}
@@ -85,7 +80,7 @@ const ArtCard: React.FC<ArtCardProps> = ({ index, artwork }) => {
 
         <div className="mt-2 flex w-full items-center justify-between">
           <p className="font-unicaone xl:text-md text-xs leading-10 text-gray-600 md:text-xs lg:text-sm 2xl:text-lg">
-            {dimensions?.dimensions}
+            {dimensions.dimensions}
           </p>
           <SaveButton
             saved={isArtworkSaved(id)}
@@ -97,4 +92,4 @@ const ArtCard: React.FC<ArtCardProps> = ({ index, artwork }) => {
   );
 };
 
-export default ArtCard;
+export default SavedArtworkCard;

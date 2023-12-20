@@ -30,3 +30,65 @@ export interface ArtworkType {
   mainImageUrlMedium: string;
   saved: boolean;
 }
+
+export type WithChildren<T = {}> = T & { children?: ReactNode };
+
+///////// Strapi Types //////////
+export interface Artwork {
+  id: number;
+  title: string;
+  artist?: Artist;
+  year: string;
+  medium: string;
+  dimensions: Dimensions;
+  price?: Price;
+  description?: string;
+  availability?: Availability;
+  mainImage: any;
+  genre?: "Abstract" | "Landscape" | "Seascape" | "Figurative";
+  series?: string;
+  featuredArtwork?: boolean;
+}
+
+export interface ArtworkCard {
+  id: number;
+  title: string;
+  year: number;
+  medium: string;
+  dimensions: string;
+  genre?: string;
+  series?: string;
+  importanceRating?: number;
+  price?: number;
+  imageUrl: string;
+}
+
+// Placeholder types for relations and components
+// These should be replaced with actual definitions
+interface Artist {
+  name: string;
+  mainImage?: Media;
+  yearBorn?: number;
+  country?: string;
+}
+
+interface Dimensions {
+  height?: number;
+  width?: number;
+  depth?: number;
+  dimensions: string;
+}
+
+interface Price {
+  price?: number;
+  formattedPrice: string;
+}
+
+interface Availability {
+  isAvailable: boolean;
+  availability?: string;
+}
+
+interface Media {
+  // ... media attributes
+}

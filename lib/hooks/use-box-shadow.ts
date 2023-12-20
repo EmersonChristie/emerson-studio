@@ -23,7 +23,7 @@ const getBoxShadows = (
     length = 150,
     finalBlur = 100,
     spread = 0,
-    finalTransparency = 0.2,
+    finalTransparency = 0.1,
   } = options;
 
   const angleToRadians = (angle: number): number => {

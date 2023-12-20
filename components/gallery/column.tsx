@@ -1,10 +1,10 @@
 import { motion } from "framer-motion";
 import ArtCard from "./art-card";
 import useWindowSize from "@/lib/hooks/use-window-size";
-import { ArtworkType } from "../../types/global";
+import { Artwork } from "../../types/global";
 
 interface ColumnProps {
-  artworks: ArtworkType[];
+  artworks: Artwork[];
   index: number;
 }
 
@@ -23,14 +23,7 @@ const Column: React.FC<ColumnProps> = ({ artworks, index }) => {
   return (
     <motion.div className="flex flex-col items-center" style={style}>
       {artworks.map((artwork) => (
-        <ArtCard
-          key={artwork.id}
-          id={artwork.id}
-          title={artwork.title}
-          dimensions={artwork.dimensions}
-          mainImageUrlMedium={artwork.mainImageUrlMedium}
-          saved={artwork.saved}
-        />
+        <ArtCard key={artwork.id} index={index} artwork={artwork} />
       ))}
     </motion.div>
   );
