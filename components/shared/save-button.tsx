@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 
 type ButtonProps = {
   saved: boolean;
@@ -6,19 +6,27 @@ type ButtonProps = {
 };
 
 const SaveButton: React.FC<ButtonProps> = ({ saved, onClick }) => {
-  const buttonStyle = saved
-    ? "bg-gray-600 text-white border-gray-600"
-    : "bg-transparent text-gray-600 border-gray-600";
+  // Introduce a local state to manage the rendering
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    // Once the component mounts, update the state to trigger a re-render
+    setIsClient(true);
+  }, []);
+
+  // Determine the button style based on the `saved` prop
+  // and whether we're on the client-side
+  const buttonStyle =
+    isClient && saved
+      ? "bg-gray-600 text-white border-gray-600"
+      : "bg-transparent text-gray-600 border-gray-600";
 
   return (
     <button
       onClick={onClick}
-      className={` font-unicaone rounded-sm
-      border py-0.5 px-4 uppercase ${buttonStyle} text-xs font-500 tracking-wide
-      hover:outline-none hover:ring-2 hover:ring-gray-600 hover:ring-opacity-50 2xl:text-lg
-      `}
+      className={`font-unicaone rounded-sm border py-0.5 px-4 uppercase ${buttonStyle} text-xs font-500 tracking-wide hover:outline-none hover:ring-2 hover:ring-gray-600 hover:ring-opacity-50 2xl:text-lg`}
     >
-      {saved ? "Saved" : " Save "}
+      {isClient ? (saved ? "Saved" : " Save ") : "Loading..."}
     </button>
   );
 };

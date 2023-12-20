@@ -8,6 +8,7 @@ interface ArtworksContextType {
   setArtworks: (artworks: Artwork[]) => void;
   loadMoreArtworks: () => void;
   currentPage: number;
+  hasMoreArtworks: boolean;
 }
 
 const ArtworksContext = createContext<ArtworksContextType | undefined>(
@@ -17,19 +18,33 @@ const ArtworksContext = createContext<ArtworksContextType | undefined>(
 export const ArtworksProvider: React.FC<WithChildren> = ({ children }) => {
   const [artworks, setArtworks] = useState<Artwork[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const pageSize = 10; // Set your desired page size
+  const [hasMoreArtworks, setHasMoreArtworks] = useState(true);
+  const pageSize = 10;
 
   // Function to load more artworks
   const loadMoreArtworks = async () => {
     const newPage = currentPage + 1;
+    console.log("New page:", newPage);
+    console.log("pageSize:", pageSize);
     const newArtworks = await fetchArtworks(newPage, pageSize);
+    console.log("newArtworks:", newArtworks);
     setArtworks((prevArtworks) => [...prevArtworks, ...newArtworks]);
     setCurrentPage(newPage);
+    // Update hasMoreArtworks based on the API response
+    // For example, if the API returns fewer items than the page size,
+    // it means there are no more artworks to load
+    setHasMoreArtworks(newArtworks.length === pageSize);
   };
 
   return (
     <ArtworksContext.Provider
-      value={{ artworks, setArtworks, loadMoreArtworks, currentPage }}
+      value={{
+        artworks,
+        setArtworks,
+        loadMoreArtworks,
+        currentPage,
+        hasMoreArtworks,
+      }}
     >
       {children}
     </ArtworksContext.Provider>

@@ -73,8 +73,7 @@ module.exports = {
         1920: "1920px",
       },
       fontFamily: {
-        // display: ["var(--font-sf)", "system-ui", "sans-serif"],
-        display: ["UnicaOne", "system-ui", "sans-serif"], // Adding Unica One
+        display: ["var(--font-josefinsans)", "system-ui", "sans-serif"],
         default: ["var(--font-inter)", "system-ui", "sans-serif"],
       },
       animation: {

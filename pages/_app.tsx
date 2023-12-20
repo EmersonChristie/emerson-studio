@@ -13,9 +13,14 @@ import Layout from "@/components/layout";
 import { UserProvider } from "@/lib/context/user-context";
 import { ArtworksProvider } from "@/lib/context/artworks-context";
 
-const sfPro = localFont({
-  src: "../styles/SF-Pro-Display-Medium.otf",
-  variable: "--font-sf",
+// const sfPro = localFont({
+//   src: "../styles/SF-Pro-Display-Medium.otf",
+//   variable: "--font-sf",
+// });
+
+const josefinSans = localFont({
+  src: "../styles/JosefinSans-SemiBold.ttf",
+  variable: "--font-josefinsans",
 });
 
 const inter = Inter({
@@ -30,7 +35,7 @@ export default function MyApp({
   return (
     <SessionProvider session={session}>
       <RWBProvider>
-        <div className={cx(sfPro.variable, inter.variable)}>
+        <div className={cx(josefinSans.variable, inter.variable)}>
           <ArtworksProvider>
             <UserProvider>
               <Layout>

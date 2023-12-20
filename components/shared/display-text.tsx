@@ -23,7 +23,7 @@ const DisplayText: React.FC<DisplayTextProps> = ({
 
   return (
     <h1
-      className={`${color} ${weightClass} ${spacingClass} ${scaleClass} ${className} font-unicaone`}
+      className={`${color} ${weightClass} ${spacingClass} ${scaleClass} ${className} font-display`}
     >
       {text}
     </h1>

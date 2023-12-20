@@ -18,7 +18,7 @@ export default function HomePage({ initialArtworks }: HomePageProps) {
   }, [initialArtworks]);
   return (
     <>
-      <Head>
+      {/* <Head>
         {initialArtworks.slice(0, 6).map((artwork) => (
           <link
             key={artwork.id}
@@ -27,7 +27,7 @@ export default function HomePage({ initialArtworks }: HomePageProps) {
             as="image"
           />
         ))}
-      </Head>
+      </Head> */}
       <GalleryContainer initialArtworks={initialArtworks} />
     </>
   );

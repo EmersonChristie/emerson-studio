@@ -9,6 +9,7 @@ import { Artwork } from "../../types/global";
 import { FADE_UP_ANIMATION } from "@/lib/constants";
 import SaveButton from "../shared/save-button";
 import { useUser } from "../../lib/context/user-context";
+import { useArtworks } from "@/lib/context/artworks-context";
 
 interface SliderProps {
   artworks: Artwork[];
@@ -18,7 +19,7 @@ interface SliderProps {
 
 const ArtDescription = (artwork: Artwork) => {
   const { toggleSaveArtwork, isArtworkSaved } = useUser();
-  console.log("artwork:", artwork);
+
   return (
     <motion.div
       {...FADE_UP_ANIMATION}
@@ -87,6 +88,8 @@ const Slider: React.FC<SliderProps> = ({
   const imageRef = useRef<HTMLImageElement>(null);
   const { isMobile, isDesktop } = useWindowSize();
   const currentArtwork = artworks[currentIndex];
+  const { loadMoreArtworks, hasMoreArtworks } = useArtworks();
+
   const nextArtwork = artworks[(currentIndex + 1) % artworks.length];
   const prevArtwork =
     artworks[(currentIndex - 1 + artworks.length) % artworks.length];
@@ -94,6 +97,10 @@ const Slider: React.FC<SliderProps> = ({
   const paginate = (newDirection: number) => {
     const newIndex =
       (currentIndex + newDirection + artworks.length) % artworks.length;
+    if (newIndex === artworks.length - 1 && hasMoreArtworks) {
+      console.log("Loading more artworks");
+      loadMoreArtworks();
+    }
     setPage([newIndex, newDirection]);
     onIndexChange(newIndex);
   };
@@ -126,6 +133,9 @@ const Slider: React.FC<SliderProps> = ({
   //   }
   // }, []);
 
+  const boxShadow =
+    "rgba(0, 0, 0, 0.043) 0.37237016456675937px 0.44377348139733286px 0.5793051374284405px 0px, rgba(0, 0, 0, 0.06) 0.8657897618972239px 1.0318080591723024px 1.3469297616353146px 0px, rgba(0, 0, 0, 0.075) 1.5547577922105507px 1.8528881844807665px 2.418773742338844px 0px, rgba(0, 0, 0, 0.086) 2.5803221177377376px 3.075108153864249px 4.014268599539516px 0px, rgba(0, 0, 0, 0.1) 4.2509936997828595px 5.066137013811576px 6.613372186585694px 0px, rgba(0, 0, 0, 0.118) 7.429504811692371px 8.854139050530355px 11.558257657323903px 0px, rgba(0, 0, 0, 0.16) 16.06969024216348px 19.151111077974452px 25px 0px";
+
   const arrowStyle = {
     top: "calc(50% - 20px)",
     position: "absolute",
@@ -145,13 +155,13 @@ const Slider: React.FC<SliderProps> = ({
     boxShadow: "0px 0px 0px rgba(0,0,0,0)",
   };
 
-  const boxShadow = useShadow(7, {
-    angle: 38,
-    length: 35,
-    finalBlur: 20,
-    spread: 0,
-    finalTransparency: 0.15,
-  });
+  // const boxShadow = useShadow(7, {
+  //   angle: 38,
+  //   length: 35,
+  //   finalBlur: 20,
+  //   spread: 0,
+  //   finalTransparency: 0.15,
+  // });
 
   useEffect(() => {
     updateUrl(currentIndex);
