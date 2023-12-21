@@ -387,7 +387,7 @@ const Slider: React.FC<SliderProps> = ({
 
   const updateUrl = (newIndex: number) => {
     const newArtwork = artworks[newIndex];
-    console.log("newArtwork in update url: ", newArtwork);
+    // console.log("newArtwork in update url: ", newArtwork);
     const newUrl = `/artworks/${newArtwork.id}`;
     router.replace(newUrl, undefined, { shallow: true });
   };

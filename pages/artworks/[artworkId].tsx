@@ -123,7 +123,7 @@
 //////////////////////////////////////////////////////////////////
 
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { GetStaticProps, GetStaticPaths } from "next";
 import { ParsedUrlQuery } from "querystring";
 import Slider from "@/components/slider";
@@ -142,64 +142,53 @@ interface IParams extends ParsedUrlQuery {
 }
 
 const ArtworkPage: React.FC<{ artwork: Artwork }> = ({ artwork }) => {
-  const [allArtworks, setAllArtworks] = useState<Artwork[]>([]);
   const [currentIndex, setCurrentIndex] = useState<number | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const isIndexInitialized = useRef(false); // To track if currentIndex is initialized
 
   const { artworks, initialArtwork, addToArtworks, loadArtworks } =
     useArtworks();
 
   const router = useRouter();
 
-  console.log("artwork in artwork page: ", artwork);
-  console.log("artworks in artwork page: ", artworks);
+  useEffect(() => {
+    if (!isIndexInitialized.current) {
+      const index = artworks.findIndex((art) => art.id === artwork.id);
+      if (index !== -1) {
+        setCurrentIndex(index);
+      } else {
+        addToArtworks(artwork);
+        setCurrentIndex(0); // Set to 0 as we add the artwork at the beginning
+      }
+      isIndexInitialized.current = true; // Mark as initialized
+    }
+  }, [artwork, artworks, addToArtworks]);
 
   useEffect(() => {
-    const getIndex = async () => {
-      // Check if there are any artworks in the context
-      if (artworks.length === 0) {
-        // Fetch artworks and add them to the context
-        await loadArtworks(1, 10);
-      }
-      // Find the index of the current artwork in the slider
-      const index = artworks.findIndex((art) => art.id === artwork.id);
-      // if the initial artwork is not in the context, add it
-      if (index === -1) {
-        await addToArtworks(artwork);
-        console.log("artworks.length in artworks page: ", artworks.length);
-        setCurrentIndex(artworks.length);
-      } else {
-        // Set the currentIndex to the index of the current artwork
-        setCurrentIndex(index);
-      }
-    };
-    getIndex();
-  }, [artwork.id]);
+    // Load additional artworks if necessary
+    if (
+      artworks.length > 0 &&
+      artworks.length < 10 &&
+      isIndexInitialized.current
+    ) {
+      loadArtworks(1, 10);
+    }
+  }, [artworks.length, loadArtworks]);
 
   if (currentIndex === null) {
     return <div>Loading...</div>;
-  } else {
-    console.log("currentIndex in artwork page: ", currentIndex);
   }
 
-  // const updateUrl = (newIndex: number) => {
-  //   const newArtworkId = artworks[newIndex].id;
-  //   const newUrl = `/artworks/${newArtworkId}`;
-  //   router.replace(newUrl, undefined, { shallow: true });
-  // };
-
   const handleIndexChange = (newIndex: number) => {
-    console.log("newIndex:", newIndex);
+    console.log("newIndex passed to artwork page: ", newIndex);
     setCurrentIndex(newIndex);
-    // updateUrl(newIndex);
+    // Update the URL if needed
+    const newArtworkId = artworks[newIndex].id;
+    router.replace(`/artworks/${newArtworkId}`, undefined, { shallow: true });
   };
 
   return (
-    <Slider
-      // artworks={allArtworks}
-      currentIndex={currentIndex}
-      onIndexChange={handleIndexChange}
-    />
+    <Slider currentIndex={currentIndex} onIndexChange={handleIndexChange} />
   );
 };
 

@@ -49,13 +49,14 @@ export const ArtworksProvider: React.FC<WithChildren> = ({ children }) => {
     try {
       const newArtworks = await fetchArtworks(page, pageSize);
 
-      if (page === 1) {
-        // If loading the first page, reset the artworks
-        setArtworks(newArtworks);
-      } else {
-        // Add new artworks without duplicates
-        addToArtworks(newArtworks);
-      }
+      addToArtworks(newArtworks);
+      //   if (page === 1) {
+      //     // If loading the first page, reset the artworks
+      //     setArtworks(newArtworks);
+      //   } else {
+      //     // Add new artworks without duplicates
+      //     addToArtworks(newArtworks);
+      //   }
 
       setCurrentPage(page);
       setHasMoreArtworks(newArtworks.length === pageSize);
