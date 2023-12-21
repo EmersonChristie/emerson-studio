@@ -11,11 +11,14 @@ interface HomePageProps {
 }
 
 export default function HomePage({ initialArtworks }: HomePageProps) {
-  const { setArtworks } = useArtworks(); // Custom hook from your ArtworksContext
+  const { artworks, addToArtworks } = useArtworks();
 
   useEffect(() => {
-    setArtworks(initialArtworks);
-  }, [initialArtworks]);
+    if (artworks.length === 0) {
+      // Initialize the context with the statically fetched artworks
+      addToArtworks(initialArtworks);
+    }
+  }, [initialArtworks, addToArtworks, artworks]);
   return (
     <>
       {/* <Head>
@@ -28,39 +31,10 @@ export default function HomePage({ initialArtworks }: HomePageProps) {
           />
         ))}
       </Head> */}
-      <GalleryContainer initialArtworks={initialArtworks} />
+      <GalleryContainer />
     </>
   );
 }
-
-// pages/index.js
-
-// export async function getStaticProps() {
-//   const baseUrl = process.env.NEXT_PUBLIC_API_URL;
-
-//   try {
-//     const res = await fetch(`${baseUrl}/api/artworks`);
-//     if (!res.ok) {
-//       throw new Error(`Failed to fetch artworks: ${res.status}`);
-//     }
-//     const artworks = await res.json();
-//     console.log("artworks in getStaticProps:", JSON.stringify(artworks));
-
-//     return {
-//       props: {
-//         artworks,
-//       },
-//       revalidate: 10, // for Incremental Static Regeneration (ISR)
-//     };
-//   } catch (error) {
-//     console.error("Error in getStaticProps:", error);
-//     return {
-//       props: {
-//         artworks: [],
-//       },
-//     };
-//   }
-// }
 
 export async function getStaticProps() {
   try {

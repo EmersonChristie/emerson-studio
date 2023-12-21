@@ -71,3 +71,14 @@ export const getArtworksQuery = (
 
   return serialize(finalQueryParams);
 };
+
+// get artworks query for single artwork without pagination
+export const getArtworkQuery = (customParams?: QueryParams): string => {
+  const defaultParams = artworksQueryParams;
+
+  const finalQueryParams = {
+    ...(customParams || defaultParams),
+  };
+
+  return serialize(finalQueryParams);
+};

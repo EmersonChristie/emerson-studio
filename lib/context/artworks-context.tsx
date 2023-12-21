@@ -1,12 +1,15 @@
 // artworks-context.tsx
-import React, { createContext, useState, useEffect, useContext } from "react";
+import React, { createContext, useState, useContext } from "react";
 import { Artwork, WithChildren } from "../../types/global";
-import { fetchArtworks } from "@/lib/strapi/artworks";
+import { fetchArtworks, fetchArtworkById } from "@/lib/strapi/artworks";
 
 interface ArtworksContextType {
   artworks: Artwork[];
-  setArtworks: (artworks: Artwork[]) => void;
-  loadMoreArtworks: () => void;
+  initialArtwork?: Artwork;
+  addToArtworks: (newArtworks: Artwork | Artwork[]) => void;
+  loadArtworks: (page: number, pageSize: number) => Promise<void>;
+  loadArtworkById: (artworkId: string) => Promise<void>;
+  loadMoreArtworks: () => Promise<void>;
   currentPage: number;
   hasMoreArtworks: boolean;
 }
@@ -17,30 +20,82 @@ const ArtworksContext = createContext<ArtworksContextType | undefined>(
 
 export const ArtworksProvider: React.FC<WithChildren> = ({ children }) => {
   const [artworks, setArtworks] = useState<Artwork[]>([]);
+  const [initialArtwork, setInitialArtwork] = useState<Artwork | undefined>(
+    undefined,
+  );
   const [currentPage, setCurrentPage] = useState(1);
   const [hasMoreArtworks, setHasMoreArtworks] = useState(true);
   const pageSize = 10;
 
+  const addToArtworks = (newArtworks: Artwork | Artwork[]) => {
+    setArtworks((prevArtworks = []) => {
+      // Default to an empty array if prevArtworks is undefined
+      const newArtworksArray = Array.isArray(newArtworks)
+        ? newArtworks
+        : [newArtworks];
+
+      const filteredNewArtworks = newArtworksArray.filter(
+        (newArtwork) =>
+          newArtwork &&
+          !prevArtworks.some((art) => art && art.id === newArtwork.id),
+      );
+
+      return [...prevArtworks, ...filteredNewArtworks];
+    });
+  };
+
+  // Function to load artworks based on page and pageSize
+  const loadArtworks = async (page: number, pageSize: number) => {
+    try {
+      const newArtworks = await fetchArtworks(page, pageSize);
+
+      if (page === 1) {
+        // If loading the first page, reset the artworks
+        setArtworks(newArtworks);
+      } else {
+        // Add new artworks without duplicates
+        addToArtworks(newArtworks);
+      }
+
+      setCurrentPage(page);
+      setHasMoreArtworks(newArtworks.length === pageSize);
+    } catch (error) {
+      console.error("Failed to load artworks:", error);
+      // Handle error appropriately
+    }
+  };
+
+  // Function to load a single artwork by ID
+  const loadArtworkById = async (artworkId: string) => {
+    try {
+      // First, check if the artwork is already in the context
+      const existingArtwork = artworks.find(
+        (art) => art.id === Number(artworkId),
+      );
+      if (!existingArtwork) {
+        // Fetch the artwork only if it's not already in the context
+        const artwork = await fetchArtworkById(artworkId);
+        addToArtworks(artwork);
+      }
+      // If the artwork already exists in the context, no further action is needed
+    } catch (error) {
+      console.error("Failed to load artwork:", error);
+      // Handle error appropriately
+    }
+  };
+
   // Function to load more artworks
   const loadMoreArtworks = async () => {
-    const newPage = currentPage + 1;
-    console.log("New page:", newPage);
-    console.log("pageSize:", pageSize);
-    const newArtworks = await fetchArtworks(newPage, pageSize);
-    console.log("newArtworks:", newArtworks);
-    setArtworks((prevArtworks) => [...prevArtworks, ...newArtworks]);
-    setCurrentPage(newPage);
-    // Update hasMoreArtworks based on the API response
-    // For example, if the API returns fewer items than the page size,
-    // it means there are no more artworks to load
-    setHasMoreArtworks(newArtworks.length === pageSize);
+    await loadArtworks(currentPage + 1, pageSize);
   };
 
   return (
     <ArtworksContext.Provider
       value={{
         artworks,
-        setArtworks,
+        addToArtworks,
+        loadArtworks,
+        loadArtworkById,
         loadMoreArtworks,
         currentPage,
         hasMoreArtworks,
@@ -51,7 +106,6 @@ export const ArtworksProvider: React.FC<WithChildren> = ({ children }) => {
   );
 };
 
-// Custom hook for easy access to the context
 export const useArtworks = (): ArtworksContextType => {
   const context = useContext(ArtworksContext);
   if (!context) {

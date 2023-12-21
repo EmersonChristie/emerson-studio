@@ -1,7 +1,11 @@
 import { Artwork } from "types/global";
 // artworks.ts
 
-import { getArtworksQuery, QueryParams } from "./api-query-params";
+import {
+  getArtworkQuery,
+  getArtworksQuery,
+  QueryParams,
+} from "./api-query-params";
 
 /**
  * Fetches artworks from the API.
@@ -40,9 +44,10 @@ export const fetchArtworks = async (
  * @throws If there was a problem fetching the artwork.
  */
 export const fetchArtworkById = async (id: string): Promise<Artwork> => {
+  const query = getArtworkQuery();
   try {
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/artworks/${id}`,
+      `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/artworks/${id}?${query}`,
     );
     if (!response.ok) {
       throw new Error("Network response was not ok");

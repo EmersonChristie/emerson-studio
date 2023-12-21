@@ -68,7 +68,7 @@ const ArtCard: React.FC<ArtCardProps> = ({ index, artwork }) => {
           className="mx-auto self-center"
           src={mainImage?.data.attributes.url}
           alt={title}
-          style={{ maxWidth: "100%", maxHeight: "25%", boxShadow: boxShadow }}
+          style={{ maxWidth: "100%", boxShadow: boxShadow }}
           width={1000}
           height={1000}
           loading={index < 6 ? "eager" : "lazy"}
