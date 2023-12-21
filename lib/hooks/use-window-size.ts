@@ -1,5 +1,9 @@
 import { useEffect, useState } from "react";
 
+/**
+ * Custom hook that returns the current window size and provides utility functions to check if the window size is mobile or desktop.
+ * @returns An object containing the window size, isMobile flag, and isDesktop flag.
+ */
 export default function useWindowSize() {
   const [windowSize, setWindowSize] = useState<{
     width: number | undefined;
@@ -36,3 +40,10 @@ export default function useWindowSize() {
       typeof windowSize?.width === "number" && windowSize?.width >= 768,
   };
 }
+/**
+ * Example usage:
+ *
+ * const { windowSize, isMobile } = useWindowSize();
+ * console.log(windowSize); // { width: 1024, height: 768 }
+ * console.log(isMobile); // false
+ */

@@ -1,6 +1,9 @@
 import React, { ReactNode, createContext, useContext } from "react";
 import { Artwork, WithChildren } from "../../types/global";
 import useLocalStorage from "../hooks/use-local-storage"; // Adjust the path as necessary
+import { useToast } from "./toast-context";
+import SaveToast from "@/components/shared/save-toast";
+import { Save } from "lucide-react";
 
 interface UserContextType {
   savedArtworks: Artwork[];
@@ -15,15 +18,26 @@ export const UserProvider: React.FC<WithChildren> = ({ children }) => {
     "savedArtworks",
     [],
   );
+  const { showToast } = useToast();
 
   const toggleSaveArtwork = (artwork: Artwork) => {
-    // Compute the new array first
-    const newArtworks = savedArtworks.some((aw) => aw.id === artwork.id)
-      ? savedArtworks.filter((aw) => aw.id !== artwork.id) // Remove the artwork if it's already saved
-      : [...savedArtworks, artwork]; // Add the artwork if it's not saved
+    const isSaved = savedArtworks.some((aw) => aw.id === artwork.id);
 
-    // Then set the new array
+    // Compute the new array first
+    const newArtworks = isSaved
+      ? savedArtworks.filter((aw) => aw.id !== artwork.id)
+      : [...savedArtworks, artwork];
+
     setSavedArtworks(newArtworks);
+
+    // Show toast notification
+    showToast(
+      <SaveToast
+        imgSrc={artwork.mainImage.data.attributes.url}
+        text={isSaved ? "Artwork unsaved" : "Artwork saved"}
+        slug={`/saved-artworks`}
+      />,
+    );
   };
 
   const isArtworkSaved = (artworkId: number): boolean => {

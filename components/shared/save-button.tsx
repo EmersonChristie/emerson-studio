@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import Toast from "./toast";
 
 type ButtonProps = {
   saved: boolean;
@@ -8,6 +9,8 @@ type ButtonProps = {
 const SaveButton: React.FC<ButtonProps> = ({ saved, onClick }) => {
   // Introduce a local state to manage the rendering
   const [isClient, setIsClient] = useState(false);
+
+  const [showToast, setShowToast] = useState(false);
 
   useEffect(() => {
     // Once the component mounts, update the state to trigger a re-render

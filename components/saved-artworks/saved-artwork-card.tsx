@@ -55,7 +55,7 @@ const SavedArtworkCard = (artwork: Artwork) => {
       >
         <Image
           className="mx-auto self-center"
-          src={mainImage.url}
+          src={mainImage.data.attributes.url}
           alt={title}
           style={{ maxWidth: "100%", maxHeight: "25%", boxShadow: boxShadow }}
           width={1000}

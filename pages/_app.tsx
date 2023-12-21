@@ -12,6 +12,7 @@ import Layout from "@/components/layout";
 // import { GalleryProvider } from "@/lib/context/gallery-context";
 import { UserProvider } from "@/lib/context/user-context";
 import { ArtworksProvider } from "@/lib/context/artworks-context";
+import { ToastProvider } from "@/lib/context/toast-context";
 
 // const sfPro = localFont({
 //   src: "../styles/SF-Pro-Display-Medium.otf",
@@ -36,13 +37,15 @@ export default function MyApp({
     <SessionProvider session={session}>
       <RWBProvider>
         <div className={cx(josefinSans.variable, inter.variable)}>
-          <ArtworksProvider>
+          <ToastProvider>
             <UserProvider>
-              <Layout>
-                <Component {...pageProps} />
-              </Layout>
+              <ArtworksProvider>
+                <Layout>
+                  <Component {...pageProps} />
+                </Layout>
+              </ArtworksProvider>
             </UserProvider>
-          </ArtworksProvider>
+          </ToastProvider>
         </div>
       </RWBProvider>
       <Analytics />

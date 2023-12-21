@@ -6,9 +6,10 @@ import { Artwork } from "../../types/global";
 interface ColumnProps {
   artworks: Artwork[];
   index: number;
+  onNearEnd?: () => void;
 }
 
-const Column: React.FC<ColumnProps> = ({ artworks, index }) => {
+const Column: React.FC<ColumnProps> = ({ artworks, index, onNearEnd }) => {
   let style = {};
 
   const { isMobile } = useWindowSize();
@@ -22,9 +23,16 @@ const Column: React.FC<ColumnProps> = ({ artworks, index }) => {
   }
   return (
     <motion.div className="flex flex-col items-center" style={style}>
-      {artworks.map((artwork) => (
-        <ArtCard key={artwork.id} index={index} artwork={artwork} />
-      ))}
+      {artworks.map((artwork, i) => {
+        return (
+          <ArtCard
+            key={artwork.id}
+            index={index}
+            artwork={artwork}
+            onNearEnd={onNearEnd}
+          />
+        );
+      })}
     </motion.div>
   );
 };

@@ -1,3 +1,4 @@
+import React, { useEffect } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { useRouter } from "next/router";
@@ -9,17 +10,23 @@ import SaveButton from "../shared/save-button";
 import Divider from "../shared/divider";
 
 import { FADE_UP_ANIMATION_VARIANTS } from "@/lib/constants";
-
 import { useUser } from "../../lib/context/user-context";
 
 interface ArtCardProps {
   index: number;
   artwork: Artwork;
+  onNearEnd?: () => void; // Callback for when the card is near the end of the viewport
 }
+
 /**
  * The ArtCard component displays an art card with an image, title, and dimensions.
+ * @param {ArtCardProps} props - The props for the ArtCard component.
+ * @param {number} props.index - The index of the art card.
+ * @param {Artwork} props.artwork - The artwork object containing information about the art.
+ * @param {Function} props.onNearEnd - The callback function to be called when the card is near the end of the viewport.
+ * @returns {JSX.Element} The rendered ArtCard component.
  */
-const ArtCard: React.FC<ArtCardProps> = ({ index, artwork }) => {
+const ArtCard: React.FC<ArtCardProps> = ({ artwork, index, onNearEnd }) => {
   const router = useRouter();
   const { id, title, dimensions, mainImage } = artwork;
 
@@ -40,16 +47,22 @@ const ArtCard: React.FC<ArtCardProps> = ({ index, artwork }) => {
   const ref = useRef(null);
 
   const entry = useIntersectionObserver(ref, {
-    threshold: 0,
+    threshold: [0, 0.25, 0.5, 0.75, 1], // Example of multiple thresholds
+    rootMargin: "50px 0px", // Example root margin; adjust as needed
   });
 
   /**
-   * Handles the click event for the art card.
-   * Navigates to the artwork detail page.
+   * Handles the click event on the art card.
    */
   const handleClick = () => {
     router.push(`/artworks/${id}`);
   };
+
+  useEffect(() => {
+    if (entry?.isIntersecting && onNearEnd) {
+      onNearEnd();
+    }
+  }, [entry, onNearEnd]);
 
   return (
     <motion.div
@@ -62,7 +75,7 @@ const ArtCard: React.FC<ArtCardProps> = ({ index, artwork }) => {
       <motion.div
         className="cursor-pointer"
         onClick={handleClick}
-        whileTap={{ scale: 0.95 }}
+        whileTap={{ scale: 0.99 }}
       >
         <Image
           className="mx-auto self-center"
@@ -77,10 +90,10 @@ const ArtCard: React.FC<ArtCardProps> = ({ index, artwork }) => {
       </motion.div>
       <div className=" mt-8 w-full flex-col space-y-1 leading-loose md:space-y-6">
         <h2
-          className="xl:text-md cursor-pointer text-xs font-400 uppercase leading-10 tracking-wide text-gray-600 md:text-xs md:tracking-wider lg:text-sm 2xl:text-lg"
+          className="xl:text-md 2xl:text-md cursor-pointer text-xs font-400 uppercase leading-10 tracking-wide text-gray-600 md:text-xs md:tracking-wide lg:text-xs"
           onClick={handleClick}
           style={{
-            lineHeight: "1.5rem",
+            lineHeight: "1.2rem",
           }}
         >
           {title}
