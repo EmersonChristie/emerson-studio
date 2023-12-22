@@ -194,6 +194,11 @@ const ArtworkPage: React.FC<{ artwork: Artwork }> = ({ artwork }) => {
 
 export default ArtworkPage;
 
+type StaticProps = {
+  // Define the structure of your static props here
+  artwork: Artwork | null; // Example property
+};
+
 export const getStaticProps: GetStaticProps<StaticProps, IParams> = async (
   context,
 ) => {

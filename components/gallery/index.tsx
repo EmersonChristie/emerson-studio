@@ -10,10 +10,10 @@ import useWindowSize from "@/lib/hooks/use-window-size";
  */
 const GalleryContainer: React.FC = () => {
   const { artworks, loadMoreArtworks, hasMoreArtworks } = useArtworks();
-  const windowSize = useWindowSize();
+  const { windowSize } = useWindowSize();
 
   // Determine if the grid is in a 3-column or 1-column layout
-  const isThreeColumnLayout = windowSize?.width > 768;
+  const isThreeColumnLayout = (windowSize?.width ?? 0) > 768;
 
   /**
    * Split the artworks into columns based on the layout.

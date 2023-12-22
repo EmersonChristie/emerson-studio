@@ -6,6 +6,7 @@ import React, {
   FunctionComponent,
 } from "react";
 import { WithChildren } from "types/global";
+import { motion } from "framer-motion";
 // Define the type for the toast content
 
 type ToastContent = {
@@ -71,13 +72,27 @@ const Toast: FunctionComponent<ToastProps> = ({ onClose, children }) => {
     const timer = setTimeout(() => {
       onClose();
     }, 3000);
-
     return () => clearTimeout(timer);
   }, [onClose]);
 
   return (
-    <div className="slide-up-fade fixed bottom-0 left-1/2 mb-4 w-11/12 transform rounded-lg bg-white p-4 shadow-lg md:w-3/4">
+    <motion.div
+      className="fixed bottom-0 left-1/2 mb-4  transform rounded-lg bg-white p-4 shadow-lg md:w-3/4"
+      style={{
+        position: "fixed",
+        bottom: 0,
+        left: "50%",
+        marginBottom: "1rem",
+        width: "75%",
+        transform: "translateX(-50%)",
+        borderRadius: "0.35rem",
+        backgroundColor: "white",
+        padding: "0.1rem",
+        boxShadow:
+          "0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.05)",
+      }}
+    >
       {children}
-    </div>
+    </motion.div>
   );
 };

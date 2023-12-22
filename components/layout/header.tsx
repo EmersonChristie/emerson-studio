@@ -84,7 +84,7 @@ const Header: React.FC = () => {
 
   return (
     <>
-      <NavModal handleClose={handleClose} />
+      <NavModal />
       <SignInModal />
       <div className="fixed top-0 z-20 w-full bg-gradient-to-b from-white to-transparent backdrop-blur-xl ">
         <div className="flex items-center justify-between p-6 md:mx-2 ">
@@ -104,7 +104,7 @@ const Header: React.FC = () => {
               <UserDropdown />
             )}
           </div> */}
-          <AnimatePresence>
+          {/* <AnimatePresence>
             {!session && status !== "loading" ? (
               <motion.button
                 className="p-1.5 px-4 text-sm text-gray-600 transition-all hover:text-black lg:text-lg"
@@ -116,7 +116,7 @@ const Header: React.FC = () => {
             ) : (
               <UserDropdown />
             )}
-          </AnimatePresence>
+          </AnimatePresence> */}
           <div className="overflow-visible">
             {/* {!session && status !== "loading" ? ( */}
             {renderMenuButton()}

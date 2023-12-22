@@ -29,12 +29,12 @@ const SaveToast: React.FC<SaveToastProps> = ({ imgSrc, text, slug }) => {
       <img
         src={imgSrc}
         alt="Thumbnail"
-        className="mr-4 h-12 w-12 rounded object-cover"
+        className="mr-4 h-6 w-6 rounded object-cover md:h-12 md:w-12"
       />
       <p className="flex-grow text-gray-600">{text}</p>
       <button
         onClick={handleButtonClick}
-        className="rounded py-2 px-4 font-bold text-gray-500 hover:text-black"
+        className="rounded px-4 font-bold text-gray-500 hover:text-black"
       >
         View
       </button>

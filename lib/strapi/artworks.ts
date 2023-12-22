@@ -1,4 +1,4 @@
-import { Artwork } from "types/global";
+import { Artwork, ArtworkResponseData } from "types/global";
 // artworks.ts
 
 import {
@@ -29,7 +29,10 @@ export const fetchArtworks = async (
       throw new Error(`API responded with status ${response.status}`);
     }
     const { data } = await response.json();
-    return data.map((item) => ({ id: item.id, ...item.attributes }));
+    return data.map((item: ArtworkResponseData) => ({
+      id: item.id,
+      ...item.attributes,
+    }));
   } catch (error) {
     console.error("There was a problem fetching the artworks:", error);
     throw error;

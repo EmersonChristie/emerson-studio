@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, CSSProperties } from "react";
 import { useRouter } from "next/router";
 import { motion, AnimatePresence, LayoutGroup } from "framer-motion";
 import { ChevronRight, ChevronLeft } from "lucide-react";
@@ -92,23 +92,39 @@ const Slider: React.FC<SliderProps> = ({ currentIndex, onIndexChange }) => {
   const prevArtwork =
     artworks[(currentIndex - 1 + artworks.length) % artworks.length];
 
-  const arrowStyle = {
-    position: "absolute",
-    top: isMobile ? "unset" : "50%", // Remove 'top' if isMobile, else set to '50%'
-    bottom: isMobile ? "1.66%" : "unset", // Add 'bottom' if isMobile
+  const arrowStyle: CSSProperties = {
+    position: "absolute" as const,
+    // Explicitly cast 'top' and 'bottom' to strings or 'undefined'
+    top: isMobile ? undefined : "50%",
+    bottom: isMobile ? "1.66%" : undefined,
     zIndex: 1,
     cursor: "pointer",
     userSelect: "none",
-    fontSize: isMobile ? "1rem" : "3rem", // Change font size based on isMobile
+    // Ensure fontSize is a string
+    fontSize: isMobile ? "1rem" : "3rem",
   };
 
   const getArrowPadX = () => {
-    if (isMobile) {
-      return "0.5rem";
-    } else {
-      return "1rem";
-    }
+    return isMobile ? "0.5rem" : "1rem";
   };
+
+  // const arrowStyle = {
+  //   position: "absolute" as const,
+  //   top: isMobile ? "unset" : "50%", // Remove 'top' if isMobile, else set to '50%'
+  //   bottom: isMobile ? "1.66%" : "unset", // Add 'bottom' if isMobile
+  //   zIndex: 1,
+  //   cursor: "pointer",
+  //   userSelect: "none",
+  //   fontSize: isMobile ? "1rem" : "3rem", // Change font size based on isMobile
+  // };
+
+  // const getArrowPadX = () => {
+  //   if (isMobile) {
+  //     return "0.5rem";
+  //   } else {
+  //     return "1rem";
+  //   }
+  // };
 
   const paginate = (newDirection: number) => {
     const newIndex =
@@ -126,6 +142,9 @@ const Slider: React.FC<SliderProps> = ({ currentIndex, onIndexChange }) => {
     const newUrl = `/artworks/${newArtwork.id}`;
     router.replace(newUrl, undefined, { shallow: true });
   };
+
+  const boxShadow =
+    "rgba(0, 0, 0, 0.043) 0.37237016456675937px 0.44377348139733286px 0.5793051374284405px 0px, rgba(0, 0, 0, 0.06) 0.8657897618972239px 1.0318080591723024px 1.3469297616353146px 0px, rgba(0, 0, 0, 0.075) 1.5547577922105507px 1.8528881844807665px 2.418773742338844px 0px, rgba(0, 0, 0, 0.086) 2.5803221177377376px 3.075108153864249px 4.014268599539516px 0px, rgba(0, 0, 0, 0.1) 4.2509936997828595px 5.066137013811576px 6.613372186585694px 0px, rgba(0, 0, 0, 0.118) 7.429504811692371px 8.854139050530355px 11.558257657323903px 0px, rgba(0, 0, 0, 0.16) 16.06969024216348px 19.151111077974452px 25px 0px";
 
   useEffect(() => {
     updateUrl(currentIndex);
@@ -172,13 +191,7 @@ const Slider: React.FC<SliderProps> = ({ currentIndex, onIndexChange }) => {
                 position: "absolute",
                 maxHeight: "80%",
                 maxWidth: "90%",
-                boxShadow: useShadow(7, {
-                  angle: 38,
-                  length: 35,
-                  finalBlur: 20,
-                  spread: 0,
-                  finalTransparency: 0.15,
-                }),
+                boxShadow: boxShadow,
               }}
               ref={imageRef}
               drag="x"

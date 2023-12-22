@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import Toast from "./toast";
 
 type ButtonProps = {
   saved: boolean;

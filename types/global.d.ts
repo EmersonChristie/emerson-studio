@@ -89,6 +89,46 @@ interface Availability {
   availability?: string;
 }
 
-interface Media {
-  // ... media attributes
+///////// Strapi Types //////////
+interface ArtworkDimensions {
+  id: number;
+  height: number;
+  width: number;
+  dimensions: string;
+}
+
+interface ArtworkPrice {
+  id: number;
+  price: number;
+  formattedPrice: string;
+}
+
+interface ArtworkImageAttributes {
+  url: string;
+  alternativeText: string | null;
+}
+
+interface ArtworkImageData {
+  id: number;
+  attributes: ArtworkImageAttributes;
+}
+
+interface ArtworkMainImage {
+  data: ArtworkImageData;
+}
+
+interface ArtworkAttributes {
+  title: string;
+  year: string;
+  medium: string;
+  genre: string;
+  series: string;
+  dimensions: ArtworkDimensions;
+  price: ArtworkPrice;
+  mainImage: ArtworkMainImage;
+}
+
+export interface ArtworkResponseData {
+  id: number;
+  attributes: ArtworkAttributes;
 }

@@ -40,7 +40,7 @@ export const serialize = (
   return query.join("&");
 };
 
-interface QueryParams {
+export interface QueryParams {
   filters?: any; // Define more specific types as needed
   populate?: any;
   fields?: string[];
