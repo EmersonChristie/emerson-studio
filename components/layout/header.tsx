@@ -31,47 +31,52 @@ const Header: React.FC = () => {
     setOpen(!isOpen);
   };
 
-  const getButtonDimensions = () => {
+  const getButtonDimensions = (scale = 1) => {
     let buttonWidth = 24;
     let buttonHeight = 24;
     let strokeWidth = 2;
 
     if (width && height) {
       if (width < 768) {
-        buttonWidth = 28;
-        buttonHeight = 14;
-        strokeWidth = 1.75;
+        buttonWidth = 38;
+        buttonHeight = 20;
+        strokeWidth = 2;
       } else if (width < 1024) {
-        buttonWidth = 32;
-        buttonHeight = 16;
+        buttonWidth = 36;
+        buttonHeight = 20;
         strokeWidth = 2;
       } else if (width < 1280) {
         buttonWidth = 40;
         buttonHeight = 20;
-        strokeWidth = 2.5;
+        strokeWidth = 2.25;
       } else if (width < 1536) {
         buttonWidth = 48;
         buttonHeight = 24;
-        strokeWidth = 3;
+        strokeWidth = 2.75;
       } else {
         buttonWidth = 56;
         buttonHeight = 28;
-        strokeWidth = 4;
+        strokeWidth = 3.5;
       }
     }
+
+    // Apply scaling
+    buttonWidth *= scale;
+    buttonHeight *= scale;
+    strokeWidth *= scale;
 
     return { buttonWidth, buttonHeight, strokeWidth };
   };
 
   const renderMenuButton = () => {
-    const { buttonWidth, buttonHeight, strokeWidth } = getButtonDimensions();
+    const { buttonWidth, buttonHeight, strokeWidth } = getButtonDimensions(0.8);
 
     return (
       <MenuButton
         isOpen={isOpen}
         onClick={toggleOpen}
         strokeWidth={strokeWidth}
-        color="#222222"
+        color="rgb(31 41 55 / 100%)"
         transition={{ ease: "easeOut", duration: 0.2 }}
         width={buttonWidth}
         height={buttonHeight}
@@ -94,7 +99,7 @@ const Header: React.FC = () => {
               fontWeight="100"
               letterSpacing="widest"
               scale="90"
-              className="md:text-md text-sm font-bold tracking-widest text-gray-400 lg:text-lg xl:text-xl 2xl:text-2xl "
+              className="md:text-md text-sm font-bold tracking-widest text-gray-800 lg:text-lg xl:text-xl 2xl:text-2xl "
             />
           </Link>
           {/* <div className="overflow-visible">

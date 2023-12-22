@@ -22,19 +22,19 @@ const ArtDescription: React.FC<Artwork> = (artwork) => {
   return (
     <motion.div
       {...FADE_UP_ANIMATION}
-      className="flex h-auto w-full flex-row justify-between  px-10 pb-16 md:ml-1 md:mb-0 md:mr-1 md:flex-col md:px-0 md:pb-0"
+      className="flex h-auto w-full flex-row justify-between  px-10 pb-16 md:ml-1 md:mb-0 md:mr-1 md:flex-col md:px-0 md:pb-0 xl:mr-10"
     >
       <div
-        className="lg:text-md mb-5 flex w-full flex-col justify-center text-left text-xs font-light text-gray-600 md:text-sm xl:text-lg 2xl:text-xl"
+        className="lg:text-md xl:text-md mb-5 flex w-full flex-col justify-center text-left text-xs font-light text-gray-600 md:text-sm 2xl:text-lg"
         id="descrition-text"
       >
         <p>
-          <span className="font-bold uppercase leading-loose tracking-wide text-gray-700 md:leading-loose">
+          <span className="font-500 uppercase leading-loose tracking-wide text-gray-600 md:leading-loose">
             {artwork.title}
           </span>
           <span className="tracking-wide text-gray-500"> / {artwork.year}</span>
         </p>
-        <Divider />
+        <Divider animated={true} className="my-2" />
         <div className="flex flex-row items-center justify-between md:flex-col md:items-start md:justify-start">
           <div className="flex flex-col">
             <p>
@@ -107,24 +107,6 @@ const Slider: React.FC<SliderProps> = ({ currentIndex, onIndexChange }) => {
   const getArrowPadX = () => {
     return isMobile ? "0.5rem" : "1rem";
   };
-
-  // const arrowStyle = {
-  //   position: "absolute" as const,
-  //   top: isMobile ? "unset" : "50%", // Remove 'top' if isMobile, else set to '50%'
-  //   bottom: isMobile ? "1.66%" : "unset", // Add 'bottom' if isMobile
-  //   zIndex: 1,
-  //   cursor: "pointer",
-  //   userSelect: "none",
-  //   fontSize: isMobile ? "1rem" : "3rem", // Change font size based on isMobile
-  // };
-
-  // const getArrowPadX = () => {
-  //   if (isMobile) {
-  //     return "0.5rem";
-  //   } else {
-  //     return "1rem";
-  //   }
-  // };
 
   const paginate = (newDirection: number) => {
     const newIndex =
@@ -250,17 +232,9 @@ const Slider: React.FC<SliderProps> = ({ currentIndex, onIndexChange }) => {
           className={"relative flex h-28 w-full flex-row justify-between"}
           style={{ width: isMobile ? "100%" : "33%" }}
         >
-          {/* <div
-          id="description"
-          className={`relative flex h-28 w-full flex-row justify-between ${
-            isMobile ? "w-full" : "w-1/4"
-          }`}
-        > */}
-          {/* <div className="flex w-full pb-5 md:pb-0"> */}
           <AnimatePresence>
             <ArtDescription {...currentArtwork} />
           </AnimatePresence>
-          {/* </div> */}
         </div>
       </div>
     </LayoutGroup>

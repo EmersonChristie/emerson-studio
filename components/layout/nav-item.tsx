@@ -25,32 +25,36 @@ export default function NavItem({
   title,
   href,
   key,
+  handleItemClick,
 }: {
   id: number;
   title: string;
   href: string;
   key: number;
+  handleItemClick: () => void;
 }) {
   const router = useRouter();
 
   return (
-    <motion.li
-      variants={variants}
-      whileHover={{ scale: 1.05, x: -15 }}
-      whileTap={{ scale: 0.95 }}
-      key={id}
-      className={
-        router.pathname === href
-          ? "text-gray-100 line-through"
-          : "text-gray-400"
-      }
+    <Link
+      href={href}
+      key={key}
+      onClick={handleItemClick}
+      className="flex items-center justify-center py-6 text-4xl tracking-wide md:py-16 md:text-7xl lg:text-8xl xl:text-9xl"
     >
-      <Link
-        href={href}
-        className=" font-unicaone flex items-center  py-3 text-5xl tracking-wide md:text-7xl lg:text-8xl xl:text-9xl"
+      <motion.li
+        variants={variants}
+        whileHover={{ scale: 1.05, x: -15 }}
+        whileTap={{ scale: 0.95 }}
+        key={id}
+        className={`flex  ${
+          router.pathname === href
+            ? "text-gray-100 line-through"
+            : "text-gray-400"
+        }`}
       >
-        <p> {title} </p>
-      </Link>
-    </motion.li>
+        <p className="text-center leading-3"> {title} </p>
+      </motion.li>
+    </Link>
   );
 }

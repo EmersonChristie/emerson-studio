@@ -10,7 +10,7 @@ export default async function handler(
 ) {
   try {
     if (req.method === "GET") {
-      const artworks = await fetchArtworks(1, 10);
+      const artworks = await fetchArtworks(1, 15);
       res.status(200).json(artworks);
     } else {
       // Handle any non-GET requests

@@ -33,6 +33,11 @@ const items = [
     title: "About",
     href: "/about",
   },
+  {
+    id: 5,
+    title: "Saved Artworks",
+    href: "/saved-artworks",
+  },
 ];
 
 const NavModal = ({
@@ -44,8 +49,6 @@ const NavModal = ({
   setShowNavModal: Dispatch<SetStateAction<boolean>>;
   handleClose: () => void;
 }) => {
-  const [signInClicked, setSignInClicked] = useState(false);
-
   const variants = {
     open: {
       transition: { staggerChildren: 0.07, delayChildren: 0.2 },
@@ -53,6 +56,11 @@ const NavModal = ({
     closed: {
       transition: { staggerChildren: 0.05, staggerDirection: -1 },
     },
+  };
+
+  const handleItemClick = () => {
+    setShowNavModal(false);
+    handleClose();
   };
 
   return (
@@ -64,7 +72,7 @@ const NavModal = ({
       <div key="nav-modal-container" className=" overflow-hidden">
         <div
           key="navigation-modal"
-          className="flex flex-col items-center justify-center space-y-10 px-4 py-5 text-left md:px-16"
+          className="flex flex-col items-center justify-center space-y-10 px-4 py-5 text-left md:px-20"
         >
           <motion.ul
             key="navigation-list"
@@ -73,7 +81,13 @@ const NavModal = ({
             animate="open"
           >
             {items.map(({ id, title, href }) => (
-              <NavItem id={id} title={title} href={href} key={id} />
+              <NavItem
+                handleItemClick={handleItemClick}
+                id={id}
+                title={title}
+                href={href}
+                key={id}
+              />
             ))}
           </motion.ul>
         </div>

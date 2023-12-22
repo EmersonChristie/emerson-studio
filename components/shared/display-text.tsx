@@ -10,7 +10,7 @@ interface DisplayTextProps {
 }
 
 const DisplayText: React.FC<DisplayTextProps> = ({
-  color = "text-black",
+  color = "text-gray-800",
   fontWeight = "600",
   letterSpacing = "normal",
   scale = "10",

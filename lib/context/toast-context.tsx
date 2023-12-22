@@ -76,14 +76,15 @@ const Toast: FunctionComponent<ToastProps> = ({ onClose, children }) => {
   }, [onClose]);
 
   return (
-    <motion.div
-      className="fixed bottom-0 left-1/2 mb-4  transform rounded-lg bg-white p-4 shadow-lg md:w-3/4"
+    <div
+      className="w-9/10 fixed bottom-0 left-1/2 mb-4 translate-x-4 transform rounded-lg bg-white p-4 shadow-lg md:w-1/2"
       style={{
         position: "fixed",
         bottom: 0,
         left: "50%",
         marginBottom: "1rem",
-        width: "75%",
+        width: "80%",
+        maxWidth: "60rem",
         transform: "translateX(-50%)",
         borderRadius: "0.35rem",
         backgroundColor: "white",
@@ -93,6 +94,6 @@ const Toast: FunctionComponent<ToastProps> = ({ onClose, children }) => {
       }}
     >
       {children}
-    </motion.div>
+    </div>
   );
 };

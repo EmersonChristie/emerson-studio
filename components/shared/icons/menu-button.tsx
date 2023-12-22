@@ -16,12 +16,13 @@ const MenuButton = ({
   width = 24,
   height = 24,
   strokeWidth = 1,
-  color = "#000",
+  color = "#000000",
   transition = null,
   lineProps = null,
   ...props
 }: Props) => {
   const variant = isOpen ? "opened" : "closed";
+
   const top = {
     closed: {
       rotate: 0,
@@ -60,7 +61,11 @@ const MenuButton = ({
     ...lineProps,
   };
   const unitHeight = 4;
-  const unitWidth = (unitHeight * (width as number)) / (height as number);
+  // round unitWidth to integer to avoid thin lines
+  const unitWidth = Math.round(
+    (unitHeight * (width as number)) / (height as number),
+  );
+  // const unitWidth = (unitHeight * (width as number)) / (height as number);
 
   return (
     <motion.svg

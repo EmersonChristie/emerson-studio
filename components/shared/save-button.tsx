@@ -26,7 +26,7 @@ const SaveButton: React.FC<ButtonProps> = ({ saved, onClick }) => {
   return (
     <button
       onClick={onClick}
-      className={`font-unicaone rounded-sm border py-0.5 px-4 uppercase ${buttonStyle} text-xs font-500 tracking-wide hover:outline-none hover:ring-2 hover:ring-gray-600 hover:ring-opacity-50 2xl:text-lg`}
+      className={`rounded-sm border py-0.5 px-3 font-default uppercase ${buttonStyle} text-xs font-500 tracking-wide hover:outline-none hover:ring-2 hover:ring-gray-600 hover:ring-opacity-50 2xl:text-lg`}
     >
       {isClient ? (saved ? "Saved" : " Save ") : "Loading..."}
     </button>

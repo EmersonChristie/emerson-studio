@@ -34,7 +34,7 @@ export const UserProvider: React.FC<WithChildren> = ({ children }) => {
     showToast(
       <SaveToast
         imgSrc={artwork.mainImage.data.attributes.url}
-        text={isSaved ? "Artwork unsaved" : "Artwork saved"}
+        text={isSaved ? "Artwork Unsaved" : "Artwork Saved"}
         slug={`/saved-artworks`}
       />,
     );

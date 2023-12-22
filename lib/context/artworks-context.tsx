@@ -25,7 +25,7 @@ export const ArtworksProvider: React.FC<WithChildren> = ({ children }) => {
   );
   const [currentPage, setCurrentPage] = useState(1);
   const [hasMoreArtworks, setHasMoreArtworks] = useState(true);
-  const pageSize = 10;
+  const pageSize = 15;
 
   const addToArtworks = (newArtworks: Artwork | Artwork[]) => {
     setArtworks((prevArtworks = []) => {

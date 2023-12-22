@@ -80,19 +80,19 @@ const ArtCard: React.FC<ArtCardProps> = ({ artwork, index, onNearEnd }) => {
           {...(index < 6 && { priority: true })}
         />
       </motion.div>
-      <div className=" mt-8 w-full flex-col space-y-1 leading-loose md:space-y-6">
+      <div className=" mt-8 w-full flex-col space-y-2 px-1 leading-normal md:space-y-3">
         <h2
-          className="xl:text-md 2xl:text-md cursor-pointer text-xs font-400 uppercase leading-10 tracking-wide text-gray-600 md:text-xs md:tracking-wide lg:text-xs"
+          className="xl:text-md lg:text-md cursor-pointer font-default text-xs font-500 uppercase  tracking-normal text-gray-600 md:text-xs md:tracking-wide 2xl:text-lg"
           onClick={handleClick}
-          style={{
-            lineHeight: "1.2rem",
-          }}
+          // style={{
+          //   lineHeight: "0.2rem",
+          // }}
         >
           {title}
         </h2>
-
-        <div className="mt-2 flex w-full items-center justify-between">
-          <p className="xl:text-md text-xs leading-10 text-gray-600 md:text-xs lg:text-sm 2xl:text-lg">
+        {/* <Divider className="my-0 w-full" /> */}
+        <div className=" flex w-full items-center justify-between">
+          <p className="xl:text-md font-default text-xs text-gray-600 md:text-xs lg:text-sm 2xl:text-lg">
             {dimensions?.dimensions}
           </p>
           <SaveButton
