@@ -8,13 +8,21 @@ import Divider from "../shared/divider";
 import HeadingText from "../shared/headingText";
 import { useUser } from "@/lib/context/user-context";
 import PageHeader from "../shared/page-header";
+import InquiryModal from "./inquiry-modal";
+import FloatingButton from "./floating-button";
 
+import ArtworkCard from "./artwork-card";
 /**
  * SavedArtworksContainer component.
  * Utilizes the gallery context to display saved artworks and handle interactions.
  */
 const SavedArtworksContainer = () => {
-  const { savedArtworks, toggleSaveArtwork } = useUser();
+  const {
+    savedArtworks,
+    toggleSaveArtwork,
+    selectedInquireArtworks,
+    setSelectedInquireArtworks,
+  } = useUser();
   const [artworks, setArtworks] = useState<Artwork[]>([]);
   const router = useRouter();
 
@@ -31,17 +39,10 @@ const SavedArtworksContainer = () => {
         className="mt-10 flex w-full flex-grow flex-col p-14 md:m-3 md:flex-row md:space-x-16 lg:m-7 lg:space-x-28 xl:m-10 xl:space-x-36"
       > */}
 
-      <div className="flex h-full w-full flex-col px-10 pt-36">
-        <PageHeader
-          title="Saved Artworks"
-          subtitle="View your saved artworks here"
-        />
-        {/* <div className="">
-          <HeadingText text="Saved Artworks" />
+      <div className="flex w-full flex-col px-2 md:px-10">
+        <PageHeader title="Saved Artworks" />
 
-          <Divider className="" />
-        </div> */}
-        <div className="flex h-full w-full items-center justify-center">
+        <div className="flex w-full flex-col items-center justify-center">
           {/* Render each column of artworks */}
           {artworks?.length === 0 ? (
             // TODO: Add a loading state
@@ -56,14 +57,23 @@ const SavedArtworksContainer = () => {
             </div>
           ) : (
             <ResponsiveGrid>
-              {savedArtworks.map((artwork, i) => (
-                <SavedArtworkCard key={i} {...artwork} />
+              {artworks.map((artwork, i) => (
+                // <SavedArtworkCard key={i} artwork={artwork} />
+                <ArtworkCard key={i} artwork={artwork} />
               ))}
             </ResponsiveGrid>
           )}
         </div>
       </div>
       {/* </motion.div> */}
+
+      <FloatingButton onClick={() => console.log("FLoating Button CLicked")} />
+
+      {/* <InquiryModal
+        maxHeight="80%"
+        maxWidth="80%"
+        inquiryArtworks={inquiryArtworks}
+      /> */}
     </LayoutGroup>
   );
 };

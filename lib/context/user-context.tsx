@@ -1,14 +1,19 @@
-import React, { ReactNode, createContext, useContext } from "react";
+import React, { createContext, useContext } from "react";
 import { Artwork, WithChildren } from "../../types/global";
 import useLocalStorage from "../hooks/use-local-storage"; // Adjust the path as necessary
 import { useToast } from "./toast-context";
 import SaveToast from "@/components/shared/save-toast";
-import { Save } from "lucide-react";
 
 interface UserContextType {
   savedArtworks: Artwork[];
+  setSavedArtworks: (artworks: Artwork[]) => void;
+
   toggleSaveArtwork: (artwork: Artwork) => void;
   isArtworkSaved: (artworkId: number) => boolean;
+  selectedInquireArtworks: Artwork[];
+  setSelectedInquireArtworks: (artworks: Artwork[]) => void;
+  toggleSelectInquireArtwork: (artwork: Artwork) => void;
+  isArtworkSelected: (artworkId: number) => boolean;
 }
 
 const UserContext = createContext<UserContextType | undefined>(undefined);
@@ -18,10 +23,26 @@ export const UserProvider: React.FC<WithChildren> = ({ children }) => {
     "savedArtworks",
     [],
   );
+  const [selectedInquireArtworks, setSelectedInquireArtworks] = useLocalStorage<
+    Artwork[]
+  >("selectedInquireArtworks", []);
+
   const { showToast } = useToast();
+
+  const isArtworkSaved = (artworkId: number): boolean => {
+    return savedArtworks.some((artwork) => artwork.id === artworkId);
+  };
 
   const toggleSaveArtwork = (artwork: Artwork) => {
     const isSaved = savedArtworks.some((aw) => aw.id === artwork.id);
+    const isSelected = selectedInquireArtworks.some(
+      (aw) => aw.id === artwork.id,
+    );
+
+    if (isSelected) {
+      // If the artwork is selected, unselect it
+      toggleSelectInquireArtwork(artwork);
+    }
 
     // Compute the new array first
     const newArtworks = isSaved
@@ -40,13 +61,35 @@ export const UserProvider: React.FC<WithChildren> = ({ children }) => {
     );
   };
 
-  const isArtworkSaved = (artworkId: number): boolean => {
-    return savedArtworks.some((artwork) => artwork.id === artworkId);
+  const isArtworkSelected = (artworkId: number): boolean => {
+    return selectedInquireArtworks.some((artwork) => artwork.id === artworkId);
+  };
+
+  const toggleSelectInquireArtwork = (artwork: Artwork) => {
+    const isArtworkSelected = selectedInquireArtworks.some(
+      (aw) => aw.id === artwork.id,
+    );
+
+    // Compute the new array first
+    const newArtworks = isArtworkSelected
+      ? selectedInquireArtworks.filter((aw) => aw.id !== artwork.id)
+      : [...selectedInquireArtworks, artwork];
+
+    setSelectedInquireArtworks(newArtworks);
   };
 
   return (
     <UserContext.Provider
-      value={{ savedArtworks, toggleSaveArtwork, isArtworkSaved }}
+      value={{
+        savedArtworks,
+        setSavedArtworks,
+        toggleSaveArtwork,
+        isArtworkSaved,
+        selectedInquireArtworks,
+        setSelectedInquireArtworks,
+        toggleSelectInquireArtwork,
+        isArtworkSelected,
+      }}
     >
       {children}
     </UserContext.Provider>

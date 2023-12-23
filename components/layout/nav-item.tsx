@@ -2,6 +2,8 @@ import React from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import cx from "classnames";
+import useWindowSize from "@/lib/hooks/use-window-size";
 
 const variants = {
   open: {
@@ -34,27 +36,33 @@ export default function NavItem({
   handleItemClick: () => void;
 }) {
   const router = useRouter();
+  const { isMobile } = useWindowSize();
 
   return (
-    <Link
-      href={href}
-      key={key}
-      onClick={handleItemClick}
-      className="flex items-center justify-center py-6 text-4xl tracking-wide md:py-16 md:text-7xl lg:text-8xl xl:text-9xl"
+    <motion.li
+      variants={variants}
+      key={id}
+      className={`  ${
+        router.pathname === href
+          ? "text-gray-100 line-through"
+          : "text-gray-500"
+      }`}
     >
-      <motion.li
-        variants={variants}
-        whileHover={{ scale: 1.05, x: -15 }}
-        whileTap={{ scale: 0.95 }}
-        key={id}
-        className={`flex  ${
-          router.pathname === href
-            ? "text-gray-100 line-through"
-            : "text-gray-400"
-        }`}
+      <Link
+        href={href}
+        key={key}
+        onClick={handleItemClick}
+        className="flex items-center justify-center py-5 text-3xl tracking-wide
+        md:py-16 md:text-5xl lg:text-6xl xl:text-7xl"
       >
-        <p className="text-center leading-3"> {title} </p>
-      </motion.li>
-    </Link>
+        <motion.p
+          className="text-center leading-3"
+          whileHover={{ scale: 1.05, x: -15 }}
+          whileTap={{ scale: 0.95 }}
+        >
+          {title}
+        </motion.p>
+      </Link>
+    </motion.li>
   );
 }

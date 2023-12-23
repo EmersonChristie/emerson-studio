@@ -11,6 +11,7 @@ import {
 import { LoadingDots, ExpandingArrow } from "@/components/shared/icons";
 import Image from "next/image";
 import { motion } from "framer-motion";
+import useWindowSize from "@/lib/hooks/use-window-size";
 
 const items = [
   {
@@ -58,6 +59,8 @@ const NavModal = ({
     },
   };
 
+  const { isDesktop } = useWindowSize();
+
   const handleItemClick = () => {
     setShowNavModal(false);
     handleClose();
@@ -70,6 +73,15 @@ const NavModal = ({
       handleClose={handleClose}
     >
       <div key="nav-modal-container" className=" overflow-hidden">
+        {isDesktop && (
+          <span
+            onClick={handleItemClick}
+            className="absolute top-6 right-6 cursor-pointer text-4xl font-100 text-gray-100"
+          >
+            X
+          </span>
+        )}
+
         <div
           key="navigation-modal"
           className="flex flex-col items-center justify-center space-y-10 px-4 py-5 text-left md:px-20"

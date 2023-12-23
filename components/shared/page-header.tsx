@@ -14,12 +14,12 @@ const PageHeader: React.FC<PageHeaderProps> = ({
   description,
 }) => {
   return (
-    <div className="my-3 text-left">
+    <div className="mt-3 flex flex-col pb-8 pt-28 text-left md:pb-16 md:pt-36">
       <h1 className="text-xl font-400 uppercase tracking-wider text-gray-600">
         {title}
       </h1>
       {subheading && <p className="mt-2 text-xl text-gray-600">{subheading}</p>}
-      <Divider animated={true} className="my-4" />
+      <Divider animated={true} className="py-4" />
       {description && (
         <div className="my-6">
           {typeof description === "string" ? <p>{description}</p> : description}

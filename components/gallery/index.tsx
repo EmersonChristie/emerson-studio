@@ -4,6 +4,7 @@ import Column from "./column";
 import { LayoutGroup, motion } from "framer-motion";
 import { useArtworks } from "@/lib/context/artworks-context";
 import useWindowSize from "@/lib/hooks/use-window-size";
+import { LoadingSpinner } from "../shared/icons";
 
 /**
  * Component for displaying a gallery of artworks.
@@ -45,10 +46,13 @@ const GalleryContainer: React.FC = () => {
     <LayoutGroup>
       <motion.div
         id="gallery-container"
-        className="flex w-full flex-grow flex-col px-14 pt-28 md:m-3 md:flex-row md:space-x-16 lg:m-7 lg:space-x-28 xl:m-10 xl:space-x-32 2xl:space-x-40"
+        className="mb-30 flex w-full max-w-1920 flex-grow flex-col px-14 pt-28 md:m-3 md:flex-row md:space-x-16 lg:m-7 lg:space-x-28 xl:m-10 xl:space-x-32 2xl:space-x-40"
       >
         {artworks?.length === 0 ? (
-          <p>Loading artworks...</p>
+          <div className="flex h-full w-full flex-col items-center justify-center">
+            <p>Loading Artworks</p>
+            <LoadingSpinner />
+          </div>
         ) : (
           columns.map((columnArtworks, i) => (
             <Column
