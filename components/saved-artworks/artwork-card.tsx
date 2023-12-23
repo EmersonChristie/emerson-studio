@@ -61,12 +61,12 @@ const ArtworkCard: React.FC<ArtworkCardProps> = ({ artwork }) => {
   return (
     <div
       id="container"
-      className="flex h-auto flex-grow overflow-hidden rounded-lg shadow-lg md:flex-col"
+      className="flex h-auto flex-grow overflow-hidden md:flex-col"
     >
       <div id="background-container" className="flex h-full w-1/3 md:w-full">
         <div
           id="image-container"
-          className="flex aspect-square flex-grow-0 items-center justify-center bg-gray-300 md:flex-grow"
+          className="flex aspect-square flex-grow-0 items-center justify-center rounded-md bg-gradient-to-br from-white to-gray-300 md:flex-grow"
         >
           <img
             className=" object-contain p-4"
