@@ -87,12 +87,6 @@ const SavedArtworksContainer = () => {
       {inquiryArtworks?.length > 0 && (
         <FloatingButton onClick={setShowInquiryModal} />
       )}
-
-      {/* <InquiryModal
-        maxHeight="80%"
-        maxWidth="80%"
-        inquiryArtworks={inquiryArtworks}
-      /> */}
       <InquiryModal />
     </LayoutGroup>
   );

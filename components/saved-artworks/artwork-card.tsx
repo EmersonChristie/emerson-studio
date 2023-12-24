@@ -173,20 +173,22 @@ const ArtworkCard: React.FC<ArtworkCardProps> = ({ artwork }) => {
       </div>
       <div
         id="details-container"
-        className="flex h-full w-2/3 flex-grow flex-col justify-between p-4 md:w-full md:flex-grow"
+        className="flex h-full w-2/3 flex-grow flex-col justify-between p-4 md:w-full md:flex-grow "
       >
         <div
           id="artwork-title-dimensions"
-          className="flex flex-col text-gray-600"
+          className="flex flex-col  text-gray-600 "
         >
-          <h2 className=" xl:text-md cursor-pointer text-xs font-600 uppercase leading-relaxed tracking-wide  2xl:text-sm">
+          <h2 className=" xl:text-md cursor-pointer text-xs font-600 uppercase tracking-wide md:leading-5   2xl:text-sm">
             {artwork.title}
           </h2>
           <Divider animated={true} className="w-10/12 py-1 md:w-4/5 md:py-2" />
-          <p className="2xl:text-md  mt-2 text-xs font-500 leading-10 lg:text-sm">
+          <p className="2xl:text-md  mt-2 text-xs font-500 md:leading-5 lg:text-sm">
             {artwork.dimensions.dimensions}
           </p>
-          <p className="2xl:text-md text-xs lg:text-sm">{artwork.medium}</p>
+          <p className="2xl:text-md text-xs md:leading-5 lg:text-sm">
+            {artwork.medium}
+          </p>
         </div>
         <div
           id="buttons-container"

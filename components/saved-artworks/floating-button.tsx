@@ -90,7 +90,7 @@ const FloatingButton: React.FC<FloatingButtonProps> = ({ onClick }) => {
             backgroundColor: "white",
             padding: "0.15rem",
             boxShadow:
-              "0 10px 15px -3px rgba(0, 0, 0, 0.2), 0 4px 6px -4px rgba(0, 0, 0, 0.2)",
+              "0 10px 15px -3px rgba(0, 0, 0, 0.25), 0 4px 6px -4px rgba(0, 0, 0, 0.25)",
           }}
           onClick={onClick}
         >
