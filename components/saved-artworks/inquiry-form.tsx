@@ -61,13 +61,13 @@ export const InquiryForm: React.FC<InquiryFormProps> = ({ postInquiry }) => {
       </div>
       {/* Artwork Grid  */}
       {/* TODO: implement buttons to remove artworks */}
-      <div className="grid grid-cols-10 gap-0 pt-3">
+      <div className="grid grid-cols-10 gap-1 pt-3">
         {selectedArtworks.map((artwork) => (
-          <div key={artwork.id}>
+          <div className=" flex overflow-hidden " key={artwork.id}>
             <img
               src={artwork.mainImage.data.attributes.url}
               alt={`Artwork ${artwork.id}`}
-              className="mr-1 h-10 w-10 rounded-lg object-cover" // Adjust size as needed
+              className=" h-12 w-12 rounded-lg object-cover" // Adjust size as needed
             />
           </div>
         ))}

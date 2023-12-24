@@ -85,7 +85,7 @@ const ArtCard: React.FC<ArtCardProps> = ({ artwork, index, onNearEnd }) => {
       </motion.div>
       <div className=" mt-8 w-full flex-col space-y-2 px-1 leading-normal md:space-y-3">
         <h2
-          className="xl:text-md lg:text-md cursor-pointer font-default text-xs font-500 uppercase  tracking-normal text-gray-600 md:text-xs md:tracking-wide 2xl:text-lg"
+          className="xl:text-md lg:text-md cursor-pointer font-default text-xs font-600 uppercase  tracking-normal text-gray-600 md:text-xs md:tracking-wide 2xl:text-lg"
           onClick={handleClick}
           // style={{
           //   lineHeight: "0.2rem",
