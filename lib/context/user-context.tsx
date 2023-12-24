@@ -75,6 +75,8 @@ export const UserProvider: React.FC<WithChildren> = ({ children }) => {
       ? selectedInquireArtworks.filter((aw) => aw.id !== artwork.id)
       : [...selectedInquireArtworks, artwork];
 
+    console.log("selectedInquiryArtworks: ", newArtworks);
+
     setSelectedInquireArtworks(newArtworks);
   };
 

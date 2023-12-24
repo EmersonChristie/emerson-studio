@@ -1,11 +1,9 @@
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { useRouter } from "next/router";
-import useShadow from "@/lib/hooks/use-box-shadow";
 import useIntersectionObserver from "@/lib/hooks/use-intersection-observer";
 import { useRef, useState } from "react";
 import { Artwork } from "types/global";
-import SaveButton from "@/components/shared/save-button";
 import Divider from "@/components/shared/divider";
 import { Trash } from "lucide-react";
 import { Dispatch, SetStateAction } from "react";
@@ -106,7 +104,7 @@ const SavedArtworkCard = ({ artwork }: ArtCardProps) => {
             {dimensions.dimensions}
           </p>
         </div>
-        <div className="buttons flex h-auto w-full items-center justify-between">
+        <div className="buttons flex  w-full items-center justify-end md:justify-between">
           <div className="w-3/4">
             <DynamicButton
               clickText="Select for Inquire"
@@ -124,10 +122,6 @@ const SavedArtworkCard = ({ artwork }: ArtCardProps) => {
               <Trash size={24} />
             </button>
           </div>
-          {/* <SaveButton
-            saved={isArtworkSaved(id)}
-            onClick={() => toggleSaveArtwork(artwork)}
-          /> */}
         </div>
       </div>
     </motion.div>

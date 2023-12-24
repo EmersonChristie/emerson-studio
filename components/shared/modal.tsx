@@ -6,6 +6,7 @@ import {
   useRef,
 } from "react";
 import FocusTrap from "focus-trap-react";
+import cx from "classnames";
 import { AnimatePresence, motion } from "framer-motion";
 import Leaflet from "./leaflet";
 import useWindowSize from "@/lib/hooks/use-window-size";
@@ -15,11 +16,13 @@ export default function Modal({
   showModal,
   setShowModal,
   handleClose,
+  backdropClass,
 }: {
   children: React.ReactNode;
   showModal: boolean;
   setShowModal: Dispatch<SetStateAction<boolean>>;
   handleClose?: () => void;
+  backdropClass?: string;
 }) {
   const desktopModalRef = useRef(null);
 
@@ -78,7 +81,10 @@ export default function Modal({
               </FocusTrap>
               <motion.div
                 key="desktop-backdrop"
-                className="fixed inset-0 z-30 bg-black bg-opacity-90 backdrop-blur"
+                className={cx(
+                  "fixed inset-0 z-30 bg-opacity-90 backdrop-blur",
+                  backdropClass,
+                )}
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.1 }}

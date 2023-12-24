@@ -1,7 +1,15 @@
 export const FADE_IN_ANIMATION_SETTINGS = {
-  initial: { opacity: 0 },
-  animate: { opacity: 1 },
-  transition: { duration: 0.2 },
+  initial: { opacity: 0, y: -10 },
+  animate: { opacity: 1, y: 0 },
+  transition: {
+    type: "cubic-bezier",
+    duration: 4, // transform duration
+    ease: [0.18, 1, 0.21, 1],
+    opacity: {
+      duration: 1.5, // opacity duration
+      ease: [0.18, 1, 0.21, 1],
+    },
+  },
 };
 
 export const FADE_DOWN_ANIMATION_VARIANTS = {

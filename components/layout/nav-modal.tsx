@@ -45,10 +45,12 @@ const NavModal = ({
   showNavModal,
   setShowNavModal,
   handleClose,
+  backdropClass,
 }: {
   showNavModal: boolean;
   setShowNavModal: Dispatch<SetStateAction<boolean>>;
   handleClose: () => void;
+  backdropClass?: string;
 }) => {
   const variants = {
     open: {
@@ -71,6 +73,7 @@ const NavModal = ({
       showModal={showNavModal}
       setShowModal={setShowNavModal}
       handleClose={handleClose}
+      backdropClass={backdropClass}
     >
       <div key="nav-modal-container" className=" overflow-hidden">
         {isDesktop && (
@@ -108,7 +111,7 @@ const NavModal = ({
   );
 };
 
-export function useNavModal(handleClose: () => void) {
+export function useNavModal(handleClose: () => void, backdropClass?: string) {
   const [showNavModal, setShowNavModal] = useState(false);
 
   const NavModalCallback = useCallback(() => {
@@ -117,9 +120,10 @@ export function useNavModal(handleClose: () => void) {
         showNavModal={showNavModal}
         setShowNavModal={setShowNavModal}
         handleClose={handleClose}
+        backdropClass={backdropClass}
       />
     );
-  }, [showNavModal, setShowNavModal, handleClose]);
+  }, [showNavModal, setShowNavModal, handleClose, backdropClass]);
 
   return useMemo(
     () => ({ setShowNavModal, NavModal: NavModalCallback }),

@@ -23,8 +23,8 @@ const Header: React.FC = () => {
   const handleClose = () => {
     setOpen(false);
   };
-
-  const { NavModal, setShowNavModal } = useNavModal(handleClose);
+  const backdropClass = "bg-black";
+  const { NavModal, setShowNavModal } = useNavModal(handleClose, backdropClass);
 
   const toggleOpen = () => {
     setShowNavModal(!isOpen);

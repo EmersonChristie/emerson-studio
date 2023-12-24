@@ -10,6 +10,7 @@ import { useUser } from "@/lib/context/user-context";
 import PageHeader from "../shared/page-header";
 import InquiryModal from "./inquiry-modal";
 import FloatingButton from "./floating-button";
+import { useInquiryModal } from "./inquiry-modal";
 
 import ArtworkCard from "./artwork-card";
 /**
@@ -17,20 +18,36 @@ import ArtworkCard from "./artwork-card";
  * Utilizes the gallery context to display saved artworks and handle interactions.
  */
 const SavedArtworksContainer = () => {
-  const {
-    savedArtworks,
-    toggleSaveArtwork,
-    selectedInquireArtworks,
-    setSelectedInquireArtworks,
-  } = useUser();
+  const { savedArtworks, selectedInquireArtworks } = useUser();
   const [artworks, setArtworks] = useState<Artwork[]>([]);
+  const [inquiryArtworks, setInquiryArtworks] = useState<Artwork[]>([]);
+
+  const postInquiry = (data: any) => {
+    console.log("Inquiry data", data);
+  };
+
+  const { setShowInquiryModal, InquiryModal } = useInquiryModal(
+    inquiryArtworks,
+    postInquiry,
+  );
+
   const router = useRouter();
 
   useEffect(() => {
     if (savedArtworks?.length !== 0) {
       setArtworks(savedArtworks);
+    } else {
+      setArtworks([]);
     }
   }, [savedArtworks]);
+
+  useEffect(() => {
+    if (selectedInquireArtworks?.length !== 0) {
+      setInquiryArtworks(selectedInquireArtworks);
+    } else {
+      setInquiryArtworks([]);
+    }
+  }, [selectedInquireArtworks]);
 
   return (
     <LayoutGroup>
@@ -39,7 +56,7 @@ const SavedArtworksContainer = () => {
         className="mt-10 flex w-full flex-grow flex-col p-14 md:m-3 md:flex-row md:space-x-16 lg:m-7 lg:space-x-28 xl:m-10 xl:space-x-36"
       > */}
 
-      <div className="flex w-full flex-col px-2 md:px-10">
+      <div className="flex w-full flex-col px-3 md:px-10">
         <PageHeader title="Saved Artworks" />
 
         <div className="flex w-full flex-col items-center justify-center">
@@ -67,13 +84,16 @@ const SavedArtworksContainer = () => {
       </div>
       {/* </motion.div> */}
 
-      <FloatingButton onClick={() => console.log("FLoating Button CLicked")} />
+      {inquiryArtworks?.length > 0 && (
+        <FloatingButton onClick={setShowInquiryModal} />
+      )}
 
       {/* <InquiryModal
         maxHeight="80%"
         maxWidth="80%"
         inquiryArtworks={inquiryArtworks}
       /> */}
+      <InquiryModal />
     </LayoutGroup>
   );
 };

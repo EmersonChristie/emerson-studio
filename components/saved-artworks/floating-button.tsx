@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { motion } from "framer-motion";
+import React, { useEffect, useState, Dispatch, SetStateAction } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 import { Artwork } from "../../types/global";
 import useWindowSize from "@/lib/hooks/use-window-size";
 const { useUser } = require("@/lib/context/user-context");
@@ -10,6 +10,8 @@ const ArtworkThumbnails = () => {
   useEffect(() => {
     if (selectedInquireArtworks?.length !== 0) {
       setInquireArtworks(selectedInquireArtworks);
+    } else {
+      setInquireArtworks([]);
     }
   }, [selectedInquireArtworks]);
   const { isMobile } = useWindowSize();
@@ -31,17 +33,17 @@ const ArtworkThumbnails = () => {
       </div>
 
       {/* Overflow Indicator */}
-      {hasOverflow && <p className="text-gray-600">...</p>}
+      {hasOverflow && <p className="px-1 text-gray-600">...</p>}
     </div>
   );
 };
 
 interface FloatingButtonProps {
-  onClick: () => void;
+  onClick: () => Dispatch<SetStateAction<boolean>>;
 }
 
 interface InquireButtonProps {
-  onClick: () => void;
+  onClick: () => Dispatch<SetStateAction<boolean>>;
 }
 
 const InquireBotton: React.FC<InquireButtonProps> = ({ onClick }) => {
@@ -70,27 +72,32 @@ const InquireBotton: React.FC<InquireButtonProps> = ({ onClick }) => {
 };
 
 const FloatingButton: React.FC<FloatingButtonProps> = ({ onClick }) => {
+  // Animation properties
   return (
-    <motion.div
-      className="w-9/10 fixed bottom-0 left-1/2 mb-4 flex translate-x-4 transform flex-row justify-between rounded-lg bg-white p-3 shadow-lg md:w-1/2"
-      style={{
-        position: "fixed",
-        bottom: 0,
-        left: "50%",
-        marginBottom: "1rem",
-        width: "90%",
-        maxWidth: "50rem",
-        transform: "translateX(-50%)",
-        borderRadius: "0.35rem",
-        backgroundColor: "white",
-        padding: "0.15rem",
-        boxShadow:
-          "0 10px 15px -3px rgba(0, 0, 0, 0.2), 0 4px 6px -4px rgba(0, 0, 0, 0.2)",
-      }}
-      onClick={onClick}
-    >
-      <InquireBotton onClick={onClick} />
-    </motion.div>
+    <>
+      <AnimatePresence>
+        <motion.div
+          className="w-9/10 fixed bottom-0 left-1/2 mb-4 flex translate-x-4 transform flex-row justify-between rounded-lg bg-white p-3 shadow-lg md:w-1/2"
+          style={{
+            position: "fixed",
+            bottom: 0,
+            left: "50%",
+            marginBottom: "1rem",
+            width: "90%",
+            maxWidth: "50rem",
+            transform: "translateX(-50%)",
+            borderRadius: "0.35rem",
+            backgroundColor: "white",
+            padding: "0.15rem",
+            boxShadow:
+              "0 10px 15px -3px rgba(0, 0, 0, 0.2), 0 4px 6px -4px rgba(0, 0, 0, 0.2)",
+          }}
+          onClick={onClick}
+        >
+          <InquireBotton onClick={onClick} />
+        </motion.div>
+      </AnimatePresence>
+    </>
   );
 };
 

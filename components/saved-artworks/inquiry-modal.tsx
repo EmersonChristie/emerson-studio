@@ -1,76 +1,70 @@
-import React, { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { MailQuestion } from "lucide-react"; // Adjust the import path
-import { Artwork } from "../../types/global";
+// components/InquiryModal.tsx
+import React, { useMemo, useCallback, useState } from "react";
+import { InquiryForm } from "./inquiry-form";
+import Modal from "@/components/shared/modal";
+import { Artwork } from "types/global";
 
 interface InquiryModalProps {
-  maxHeight: string | number;
-  maxWidth: string | number;
+  showInquiryModal: boolean;
+  setShowInquiryModal: React.Dispatch<React.SetStateAction<boolean>>;
   inquiryArtworks: Artwork[];
+  postInquiry: (data: any) => void;
+  backdropClass?: string;
 }
 
 const InquiryModal: React.FC<InquiryModalProps> = ({
-  maxHeight,
-  maxWidth,
-  inquiryArtworks,
+  showInquiryModal,
+  setShowInquiryModal,
+  postInquiry,
+  backdropClass,
 }) => {
-  const [isOpen, setIsOpen] = useState(false);
-
-  const modalVariants = {
-    closed: {
-      scale: 0,
-      x: "calc(100vw - 4rem)", // Adjust based on button size and position
-      y: "calc(100vh - 4rem)",
-    },
-    open: {
-      scale: 1,
-      x: 0,
-      y: 0,
-      transition: {
-        type: "spring",
-        stiffness: 260,
-        damping: 20,
-      },
-    },
-  };
-
-  const handleToggle = () => setIsOpen(!isOpen);
-
   return (
-    <>
-      <AnimatePresence>
-        {isOpen && (
-          <motion.div
-            className="fixed inset-0 z-50 overflow-hidden p-4"
-            variants={modalVariants}
-            initial="closed"
-            animate="open"
-            exit="closed"
-          >
-            {/* Modal Content */}
-            {/* ... */}
-          </motion.div>
-        )}
-
-        {!isOpen && (
-          <motion.div
-            className="fixed bottom-10 right-10 z-40"
-            initial={false}
-            animate="closed"
-            onClick={handleToggle}
-          >
-            <MailQuestion
-              size={12}
-              color="black"
-              className="h-16 w-16 rounded-full bg-gray-100 text-white shadow-lg shadow-gray-400"
-            />
-            {/* Artwork count badge */}
-            {/* ... */}
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </>
+    <Modal
+      showModal={showInquiryModal}
+      setShowModal={setShowInquiryModal}
+      backdropClass={backdropClass}
+    >
+      <div className="max-h-[75vh] w-full max-w-2xl overflow-auto bg-white px-4 pt-1 md:py-4 md:px-0 md:pt-4 ">
+        <InquiryForm postInquiry={postInquiry} />
+      </div>
+    </Modal>
   );
 };
 
 export default InquiryModal;
+
+/// Inquiry Modal Hook ///////////////////////////////////////
+
+export function useInquiryModal(
+  inquiryArtworks: Artwork[],
+  postInquiry: (data: any) => void,
+  backDropClass?: string,
+) {
+  const [showInquiryModal, setShowInquiryModal] = useState(false);
+
+  const InquiryModalCallback = useCallback(() => {
+    return (
+      <InquiryModal
+        showInquiryModal={showInquiryModal}
+        setShowInquiryModal={setShowInquiryModal}
+        inquiryArtworks={inquiryArtworks}
+        postInquiry={postInquiry}
+        backdropClass={backDropClass}
+      />
+    );
+  }, [
+    showInquiryModal,
+    setShowInquiryModal,
+    inquiryArtworks,
+    postInquiry,
+    backDropClass,
+  ]);
+
+  return useMemo(
+    () => ({
+      setShowInquiryModal,
+      InquiryModal: InquiryModalCallback,
+    }),
+    [setShowInquiryModal, InquiryModalCallback],
+  );
+}
