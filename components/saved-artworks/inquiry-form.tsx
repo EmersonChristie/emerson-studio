@@ -15,7 +15,11 @@ export const InquiryForm: React.FC<InquiryFormProps> = ({ postInquiry }) => {
   const [message, setMessage] = useState("");
   const [newsLetter, setNewsLetter] = useState(false);
   const [selectedArtworks, setSelectedArtworks] = useState<Artwork[]>([]);
-  const { selectedInquireArtworks, setSelectedInquireArtworks } = useUser();
+  const {
+    selectedInquireArtworks,
+    setSelectedInquireArtworks,
+    toggleSelectInquireArtwork,
+  } = useUser();
 
   //TODO: Add postInquiry function from context
 
@@ -61,19 +65,19 @@ export const InquiryForm: React.FC<InquiryFormProps> = ({ postInquiry }) => {
       </div>
       {/* Artwork Grid  */}
       {/* TODO: implement buttons to remove artworks */}
-      <div className="mr-1 grid h-8 w-8 grid-cols-10 gap-1 rounded-lg object-cover pt-3">
+      <div className="grid grid-cols-7 rounded-lg object-cover pt-3">
         {selectedArtworks.map((artwork) => (
-          <div className=" flex overflow-hidden " key={artwork.id}>
+          <div className=" flex " key={artwork.id}>
             <img
               src={artwork.mainImage.data.attributes.url}
               alt={`Artwork ${artwork.id}`}
-              className=" h-12 w-12 rounded-lg object-cover" // Adjust size as needed
+              className=" mr-2 h-10 w-10 rounded-lg object-cover md:h-12 md:w-12" // Adjust size as needed
             />
           </div>
         ))}
       </div>
       {/* Contact Info ///////////////////////// */}
-      <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-5 sm:grid-cols-6">
+      <div className="mt-4 grid grid-cols-1 gap-x-6 gap-y-5 sm:grid-cols-6">
         <div className="sm:col-span-4">
           <label
             htmlFor="email"

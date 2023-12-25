@@ -9,7 +9,6 @@ import localFont from "@next/font/local";
 import { Inter } from "@next/font/google";
 
 import Layout from "@/components/layout";
-// import { GalleryProvider } from "@/lib/context/gallery-context";
 import { UserProvider } from "@/lib/context/user-context";
 import { ArtworksProvider } from "@/lib/context/artworks-context";
 import { ToastProvider } from "@/lib/context/toast-context";
