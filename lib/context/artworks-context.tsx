@@ -1,6 +1,6 @@
 // artworks-context.tsx
 import React, { createContext, useState, useContext } from "react";
-import { Artwork, WithChildren } from "../../types/global";
+import { Artwork, WithChildren } from "types/global";
 import { fetchArtworks, fetchArtworkById } from "@/lib/strapi/artworks";
 
 interface ArtworksContextType {

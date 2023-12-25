@@ -1,4 +1,4 @@
-import { Artwork } from "../types/global";
+import { Artwork } from "types/global";
 import SavedArtworksContainer from "@/components/saved-artworks";
 
 interface SavedArtworksPageProps {

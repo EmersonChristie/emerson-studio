@@ -1,6 +1,6 @@
 // pages/index.tsx
 import { useEffect } from "react";
-import { Artwork } from "../types/global";
+import { Artwork } from "types/global";
 import GalleryContainer from "@/components/gallery";
 import { fetchArtworks } from "@/lib/strapi/artworks";
 import { useArtworks } from "@/lib/context/artworks-context";

@@ -1,6 +1,6 @@
 // components/InquiryForm.tsx
 import React, { useEffect, useState } from "react";
-import { Artwork } from "../../types/global";
+import { Artwork } from "types/global";
 import { useUser } from "@/lib/context/user-context";
 import Divider from "../shared/divider";
 
@@ -61,7 +61,7 @@ export const InquiryForm: React.FC<InquiryFormProps> = ({ postInquiry }) => {
       </div>
       {/* Artwork Grid  */}
       {/* TODO: implement buttons to remove artworks */}
-      <div className="grid grid-cols-10 gap-1 pt-3">
+      <div className="mr-1 grid h-8 w-8 grid-cols-10 gap-1 rounded-lg object-cover pt-3">
         {selectedArtworks.map((artwork) => (
           <div className=" flex overflow-hidden " key={artwork.id}>
             <img

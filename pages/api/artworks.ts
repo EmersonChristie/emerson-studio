@@ -2,7 +2,7 @@
 
 import type { NextApiRequest, NextApiResponse } from "next";
 import { fetchArtworks } from "../../lib/strapi/artworks";
-import { Artwork } from "../../types/global";
+import { Artwork } from "types/global";
 
 export default async function handler(
   req: NextApiRequest,

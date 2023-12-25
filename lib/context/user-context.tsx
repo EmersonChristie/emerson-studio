@@ -1,5 +1,5 @@
 import React, { createContext, useContext } from "react";
-import { Artwork, WithChildren } from "../../types/global";
+import { Artwork, WithChildren } from "types/global";
 import useLocalStorage from "../hooks/use-local-storage"; // Adjust the path as necessary
 import { useToast } from "./toast-context";
 import SaveToast from "@/components/shared/save-toast";

@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo } from "react";
-import { Artwork } from "../../types/global"; // Assuming you have a type definition for Artwork
+import { Artwork } from "types/global";
 import Column from "./column";
 import { LayoutGroup, motion } from "framer-motion";
 import { useArtworks } from "@/lib/context/artworks-context";

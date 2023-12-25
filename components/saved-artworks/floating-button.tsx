@@ -1,6 +1,6 @@
 import React, { useEffect, useState, Dispatch, SetStateAction } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { Artwork } from "../../types/global";
+import { Artwork } from "types/global";
 import useWindowSize from "@/lib/hooks/use-window-size";
 const { useUser } = require("@/lib/context/user-context");
 

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import { Artwork } from "../../types/global"; // Assuming you have a type definition for Artwork
+import { Artwork } from "types/global"; // Assuming you have a type definition for Artwork
 import { LayoutGroup, motion } from "framer-motion";
 import ResponsiveGrid from "../shared/responsive-grid";
 import SavedArtworkCard from "./saved-artwork-card";

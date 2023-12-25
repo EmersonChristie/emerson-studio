@@ -5,7 +5,7 @@ import React, {
   ReactNode,
   useEffect,
 } from "react";
-import { ArtworkType } from "../../types/global";
+import { ArtworkType } from "types/global";
 
 type Artwork = ArtworkType;
 

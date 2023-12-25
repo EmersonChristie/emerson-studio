@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import ArtCard from "./art-card";
 import useWindowSize from "@/lib/hooks/use-window-size";
-import { Artwork } from "../../types/global";
+import { Artwork } from "types/global";
 
 interface ColumnProps {
   artworks: Artwork[];
