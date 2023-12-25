@@ -39,11 +39,11 @@ const ArtworkThumbnails = () => {
 };
 
 interface FloatingButtonProps {
-  onClick: () => Dispatch<SetStateAction<boolean>>;
+  onClick: () => void;
 }
 
 interface InquireButtonProps {
-  onClick: () => Dispatch<SetStateAction<boolean>>;
+  onClick: () => void;
 }
 
 const InquireBotton: React.FC<InquireButtonProps> = ({ onClick }) => {

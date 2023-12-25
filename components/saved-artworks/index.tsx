@@ -11,6 +11,7 @@ import PageHeader from "../shared/page-header";
 import InquiryModal from "./inquiry-modal";
 import FloatingButton from "./floating-button";
 import { useInquiryModal } from "./inquiry-modal";
+import PageLayout from "../shared/page-layout";
 
 import ArtworkCard from "./artwork-card";
 /**
@@ -33,6 +34,10 @@ const SavedArtworksContainer = () => {
 
   const router = useRouter();
 
+  const handleFloatingButtonCLick = () => {
+    setShowInquiryModal(true);
+  };
+
   useEffect(() => {
     if (savedArtworks?.length !== 0) {
       setArtworks(savedArtworks);
@@ -51,43 +56,33 @@ const SavedArtworksContainer = () => {
 
   return (
     <LayoutGroup>
-      {/* <motion.div
-        id="saved-container"
-        className="mt-10 flex w-full flex-grow flex-col p-14 md:m-3 md:flex-row md:space-x-16 lg:m-7 lg:space-x-28 xl:m-10 xl:space-x-36"
-      > */}
+      <PageLayout title="Saved Artworks">
+        {/* Render each column of artworks */}
+        {artworks?.length === 0 ? (
+          // TODO: Add a loading state
+          <div className="flex h-full w-full flex-col items-center justify-center">
+            <p className="text-center text-gray-600">No Saved Artworks</p>
+            <button
+              className="mt-10 rounded-sm border border-gray-600 bg-gray-600 px-4 py-2 uppercase tracking-wide text-gray-100 hover:text-white"
+              onClick={() => router.push("/artworks")}
+            >
+              Browse Artworks
+            </button>
+          </div>
+        ) : (
+          <ResponsiveGrid>
+            {artworks.map((artwork, i) => (
+              // <SavedArtworkCard key={i} artwork={artwork} />
+              <ArtworkCard key={i} artwork={artwork} />
+            ))}
+          </ResponsiveGrid>
+        )}
 
-      <div className="flex w-full flex-col px-3 md:px-10">
-        <PageHeader title="Saved Artworks" />
-
-        <div className="flex w-full flex-col items-center justify-center">
-          {/* Render each column of artworks */}
-          {artworks?.length === 0 ? (
-            // TODO: Add a loading state
-            <div className="flex h-full w-full flex-col items-center justify-center">
-              <p className="text-center text-gray-600">No Saved Artworks</p>
-              <button
-                className="mt-10 rounded-sm border border-gray-600 bg-gray-600 px-4 py-2 uppercase tracking-wide text-gray-100 hover:text-white"
-                onClick={() => router.push("/artworks")}
-              >
-                Browse Artworks
-              </button>
-            </div>
-          ) : (
-            <ResponsiveGrid>
-              {artworks.map((artwork, i) => (
-                // <SavedArtworkCard key={i} artwork={artwork} />
-                <ArtworkCard key={i} artwork={artwork} />
-              ))}
-            </ResponsiveGrid>
-          )}
-        </div>
-      </div>
-      {/* </motion.div> */}
-
-      {inquiryArtworks?.length > 0 && (
-        <FloatingButton onClick={setShowInquiryModal} />
-      )}
-      <InquiryModal />
+        {inquiryArtworks?.length > 0 && (
+          <FloatingButton onClick={handleFloatingButtonCLick} />
+        )}
+        <InquiryModal />
+      </PageLayout>
     </LayoutGroup>
   );
 };
