@@ -24,8 +24,8 @@ const InquiryModal: React.FC<InquiryModalProps> = ({
       setShowModal={setShowInquiryModal}
       backdropClass={backdropClass}
     >
-      <div className="max-h-[70vh] w-full max-w-2xl overflow-auto bg-white px-4 pt-2 md:py-4 md:px-0 md:pt-4 ">
-        <InquiryForm postInquiry={postInquiry} />
+      <div className="max-h-[60vh] w-full max-w-3xl overflow-auto rounded-sm bg-white px-4 pt-2 md:max-h-[70vh] md:py-4 md:px-0 md:pt-4 ">
+        <InquiryForm setShowInquiryModal={setShowInquiryModal} />
       </div>
     </Modal>
   );

@@ -36,7 +36,7 @@ const items = [
   },
   {
     id: 5,
-    title: "Saved Artworks",
+    title: "Saved Works",
     href: "/saved-artworks",
   },
 ];

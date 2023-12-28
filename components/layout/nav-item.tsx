@@ -38,22 +38,27 @@ export default function NavItem({
   const router = useRouter();
   const { isMobile } = useWindowSize();
 
+  const activeColorClass = cx(
+    "line-through",
+    isMobile ? "text-gray-600" : "text-gray-100",
+  );
+  const inactiveColorClass = "text-gray-400";
+
   return (
     <motion.li
       variants={variants}
       key={id}
-      className={`  ${
-        router.pathname === href
-          ? "text-gray-100 line-through"
-          : "text-gray-500"
-      }`}
+      className={cx({
+        [activeColorClass]: router.pathname === href,
+        [inactiveColorClass]: router.pathname !== href,
+      })}
     >
       <Link
         href={href}
         key={key}
         onClick={handleItemClick}
-        className="flex items-center justify-center py-5 text-3xl tracking-wide
-        md:py-16 md:text-5xl lg:text-6xl xl:text-7xl"
+        className="3xl:py-24 3xl:text-9xl flex items-center justify-center py-6 font-sans text-4xl font-500 uppercase
+        leading-tight tracking-wide md:py-16 md:text-6xl lg:py-20 lg:text-7xl xl:py-20 xl:text-8xl"
       >
         <motion.p
           className="text-center leading-3"

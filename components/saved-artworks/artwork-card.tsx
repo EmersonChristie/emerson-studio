@@ -159,7 +159,7 @@ const ArtworkCard: React.FC<ArtworkCardProps> = ({ artwork }) => {
     >
       <div id="background-container" className="flex w-1/3 flex-grow md:w-full">
         <motion.div
-          className="flex aspect-square flex-grow items-center justify-center rounded-md bg-gradient-to-br from-gray-100 to-gray-300 hover:opacity-75 md:flex-grow"
+          className="flex aspect-square flex-grow cursor-pointer items-center justify-center rounded-md bg-gradient-to-br from-gray-100 to-gray-300 hover:opacity-75 md:flex-grow"
           onClick={handleClick}
           whileTap={{ scale: 0.95 }}
         >
@@ -179,7 +179,10 @@ const ArtworkCard: React.FC<ArtworkCardProps> = ({ artwork }) => {
           id="artwork-title-dimensions"
           className="flex flex-col  text-gray-600 "
         >
-          <h2 className=" xl:text-md cursor-pointer text-xs font-600 uppercase tracking-wide md:leading-5   2xl:text-sm">
+          <h2
+            onClick={handleClick}
+            className=" xl:text-md cursor-pointer text-xs font-600 uppercase tracking-wide md:leading-5   2xl:text-sm"
+          >
             {artwork.title}
           </h2>
           <Divider animated={true} className="w-10/12 py-1 md:w-4/5 md:py-2" />
@@ -192,7 +195,7 @@ const ArtworkCard: React.FC<ArtworkCardProps> = ({ artwork }) => {
         </div>
         <div
           id="buttons-container"
-          className="align-center flex flex-grow-0 flex-row justify-between md:mt-5"
+          className="align-center mt-2 flex flex-grow-0 flex-row justify-between md:mt-5"
         >
           <div className="align-center flex w-3/4">
             <DynamicButton
