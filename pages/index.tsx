@@ -6,12 +6,15 @@ import { fetchArtworks } from "@/lib/strapi/artworks";
 import { useArtworks } from "@/lib/context/artworks-context";
 import Head from "next/head";
 
+import { HomePageSlider } from "@/components/home-page-slider/slider";
+
 interface HomePageProps {
   initialArtworks: Artwork[];
 }
 
 export default function HomePage({ initialArtworks }: HomePageProps) {
   const { artworks, addToArtworks } = useArtworks();
+  const backgroundImage = "/images/gallery-wall.jpg";
 
   useEffect(() => {
     if (artworks.length === 0) {
@@ -31,6 +34,12 @@ export default function HomePage({ initialArtworks }: HomePageProps) {
           />
         ))}
       </Head> */}
+      {/* <HomePageSlider
+        items={initialArtworks.slice(0, 6).map((artwork) => ({
+          artwork,
+        }))}
+        background={backgroundImage}
+      /> */}
       <GalleryContainer />
     </>
   );

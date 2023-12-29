@@ -19,11 +19,20 @@ const GalleryContainer: React.FC = () => {
   /**
    * Split the artworks into columns based on the layout.
    */
-  const columns = useMemo(() => {
-    const chunkSize = Math.ceil(artworks.length / 3);
-    return Array.from({ length: 3 }, (_, i) =>
-      artworks.slice(i * chunkSize, i * chunkSize + chunkSize),
-    );
+  // const columns = useMemo(() => {
+  //   const chunkSize = Math.ceil(artworks.length / 3);
+  //   return Array.from({ length: 3 }, (_, i) =>
+  //     artworks.slice(i * chunkSize, i * chunkSize + chunkSize),
+  //   );
+  // }, [artworks]);
+
+  const galleryColumns = useMemo(() => {
+    const columns: Artwork[][] = [[], [], []];
+    artworks.forEach((artwork, index) => {
+      const column = index % 3;
+      columns[column].push(artwork);
+    });
+    return columns;
   }, [artworks]);
 
   /**
@@ -54,7 +63,7 @@ const GalleryContainer: React.FC = () => {
             <LoadingSpinner />
           </div>
         ) : (
-          columns.map((columnArtworks, i) => (
+          galleryColumns.map((columnArtworks, i) => (
             <Column
               key={i.toString()}
               index={i}
