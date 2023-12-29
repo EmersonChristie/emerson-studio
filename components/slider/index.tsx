@@ -3,7 +3,6 @@ import { useRouter } from "next/router";
 import { motion, AnimatePresence, LayoutGroup } from "framer-motion";
 import { ChevronRight, ChevronLeft } from "lucide-react";
 import Divider from "../shared/divider";
-import useShadow from "@/lib/hooks/use-box-shadow";
 import useWindowSize from "@/lib/hooks/use-window-size";
 import { Artwork } from "types/global";
 import { FADE_UP_ANIMATION } from "@/lib/constants";

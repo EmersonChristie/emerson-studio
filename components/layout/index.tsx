@@ -35,7 +35,10 @@ export default function Layout({ meta, children }: LayoutProps) {
         style={{ height: "calc(var(--vh, 1vh) * 100)" }}
       >
         <Header />
-        <main className="xl:pt-18 mx-1 flex h-full w-full  flex-grow items-start justify-center self-center overflow-auto lg:mx-10">
+        {/* new main */}
+        <main className="xl:pt-18 mx-1 flex h-full w-full flex-col items-center justify-start self-center overflow-auto lg:mx-10">
+          {/* original main */}
+          {/* <main className="xl:pt-18 mx-1 flex h-full w-full  flex-grow items-start justify-center self-center overflow-auto lg:mx-10"> */}
           {children}
         </main>
       </div>
