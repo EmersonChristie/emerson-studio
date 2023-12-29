@@ -8,6 +8,7 @@ import { useRef } from "react";
 import { Artwork } from "types/global";
 import SaveButton from "../shared/save-button";
 import Divider from "../shared/divider";
+import CloudinaryImage from "../shared/cloudinary-image";
 
 import { FADE_UP_ANIMATION_VARIANTS } from "@/lib/constants";
 import { useUser } from "../../lib/context/user-context";
@@ -72,7 +73,16 @@ const ArtCard: React.FC<ArtCardProps> = ({ artwork, index, onNearEnd }) => {
         onClick={handleClick}
         whileTap={{ scale: 0.99 }}
       >
-        <Image
+        <CloudinaryImage
+          mainImageUrl={mainImage?.data.attributes.url}
+          alt={title}
+          width={1000}
+          height={1000}
+          loading={index < 6 ? "eager" : "lazy"}
+          priority={index < 6}
+          style={{ maxWidth: "100%", boxShadow: boxShadow }}
+        />
+        {/* <Image
           className="mx-auto self-center"
           src={mainImage?.data.attributes.url}
           alt={title}
@@ -81,7 +91,8 @@ const ArtCard: React.FC<ArtCardProps> = ({ artwork, index, onNearEnd }) => {
           height={1000}
           loading={index < 6 ? "eager" : "lazy"}
           {...(index < 6 && { priority: true })}
-        />
+          
+        /> */}
       </motion.div>
       <div className=" mt-8 w-full flex-col space-y-2 px-1 leading-normal md:space-y-3">
         <h2
