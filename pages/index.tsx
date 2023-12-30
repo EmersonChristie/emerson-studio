@@ -30,16 +30,17 @@ export default function HomePage({ initialArtworks }: HomePageProps) {
             key={artwork.id}
             rel="preload"
             href={artwork.mainImage.data.attributes.url}
-            as="image"
+            as="imaghttps://res.cloudinary.com/dainpisbj/image/upload/v1702430751/383_image_0d6d4d7069.jpge"
           />
-        ))}
+https://res.cloudinary.com/dainpisbj/image/upload/v1702430751/383_image_0d6d4d7069.jpg        ))}
       </Head> */}
-      {/* <HomePageSlider
-        items={initialArtworks.slice(0, 6).map((artwork) => ({
-          artwork,
-        }))}
+      <HomePageSlider
+        artworks={initialArtworks.slice(0, 6)}
+        // artworks={initialArtworks.slice(0, 6).map((artwork) => ({
+        //   artwork,
+        // }))}
         background={backgroundImage}
-      /> */}
+      />
       <GalleryContainer />
     </>
   );

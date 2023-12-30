@@ -10,7 +10,7 @@ import SaveButton from "../shared/save-button";
 import Divider from "../shared/divider";
 import CloudinaryImage from "../shared/cloudinary-image";
 
-import { FADE_UP_ANIMATION_VARIANTS } from "@/lib/constants";
+import { FADE_UP_ANIMATION_VARIANTS, BOX_SHADOW } from "@/lib/constants";
 import { useUser } from "../../lib/context/user-context";
 
 interface ArtCardProps {
@@ -33,9 +33,6 @@ const ArtCard: React.FC<ArtCardProps> = ({ artwork, index, onNearEnd }) => {
 
   // Use context to toggle like
   const { toggleSaveArtwork, isArtworkSaved } = useUser();
-
-  const boxShadow =
-    "rgba(0, 0, 0, 0.043) 0.37237016456675937px 0.44377348139733286px 0.5793051374284405px 0px, rgba(0, 0, 0, 0.06) 0.8657897618972239px 1.0318080591723024px 1.3469297616353146px 0px, rgba(0, 0, 0, 0.075) 1.5547577922105507px 1.8528881844807665px 2.418773742338844px 0px, rgba(0, 0, 0, 0.086) 2.5803221177377376px 3.075108153864249px 4.014268599539516px 0px, rgba(0, 0, 0, 0.1) 4.2509936997828595px 5.066137013811576px 6.613372186585694px 0px, rgba(0, 0, 0, 0.118) 7.429504811692371px 8.854139050530355px 11.558257657323903px 0px, rgba(0, 0, 0, 0.16) 16.06969024216348px 19.151111077974452px 25px 0px";
 
   const ref = useRef(null);
 
@@ -80,7 +77,7 @@ const ArtCard: React.FC<ArtCardProps> = ({ artwork, index, onNearEnd }) => {
           height={1000}
           loading={index < 6 ? "eager" : "lazy"}
           priority={index < 6}
-          style={{ maxWidth: "100%", boxShadow: boxShadow }}
+          style={{ maxWidth: "100%", boxShadow: BOX_SHADOW }}
         />
         {/* <Image
           className="mx-auto self-center"
