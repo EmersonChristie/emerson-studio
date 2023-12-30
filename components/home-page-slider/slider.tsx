@@ -6,7 +6,7 @@ import { ChevronRight, ChevronLeft } from "lucide-react";
 import useWindowSize from "@/lib/hooks/use-window-size";
 import { CSSProperties } from "react";
 import { BOX_SHADOW } from "@/lib/constants";
-
+import Title from "./title";
 // TypeScript props definition
 interface SliderProps {
   artworks: Artwork[];
@@ -28,12 +28,6 @@ const variants = {
     x: direction < 0 ? 1000 : -1000,
     opacity: 0,
   }),
-};
-
-const titleVariants = {
-  enter: { opacity: 0 },
-  center: { opacity: 1, transition: { duration: 0.5 } },
-  exit: { opacity: 0, transition: { duration: 0.5 } },
 };
 
 const swipeConfidenceThreshold = 10000;
@@ -134,15 +128,7 @@ export const HomePageSlider: React.FC<SliderProps> = ({
             //   }
             // }}
           />
-          <motion.div
-            key={`title-${page}`}
-            variants={titleVariants}
-            initial="hidden"
-            animate="visible"
-            className="absolute bottom-0 left-0 bg-white bg-opacity-50 p-4"
-          >
-            {artworks[imageIndex].title}
-          </motion.div>
+          {/* <Title text={artworks[imageIndex].title} key={`title-${page}`} /> */}
         </AnimatePresence>
         <motion.div
           className="next text-gray-500"
