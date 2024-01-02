@@ -16,6 +16,7 @@ const artworksQueryParams = {
   },
   fields: ["title", "year", "medium", "genre", "series"],
   publicationState: "live",
+  sort: ["year:desc"],
 };
 
 /**

@@ -1,6 +1,11 @@
 import React, { useState, useEffect, useRef, CSSProperties } from "react";
 import { useRouter } from "next/router";
-import { motion, AnimatePresence, LayoutGroup } from "framer-motion";
+import {
+  motion,
+  AnimatePresence,
+  LayoutGroup,
+  useAnimation,
+} from "framer-motion";
 import { ChevronRight, ChevronLeft } from "lucide-react";
 import Divider from "../shared/divider";
 import useWindowSize from "@/lib/hooks/use-window-size";
@@ -9,6 +14,8 @@ import { FADE_UP_ANIMATION } from "@/lib/constants";
 import SaveButton from "../shared/save-button";
 import { useUser } from "../../lib/context/user-context";
 import { useArtworks } from "@/lib/context/artworks-context";
+import { BOX_SHADOW } from "@/lib/constants";
+import useScroll from "@/lib/hooks/use-scroll";
 
 interface SliderProps {
   currentIndex: number;
@@ -80,6 +87,11 @@ const swipeConfidenceThreshold = 10000;
 const swipePower = (offset: number, velocity: number) =>
   Math.abs(offset) * velocity;
 
+/**
+ * Slider component for the home page.
+ * @param currentIndex - The index of the current artwork.
+ * @param onIndexChange - Callback function when the index changes.
+ */
 const Slider: React.FC<SliderProps> = ({ currentIndex, onIndexChange }) => {
   const router = useRouter();
   const [[page, direction], setPage] = useState([0, 0]);
@@ -90,6 +102,18 @@ const Slider: React.FC<SliderProps> = ({ currentIndex, onIndexChange }) => {
   const nextArtwork = artworks[(currentIndex + 1) % artworks.length];
   const prevArtwork =
     artworks[(currentIndex - 1 + artworks.length) % artworks.length];
+
+  // Scroll to Reveal Description
+  const descriptionAnimation = useAnimation();
+  const hasScrolled = useScroll(10); // Set the threshold as needed
+
+  useEffect(() => {
+    if (hasScrolled) {
+      descriptionAnimation.start({ height: "auto", opacity: 1 });
+    } else {
+      descriptionAnimation.start({ height: 0, opacity: 0 });
+    }
+  }, [hasScrolled, descriptionAnimation]);
 
   const arrowStyle: CSSProperties = {
     position: "absolute" as const,
@@ -124,9 +148,6 @@ const Slider: React.FC<SliderProps> = ({ currentIndex, onIndexChange }) => {
     router.replace(newUrl, undefined, { shallow: true });
   };
 
-  const boxShadow =
-    "rgba(0, 0, 0, 0.043) 0.37237016456675937px 0.44377348139733286px 0.5793051374284405px 0px, rgba(0, 0, 0, 0.06) 0.8657897618972239px 1.0318080591723024px 1.3469297616353146px 0px, rgba(0, 0, 0, 0.075) 1.5547577922105507px 1.8528881844807665px 2.418773742338844px 0px, rgba(0, 0, 0, 0.086) 2.5803221177377376px 3.075108153864249px 4.014268599539516px 0px, rgba(0, 0, 0, 0.1) 4.2509936997828595px 5.066137013811576px 6.613372186585694px 0px, rgba(0, 0, 0, 0.118) 7.429504811692371px 8.854139050530355px 11.558257657323903px 0px, rgba(0, 0, 0, 0.16) 16.06969024216348px 19.151111077974452px 25px 0px";
-
   useEffect(() => {
     updateUrl(currentIndex);
   }, [currentIndex]);
@@ -142,7 +163,7 @@ const Slider: React.FC<SliderProps> = ({ currentIndex, onIndexChange }) => {
   return (
     <LayoutGroup>
       <div
-        className={`flex h-full w-full flex-row items-center justify-center md:mx-20 ${
+        className={`flex h-full w-full flex-row items-center justify-center md:px-16 xl:px-20 ${
           isMobile ? "flex-col" : ""
         }`}
         style={{ paddingTop: isMobile ? "2rem" : "3rem" }}
@@ -172,7 +193,7 @@ const Slider: React.FC<SliderProps> = ({ currentIndex, onIndexChange }) => {
                 position: "absolute",
                 maxHeight: "80%",
                 maxWidth: "90%",
-                boxShadow: boxShadow,
+                boxShadow: BOX_SHADOW,
               }}
               ref={imageRef}
               drag="x"
@@ -226,6 +247,22 @@ const Slider: React.FC<SliderProps> = ({ currentIndex, onIndexChange }) => {
             strokeWidth={isMobile ? 1.5 : 1.6}
           />
         </motion.div>
+        {/* Description */}
+        {/* <div
+          id="description"
+          className="relative flex w-full justify-between overflow-hidden"
+          style={{ width: isMobile ? "100%" : "33%" }}
+        >
+          <AnimatePresence>
+            <motion.div
+              initial={{ height: 0, opacity: 0 }}
+              animate={descriptionAnimation}
+              transition={{ duration: 0.5, ease: "easeInOut" }} // Adjust transition as needed
+            >
+              <ArtDescription {...currentArtwork} />
+            </motion.div>
+          </AnimatePresence>
+        </div> */}
         <div
           id="description"
           className={"relative flex h-28 w-full flex-row justify-between"}
