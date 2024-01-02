@@ -91,7 +91,7 @@ const Header: React.FC = () => {
     <>
       <NavModal />
       <SignInModal />
-      <div className="fixed top-0 z-20 w-full bg-gradient-to-b from-white to-transparent backdrop-blur-xl ">
+      <div className="fixed top-0 z-20 w-full backdrop-blur-xl ">
         <div className="flex items-center justify-between p-6 md:mx-2 ">
           <Link href="/" className="flex items-center font-display">
             <DisplayText

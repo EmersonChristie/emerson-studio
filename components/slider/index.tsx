@@ -1,6 +1,11 @@
 import React, { useState, useEffect, useRef, CSSProperties } from "react";
 import { useRouter } from "next/router";
-import { motion, AnimatePresence, LayoutGroup } from "framer-motion";
+import {
+  motion,
+  AnimatePresence,
+  LayoutGroup,
+  useAnimation,
+} from "framer-motion";
 import { ChevronRight, ChevronLeft } from "lucide-react";
 import Divider from "../shared/divider";
 import useShadow from "@/lib/hooks/use-box-shadow";
@@ -11,6 +16,7 @@ import SaveButton from "../shared/save-button";
 import { useUser } from "../../lib/context/user-context";
 import { useArtworks } from "@/lib/context/artworks-context";
 import { BOX_SHADOW } from "@/lib/constants";
+import useScroll from "@/lib/hooks/use-scroll";
 
 interface SliderProps {
   currentIndex: number;
@@ -82,6 +88,11 @@ const swipeConfidenceThreshold = 10000;
 const swipePower = (offset: number, velocity: number) =>
   Math.abs(offset) * velocity;
 
+/**
+ * Slider component for the home page.
+ * @param currentIndex - The index of the current artwork.
+ * @param onIndexChange - Callback function when the index changes.
+ */
 const Slider: React.FC<SliderProps> = ({ currentIndex, onIndexChange }) => {
   const router = useRouter();
   const [[page, direction], setPage] = useState([0, 0]);
@@ -92,6 +103,18 @@ const Slider: React.FC<SliderProps> = ({ currentIndex, onIndexChange }) => {
   const nextArtwork = artworks[(currentIndex + 1) % artworks.length];
   const prevArtwork =
     artworks[(currentIndex - 1 + artworks.length) % artworks.length];
+
+  // Scroll to Reveal Description
+  const descriptionAnimation = useAnimation();
+  const hasScrolled = useScroll(10); // Set the threshold as needed
+
+  useEffect(() => {
+    if (hasScrolled) {
+      descriptionAnimation.start({ height: "auto", opacity: 1 });
+    } else {
+      descriptionAnimation.start({ height: 0, opacity: 0 });
+    }
+  }, [hasScrolled, descriptionAnimation]);
 
   const arrowStyle: CSSProperties = {
     position: "absolute" as const,
@@ -141,7 +164,7 @@ const Slider: React.FC<SliderProps> = ({ currentIndex, onIndexChange }) => {
   return (
     <LayoutGroup>
       <div
-        className={`flex h-full w-full flex-row items-center justify-center md:mx-20 ${
+        className={`flex h-full w-full flex-row items-center justify-center md:px-16 xl:px-20 ${
           isMobile ? "flex-col" : ""
         }`}
         style={{ paddingTop: isMobile ? "2rem" : "3rem" }}
@@ -225,6 +248,22 @@ const Slider: React.FC<SliderProps> = ({ currentIndex, onIndexChange }) => {
             strokeWidth={isMobile ? 1.5 : 1.6}
           />
         </motion.div>
+        {/* Description */}
+        {/* <div
+          id="description"
+          className="relative flex w-full justify-between overflow-hidden"
+          style={{ width: isMobile ? "100%" : "33%" }}
+        >
+          <AnimatePresence>
+            <motion.div
+              initial={{ height: 0, opacity: 0 }}
+              animate={descriptionAnimation}
+              transition={{ duration: 0.5, ease: "easeInOut" }} // Adjust transition as needed
+            >
+              <ArtDescription {...currentArtwork} />
+            </motion.div>
+          </AnimatePresence>
+        </div> */}
         <div
           id="description"
           className={"relative flex h-28 w-full flex-row justify-between"}
