@@ -1,49 +1,25 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
-type ScrollDirection = "up" | "down";
+type ScrollDirection = "down" | "up" | null;
 
-interface ScrollState {
-  scrolled: boolean;
-  scrollDirection: ScrollDirection;
-}
+export default function useScroll(threshold = 10) {
+  const [scrollDirection, setScrollDirection] = useState<ScrollDirection>(null);
+  const [lastScrollY, setLastScrollY] = useState(0);
 
-export default function useScrollDirection(threshold: number): ScrollState {
-  const [scrolled, setScrolled] = useState<boolean>(false);
-  const [scrollDirection, setScrollDirection] = useState<ScrollDirection>("up");
+  const onScroll = useCallback(() => {
+    const currentScrollY = window.scrollY;
+    const deltaY = currentScrollY - lastScrollY;
+    if (Math.abs(deltaY) > threshold) {
+      const direction = deltaY > 0 ? "down" : "up";
+      setScrollDirection(direction);
+    }
+    setLastScrollY(currentScrollY);
+  }, [lastScrollY, threshold]);
 
   useEffect(() => {
-    // let lastScrollY = window.pageYOffset;
-    let lastScrollY = window.scrollY;
-    let ticking = false;
-
-    const updateScrollDir = () => {
-      //   const scrollY = window.pageYOffset;
-      const scrollY = window.scrollY;
-
-      // Check if the scroll position has exceeded the threshold
-      setScrolled(scrollY > threshold);
-
-      // Determine the direction of scroll based on the current and last scroll position
-      if (Math.abs(scrollY - lastScrollY) < threshold) {
-        ticking = false;
-        return;
-      }
-      setScrollDirection(scrollY > lastScrollY ? "down" : "up");
-      lastScrollY = scrollY > 0 ? scrollY : 0;
-      ticking = false;
-    };
-
-    const onScroll = () => {
-      if (!ticking) {
-        window.requestAnimationFrame(updateScrollDir);
-        ticking = true;
-      }
-    };
-
     window.addEventListener("scroll", onScroll);
-
     return () => window.removeEventListener("scroll", onScroll);
-  }, [threshold]);
+  }, [onScroll]);
 
-  return { scrolled, scrollDirection };
+  return scrollDirection;
 }

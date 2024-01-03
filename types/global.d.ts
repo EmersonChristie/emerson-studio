@@ -132,3 +132,6 @@ export interface ArtworkResponseData {
   id: number;
   attributes: ArtworkAttributes;
 }
+
+declare module "lodash.debounce";
+declare module "lodash.throttle";
