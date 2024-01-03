@@ -7,6 +7,7 @@ import { useArtworks } from "@/lib/context/artworks-context";
 import Head from "next/head";
 
 import { HomePageSlider } from "@/components/home-page-slider/slider";
+import CollectionsSlider from "@/components/collections-slider";
 
 interface HomePageProps {
   initialArtworks: Artwork[];
@@ -34,14 +35,12 @@ export default function HomePage({ initialArtworks }: HomePageProps) {
           />
 https://res.cloudinary.com/dainpisbj/image/upload/v1702430751/383_image_0d6d4d7069.jpg        ))}
       </Head> */}
-      <HomePageSlider
+      {/* <HomePageSlider
         artworks={initialArtworks.slice(0, 6)}
-        // artworks={initialArtworks.slice(0, 6).map((artwork) => ({
-        //   artwork,
-        // }))}
         background={backgroundImage}
-      />
-      <GalleryContainer />
+      /> */}
+      <CollectionsSlider />
+      {/* <GalleryContainer /> */}
     </>
   );
 }
