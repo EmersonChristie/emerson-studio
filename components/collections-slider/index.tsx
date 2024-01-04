@@ -1,14 +1,13 @@
 import React, { useState } from "react";
-import { BaseSlider } from "./base-slider"; // Assuming BaseSlider is in the same directory
-import Slide from "./slide"; // Import the Slide component
+import Slider from "@/components/collections-slider/slider"; // Assuming BaseSlider is in the same directory
+import Slide from "@/components/collections-slider/slide"; // Import the Slide component
+import { HomePageSlideResponseData, SliderItem } from "types/global";
 
-const collections = [
-  ["bg-red-800", "bg-red-600", "bg-red-400", "bg-red-200"],
-  ["bg-blue-800", "bg-blue-600", "bg-blue-400", "bg-blue-200"],
-  ["bg-green-800", "bg-green-600", "bg-green-400", "bg-green-200"],
-];
+interface CollectionsSliderProps {
+  slides: SliderItem[];
+}
 
-const CollectionsSlider: React.FC = () => {
+const CollectionsSlider: React.FC<CollectionsSliderProps> = ({ slides }) => {
   //   const [currentPage, setCurrentPage] = useState(0);
 
   //   const paginate = (newPage: number) => {
@@ -19,9 +18,13 @@ const CollectionsSlider: React.FC = () => {
 
   //   const currentCollection = collections[currentPage];
 
-  return <BaseSlider collections={collections} />;
+  return (
+    <div className="slider-container relative flex h-full w-full items-center justify-center">
+      <Slider slides={slides} />
+    </div>
 
-  // Implement the logic to handle vertical scroll and slide transitions
+    // Implement the logic to handle vertical scroll and slide transitions
+  );
 };
 
 export default CollectionsSlider;

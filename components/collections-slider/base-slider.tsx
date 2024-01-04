@@ -19,7 +19,7 @@ const swipeConfidenceThreshold = 10000;
 const swipePower = (offset: number, velocity: number) =>
   Math.abs(offset) * velocity;
 
-export const BaseSlider: React.FC<SliderProps> = ({ collections }) => {
+const BaseSlider: React.FC<SliderProps> = ({ collections }) => {
   const { isMobile } = useWindowSize();
   const [pageIndex, setPageIndex] = useState(0);
   const [slideIndex, setSlideIndex] = useState(0);
@@ -132,7 +132,7 @@ export const BaseSlider: React.FC<SliderProps> = ({ collections }) => {
             }}
           >
             {/* Render the slide if it's the current one in the view */}
-            {index === slideIndex && (
+            {/* {index === slideIndex && (
               <Slide className={backgroundColor}>
                 <div className="flex h-full w-full flex-col items-center justify-center">
                   <h1 className="text-3xl font-bold text-white">
@@ -146,7 +146,7 @@ export const BaseSlider: React.FC<SliderProps> = ({ collections }) => {
                   </h1>
                 </div>
               </Slide>
-            )}
+            )} */}
           </motion.div>
         ))}
       </AnimatePresence>
@@ -185,3 +185,213 @@ export const BaseSlider: React.FC<SliderProps> = ({ collections }) => {
     </div>
   );
 };
+
+export default BaseSlider;
+
+////////////////////////// NEW //////////////////////////
+// import * as React from "react";
+// import { useState, useCallback, useEffect, useRef } from "react";
+// import { motion, AnimatePresence, PanInfo } from "framer-motion";
+// import debounce from "lodash.debounce";
+// import useWindowSize from "@/lib/hooks/use-window-size";
+// import Slide from "./slide";
+
+// // TypeScript props definition
+// interface SliderProps {
+//   collections: string[][]; // Array of arrays for secondary images
+// }
+
+// const BaseSlider: React.FC<SliderProps> = ({ collections }) => {
+//   const { isMobile } = useWindowSize();
+//   const [pageIndex, setPageIndex] = useState(0);
+//   const [slideIndex, setSlideIndex] = useState(0);
+//   const [dragDirection, setDragDirection] = useState<"x" | "y">("y");
+//   const [isHorizontal, setIsHorizontal] = useState(true);
+//   const [direction, setDirection] = useState(0);
+
+//   // Function to handle page transition
+//   const paginatePage = (newPageIndex: number) => {
+//     newPageIndex = Math.max(0, Math.min(newPageIndex, collections.length - 1));
+//     setPageIndex(newPageIndex);
+//     setSlideIndex(0); // Reset slide index on page change
+//   };
+
+//   // Function to handle slide transition within a page
+//   const paginateSlide = (newSlideIndex: number) => {
+//     newSlideIndex = Math.max(
+//       0,
+//       Math.min(newSlideIndex, collections[pageIndex].length - 1),
+//     );
+//     setSlideIndex(newSlideIndex);
+//   };
+
+//   // Function to calculate the swipe power
+//   const swipePower = (offset: number, velocity: number) =>
+//     Math.abs(offset) * velocity;
+
+//   // Debounce the swipe handling to prevent double processing
+//   const debouncedHandleSwipe = useCallback(
+//     debounce((isHorizontalSwipe: boolean, direction: number) => {
+//       if (isHorizontalSwipe) {
+//         let newSlideIndex = slideIndex + direction;
+//         newSlideIndex = Math.max(
+//           0,
+//           Math.min(newSlideIndex, collections[pageIndex].length - 1),
+//         );
+//         if (newSlideIndex !== slideIndex) {
+//           paginateSlide(newSlideIndex);
+//         }
+//       } else {
+//         let newPageIndex = pageIndex + direction;
+//         newPageIndex = Math.max(
+//           0,
+//           Math.min(newPageIndex, collections.length - 1),
+//         );
+//         if (newPageIndex !== pageIndex) {
+//           paginatePage(newPageIndex);
+//         }
+//       }
+//     }, 300),
+//     [slideIndex, pageIndex, collections],
+//   );
+
+//   const onDragEnd = (event: any, info: PanInfo) => {
+//     console.log("Drag ended");
+
+//     const horizontalOffset = info.offset.x;
+//     const verticalOffset = info.offset.y;
+
+//     const horizontalPower = Math.abs(horizontalOffset);
+//     const verticalPower = Math.abs(verticalOffset);
+//     const swipeThreshold = 100;
+
+//     console.log(
+//       `Horizontal Power: ${horizontalPower}, Vertical Power: ${verticalPower}`,
+//     );
+
+//     if (horizontalPower > verticalPower) {
+//       setIsHorizontal(true);
+//       setDirection(horizontalOffset < 0 ? 1 : -1); // Right swipe: 1, Left swipe: -1
+
+//       if (horizontalPower > swipeThreshold) {
+//         const direction = horizontalOffset < 0 ? 1 : -1;
+//         console.log(
+//           `Horizontal Swipe Detected: New Slide Index = ${
+//             slideIndex + direction
+//           }`,
+//         );
+//         debouncedHandleSwipe(true, direction);
+//       }
+//     } else {
+//       setIsHorizontal(false);
+//       setDirection(verticalOffset < 0 ? 1 : -1); // Down swipe: 1, Up swipe: -1
+
+//       if (verticalPower > swipeThreshold) {
+//         const direction = verticalOffset < 0 ? 1 : -1;
+//         console.log(
+//           `Vertical Swipe Detected: New Page Index = ${pageIndex + direction}`,
+//         );
+//         debouncedHandleSwipe(false, direction);
+//       }
+//     }
+//   };
+
+//   // ...
+
+//   // Variants for framer-motion
+//   const pageVariants = {
+//     enter: { y: "100%", opacity: 0 },
+//     center: { y: 0, opacity: 1 },
+//     exit: { y: "-100%", opacity: 0 },
+//   };
+
+//   const slideVariants = {
+//     enter: { x: "100%", opacity: 0 },
+//     center: { x: 0, opacity: 1 },
+//     exit: { x: "-100%", opacity: 0 },
+//   };
+
+//   const verticalVariants = {
+//     enter: (direction: number) => ({
+//       y: direction > 0 ? 1000 : -1000,
+//       opacity: 0,
+//     }),
+//     center: { y: 0, opacity: 1, zIndex: 1 },
+//     exit: (direction: number) => ({
+//       y: direction < 0 ? 1000 : -1000,
+//       opacity: 0,
+//       zIndex: 0,
+//     }),
+//   };
+
+//   const horizontalVariants = {
+//     enter: (direction: number) => ({
+//       x: direction > 0 ? 1000 : -1000,
+//       opacity: 0,
+//     }),
+//     center: { x: 0, opacity: 1, zIndex: 1 },
+//     exit: (direction: number) => ({
+//       x: direction < 0 ? 1000 : -1000,
+//       opacity: 0,
+//       zIndex: 0,
+//     }),
+//   };
+
+//   return (
+//     <div className="relative h-full w-full">
+//       <AnimatePresence>
+//         {collections.map((slides, index) => (
+//           <motion.div
+//             key={index}
+//             className={`absolute top-0 left-0 h-full w-full`}
+//             variants={isHorizontal ? horizontalVariants : verticalVariants}
+//             initial="enter"
+//             animate="center"
+//             exit="exit"
+//             custom={direction}
+//             transition={{ type: "spring", stiffness: 250, damping: 30 }}
+//             drag="y"
+//             dragConstraints={{ top: 0, bottom: 0 }}
+//             dragElastic={1}
+//             onDragEnd={onDragEnd}
+//           >
+//             <AnimatePresence>
+//               {slides.map((slide, idx) => (
+//                 <motion.div
+//                   key={idx}
+//                   className={`absolute inset-0 `} // Ensure active slide is on top
+//                   variants={
+//                     isHorizontal ? horizontalVariants : verticalVariants
+//                   }
+//                   custom={direction}
+//                   initial="enter"
+//                   animate="center"
+//                   exit="exit"
+//                   transition={{ type: "spring", stiffness: 250, damping: 30 }}
+//                   drag="x"
+//                   dragConstraints={{ left: 0, right: 0 }}
+//                   dragElastic={1}
+//                   onDragEnd={onDragEnd}
+//                 >
+//                   <Slide className={slide}>
+//                     <div className="flex h-full w-full flex-col items-center justify-center">
+//                       <h1 className="text-3xl font-bold text-white">
+//                         Page Index: {index}
+//                       </h1>
+//                       <h1 className="text-3xl font-bold text-white">{slide}</h1>
+//                       <h1 className="text-3xl font-bold text-white">
+//                         Slide Index: {idx}
+//                       </h1>
+//                     </div>
+//                   </Slide>
+//                 </motion.div>
+//               ))}
+//             </AnimatePresence>
+//           </motion.div>
+//         ))}
+//       </AnimatePresence>
+//     </div>
+//   );
+// };
+
+// export default BaseSlider;

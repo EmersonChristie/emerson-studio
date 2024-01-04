@@ -1,22 +1,12 @@
 import React from "react";
-import cx from "classnames";
-import { WithChildren } from "types/global";
+import { SlideProps } from "types/global";
 
-interface SlideProps extends WithChildren {
-  className?: string;
-}
-
-const Slide: React.FC<SlideProps> = ({ className, children }) => {
-  return (
-    <div
-      className={cx(
-        "flex h-screen w-full items-center justify-center",
-        className,
-      )}
-    >
-      {children}
-    </div>
-  );
-};
+const Slide: React.FC<SlideProps> = ({ image, title, slug, onClick }) => (
+  <div className="slide cursor-pointer" onClick={() => onClick(slug)}>
+    <img src={image} alt={title} className="h-auto w-full" />
+    <h2 className="mt-2 text-lg font-bold">{title}</h2>
+    {/* Add more Tailwind classes as needed */}
+  </div>
+);
 
 export default Slide;

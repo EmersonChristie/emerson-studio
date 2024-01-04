@@ -83,3 +83,28 @@ export const getArtworkQuery = (customParams?: QueryParams): string => {
 
   return serialize(finalQueryParams);
 };
+
+const sliderQueryParams = {
+  populate: {
+    artwork: {
+      fields: ["title", "year", "medium", "genre", "series"],
+    },
+    coverImage: {
+      fields: ["url", "alternativeText"],
+    },
+  },
+};
+
+export const getSliderQuery = (
+  page: number = 1,
+  pageSize: number = 20,
+  customParams?: QueryParams,
+): string => {
+  const defaultParams = sliderQueryParams;
+
+  const finalQueryParams = {
+    ...(customParams || defaultParams),
+  };
+
+  return serialize(finalQueryParams);
+};

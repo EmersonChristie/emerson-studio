@@ -247,22 +247,6 @@ const Slider: React.FC<SliderProps> = ({ currentIndex, onIndexChange }) => {
             strokeWidth={isMobile ? 1.5 : 1.6}
           />
         </motion.div>
-        {/* Description */}
-        {/* <div
-          id="description"
-          className="relative flex w-full justify-between overflow-hidden"
-          style={{ width: isMobile ? "100%" : "33%" }}
-        >
-          <AnimatePresence>
-            <motion.div
-              initial={{ height: 0, opacity: 0 }}
-              animate={descriptionAnimation}
-              transition={{ duration: 0.5, ease: "easeInOut" }} // Adjust transition as needed
-            >
-              <ArtDescription {...currentArtwork} />
-            </motion.div>
-          </AnimatePresence>
-        </div> */}
         <div
           id="description"
           className={"relative flex h-28 w-full flex-row justify-between"}

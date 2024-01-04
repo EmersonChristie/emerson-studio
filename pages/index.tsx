@@ -3,26 +3,27 @@ import { useEffect } from "react";
 import { Artwork } from "types/global";
 import GalleryContainer from "@/components/gallery";
 import { fetchArtworks } from "@/lib/strapi/artworks";
+import { fetchHomePageSlides } from "@/lib/strapi/homePageSlider";
 import { useArtworks } from "@/lib/context/artworks-context";
 import Head from "next/head";
 
-import { HomePageSlider } from "@/components/home-page-slider/slider";
 import CollectionsSlider from "@/components/collections-slider";
+import { SliderItem } from "types/global";
 
 interface HomePageProps {
-  initialArtworks: Artwork[];
+  slides: SliderItem[];
 }
 
-export default function HomePage({ initialArtworks }: HomePageProps) {
-  const { artworks, addToArtworks } = useArtworks();
-  const backgroundImage = "/images/gallery-wall.jpg";
+export default function HomePage({ slides }: HomePageProps) {
+  // const { artworks, addToArtworks } = useArtworks();
+  // const backgroundImage = "/images/gallery-wall.jpg";
 
-  useEffect(() => {
-    if (artworks.length === 0) {
-      // Initialize the context with the statically fetched artworks
-      addToArtworks(initialArtworks);
-    }
-  }, [initialArtworks, addToArtworks, artworks]);
+  // useEffect(() => {
+  //   if (artworks.length === 0) {
+  //     // Initialize the context with the statically fetched artworks
+  //     addToArtworks(initialArtworks);
+  //   }
+  // }, [initialArtworks, addToArtworks, artworks]);
   return (
     <>
       {/* <Head>
@@ -39,7 +40,7 @@ https://res.cloudinary.com/dainpisbj/image/upload/v1702430751/383_image_0d6d4d70
         artworks={initialArtworks.slice(0, 6)}
         background={backgroundImage}
       /> */}
-      <CollectionsSlider />
+      <CollectionsSlider slides={slides} />
       {/* <GalleryContainer /> */}
     </>
   );
@@ -47,10 +48,11 @@ https://res.cloudinary.com/dainpisbj/image/upload/v1702430751/383_image_0d6d4d70
 
 export async function getStaticProps() {
   try {
-    const initialArtworks = await fetchArtworks(1, 15); // Fetch the first 10 artworks
+    const slides = await fetchHomePageSlides(1, 20);
+    console.log("slides", slides);
     return {
       props: {
-        initialArtworks,
+        slides,
       },
       revalidate: 60, // Revalidate at a regular interval if using ISR
     };
@@ -58,7 +60,7 @@ export async function getStaticProps() {
     console.error("Error in getStaticProps:", error);
     return {
       props: {
-        initialArtworks: [],
+        slides: [],
       },
     };
   }

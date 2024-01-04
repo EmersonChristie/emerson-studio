@@ -128,9 +128,90 @@ interface ArtworkAttributes {
   mainImage: ArtworkMainImage;
 }
 
+interface SimpleArtworkAttributes {
+  title: string;
+  year: string;
+  medium: string;
+  genre: string;
+  series: string;
+}
+
 export interface ArtworkResponseData {
   id: number;
   attributes: ArtworkAttributes;
+}
+
+export interface SlideProps {
+  image: string;
+  title: string;
+  slug: string;
+  onClick: (slug: string) => void;
+}
+
+export interface SliderProps {
+  slides: React.ReactElement<SlideProps>[];
+}
+
+///////// Home Page Slider Types //////////
+
+export interface SliderItem {
+  id: number;
+  attributes: SliderAttributes;
+}
+
+export interface SliderAttributes {
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
+  artwork: ArtworkWrapper;
+  coverImage: ImageWrapper;
+}
+
+export interface ArtworkWrapper {
+  data: ArtworkData;
+}
+
+interface ArtworkData {
+  id: number;
+  attributes: ArtworkAttributes;
+}
+
+interface ArtworkAttributes {
+  title: string;
+  year: string;
+  medium: string;
+  genre: string | null;
+  series: string | null;
+}
+
+interface ImageWrapper {
+  data: ImageData;
+}
+
+interface ImageData {
+  id: number;
+  attributes: ImageAttributes;
+}
+
+interface ImageAttributes {
+  url: string;
+  alternativeText: string | null;
+}
+
+interface MetaData {
+  pagination: PaginationData;
+}
+
+interface PaginationData {
+  page: number;
+  pageSize: number;
+  pageCount: number;
+  total: number;
+}
+
+export interface HomePageSlideResponseData {
+  data?: SliderItem[];
+  meta?: MetaData;
 }
 
 declare module "lodash.debounce";
