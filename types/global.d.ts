@@ -132,3 +132,11 @@ export interface ArtworkResponseData {
   id: number;
   attributes: ArtworkAttributes;
 }
+
+export interface QueryParams {
+  filters?: any; // Define more specific types as needed
+  populate?: any;
+  fields?: string[];
+  publicationState?: string;
+  sort?: string[];
+}

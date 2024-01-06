@@ -135,7 +135,6 @@ const Slider: React.FC<SliderProps> = ({ currentIndex, onIndexChange }) => {
     const newIndex =
       (currentIndex + newDirection + artworks.length) % artworks.length;
     if (newIndex === artworks.length - 1 && hasMoreArtworks) {
-      console.log("Loading more artworks");
       loadMoreArtworks();
     }
     setPage([newIndex, newDirection]);

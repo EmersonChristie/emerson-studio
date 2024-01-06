@@ -1,3 +1,5 @@
+import { QueryParams } from "types/global";
+
 const artworksQueryParams = {
   filters: {
     sendToWebsite: { $eq: true },
@@ -40,13 +42,6 @@ export const serialize = (
 
   return query.join("&");
 };
-
-export interface QueryParams {
-  filters?: any; // Define more specific types as needed
-  populate?: any;
-  fields?: string[];
-  publicationState?: string;
-}
 
 /**
  * Returns the query string for retrieving artworks with optional custom parameters.

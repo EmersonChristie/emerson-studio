@@ -1,12 +1,8 @@
 import { Artwork, ArtworkResponseData } from "types/global";
-// artworks.ts
+import { fetchStrapi } from "@/lib/strapi";
+import { getArtworkQuery, getArtworksQuery } from "./api-query-params";
 
-import {
-  getArtworkQuery,
-  getArtworksQuery,
-  QueryParams,
-} from "./api-query-params";
-
+import { QueryParams } from "types/global";
 /**
  * Fetches artworks from the API.
  *
@@ -16,23 +12,73 @@ import {
  * @returns A promise that resolves to an array of Artwork objects.
  * @throws An error if there was a problem fetching the artworks.
  */
+// export const fetchArtworks = async (
+//   page: number,
+//   pageSize: number,
+//   queryParams?: QueryParams,
+// ): Promise<Artwork[]> => {
+//   const query = getArtworksQuery(page, pageSize, queryParams);
+//   const url = `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/artworks?${query}`;
+//   try {
+//     const response = await fetch(url);
+//     if (!response.ok) {
+//       throw new Error(`API responded with status ${response.status}`);
+//     }
+//     const { data } = await response.json();
+//     return data.map((item: ArtworkResponseData) => ({
+//       id: item.id,
+//       ...item.attributes,
+//     }));
+//   } catch (error) {
+//     console.error("There was a problem fetching the artworks:", error);
+//     throw error;
+//   }
+// };
+const artworksQueryParams = {
+  filters: {
+    sendToWebsite: { $eq: true },
+    featuredArtwork: { $eq: true },
+  },
+  populate: {
+    dimensions: {
+      fields: ["height", "width", "dimensions"],
+    },
+    price: {
+      fields: ["price", "formattedPrice"],
+    },
+    mainImage: {
+      fields: ["url", "alternativeText"],
+    },
+  },
+  fields: ["title", "year", "medium", "genre", "series"],
+  publicationState: "live",
+  sort: ["year:desc"],
+};
+/**
+ * Fetches artworks from the API.
+ *
+ * @param {number} page - The page number to fetch.
+ * @param {number} pageSize - The number of artworks per page.
+ * @param {QueryParams} [queryParams] - Optional query parameters to filter the artworks.
+ * @returns {Promise<Artwork[]>} A promise that resolves to an array of Artwork objects.
+ * @throws {Error} An error if there was a problem fetching the artworks.
+ */
 export const fetchArtworks = async (
   page: number,
   pageSize: number,
   queryParams?: QueryParams,
 ): Promise<Artwork[]> => {
-  const query = getArtworksQuery(page, pageSize, queryParams);
-  const url = `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/artworks?${query}`;
+  const query = queryParams || artworksQueryParams;
+  // console.log("Query Params in fetchArtworks", query);
   try {
-    const response = await fetch(url);
-    if (!response.ok) {
-      throw new Error(`API responded with status ${response.status}`);
-    }
-    const { data } = await response.json();
-    return data.map((item: ArtworkResponseData) => ({
-      id: item.id,
-      ...item.attributes,
-    }));
+    // Using fetchStrapi to fetch the data
+    const data = await fetchStrapi(
+      "artworks",
+      page,
+      pageSize,
+      artworksQueryParams,
+    );
+    return data;
   } catch (error) {
     console.error("There was a problem fetching the artworks:", error);
     throw error;

@@ -40,10 +40,3 @@ export default function useWindowSize() {
       typeof windowSize?.width === "number" && windowSize?.width >= 768,
   };
 }
-/**
- * Example usage:
- *
- * const { windowSize, isMobile } = useWindowSize();
- * console.log(windowSize); // { width: 1024, height: 768 }
- * console.log(isMobile); // false
- */
