@@ -1,0 +1,41 @@
+/* Layered gradient background */
+.wallGradient {
+  --base-color-1: #ffffff;
+  --base-color-2: #b2b2b2;
+
+  background: linear-gradient(135deg, var(--base-color-1), var(--base-color-2)),
+    radial-gradient(
+      circle at top left,
+      rgba(255, 255, 255, 1),
+      transparent 100%
+    ),
+    radial-gradient(circle at bottom right, rgba(0, 0, 0, 2), transparent 100%);
+  /* background: linear-gradient(
+      to bottom,
+      rgba(255, 255, 255, 1) 0%,
+      var(--base-color-1) 10%,
+      var(--base-color-2) 100%
+    ),
+    radial-gradient(
+      circle at top left,
+      rgba(255, 255, 255, 1),
+      transparent 100%
+    ),
+    radial-gradient(
+      circle at bottom right,
+      rgba(0, 0, 0, 0.2),
+      transparent 100%
+    ); */
+  box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.1);
+
+  /* Ensure the element is large enough */
+  width: 100%;
+  height: 100vh; /* Adjust as needed */
+  /* border: 10px solid white; */
+}
+
+/* Additional texture (optional) */
+.wallTexture {
+  -webkit-backdrop-filter: blur(1px); /* For WebKit browsers */
+  backdrop-filter: blur(1px); /* Standard syntax */
+}

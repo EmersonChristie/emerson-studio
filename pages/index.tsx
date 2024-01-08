@@ -8,23 +8,24 @@ import { fetchArtworks } from "@/lib/strapi/artworks";
 import { fetchWebsiteCollections } from "@/lib/strapi/website-collection";
 import { useArtworks } from "@/lib/context/artworks-context";
 import Head from "next/head";
+import PageHeader from "@/components/shared/page-header";
 
 import { HomePageSlider } from "@/components/home-page-slider/slider";
 
 interface SlideArtwork {
   src: string;
   alt: string;
+  id: number;
 }
 
-interface ArtCollectionSlideProps {
+interface CollectionProps {
   artworks: SlideArtwork[];
   collectionTitle: string;
-  onSlideComplete?: () => void;
 }
 
 interface HomePageProps {
   initialArtworks: Artwork[];
-  artCollectionSlides: ArtCollectionSlideProps[];
+  artCollectionSlides: CollectionProps[];
 }
 
 export default function HomePage({
@@ -34,18 +35,6 @@ export default function HomePage({
   const { artworks, addToArtworks } = useArtworks();
   const backgroundImage = "/images/gallery-wall.jpg";
 
-  // Create ArtCollectionSlide components
-  const artCollectionSlideComponents = artCollectionSlides.map(
-    (props, index) => (
-      <ArtCollectionSlide
-        key={index}
-        {...props}
-        onSlideComplete={() => {
-          /* ... */
-        }}
-      />
-    ),
-  );
   useEffect(() => {
     if (artworks.length === 0) {
       // Initialize the context with the statically fetched artworks
@@ -54,23 +43,24 @@ export default function HomePage({
   }, [initialArtworks, addToArtworks, artworks]);
   return (
     <>
-      {/* <Head>
-        {initialArtworks.slice(0, 6).map((artwork) => (
-          <link
-            key={artwork.id}
-            rel="preload"
-            href={artwork.mainImage.data.attributes.url}
-            as="imaghttps://res.cloudinary.com/dainpisbj/image/upload/v1702430751/383_image_0d6d4d7069.jpge"
-          />
-https://res.cloudinary.com/dainpisbj/image/upload/v1702430751/383_image_0d6d4d7069.jpg        ))}
-      </Head> */}
-      <HeroSection slides={artCollectionSlideComponents} />
-      {/* <HomePageSlider
-        artworks={initialArtworks.slice(0, 6)}
-   
-        background={backgroundImage}
+      <Head>
+        {artCollectionSlides.map((collection) =>
+          collection.artworks.map((artwork) => (
+            <link
+              key={artwork.id}
+              rel="preload"
+              href={artwork.src}
+              as="image"
+            />
+          )),
+        )}
+      </Head>
+      <HeroSection collections={artCollectionSlides} />
+      <PageHeader
+        title="Current Works"
+        classNames="pt-10 flex flex-col pb-0 px-12 pt-1 text-left md:pb-11 md:pt-11 w-full"
       />
-      <GalleryContainer /> */}
+      <GalleryContainer />
     </>
   );
 }
@@ -107,13 +97,14 @@ const transformToArtCollectionSlides = (data: Collection[]) => {
       alt:
         artwork.attributes.mainImage.data.attributes.alternativeText ||
         artwork.attributes.title,
+      id: artwork.id,
     })),
   }));
 };
 
 export async function getStaticProps() {
   try {
-    const initialArtworks = await fetchArtworks(1, 15); // Fetch the first 10 artworks
+    const initialArtworks = await fetchArtworks(1, 100); // Fetch the first 10 artworks
     const websiteCollections = await fetchWebsiteCollections(1, 20);
     const artCollectionSlides =
       transformToArtCollectionSlides(websiteCollections);

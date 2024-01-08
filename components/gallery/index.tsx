@@ -19,13 +19,6 @@ const GalleryContainer: React.FC = () => {
   /**
    * Split the artworks into columns based on the layout.
    */
-  // const columns = useMemo(() => {
-  //   const chunkSize = Math.ceil(artworks.length / 3);
-  //   return Array.from({ length: 3 }, (_, i) =>
-  //     artworks.slice(i * chunkSize, i * chunkSize + chunkSize),
-  //   );
-  // }, [artworks]);
-
   const galleryColumns = useMemo(() => {
     const columns: Artwork[][] = [[], [], []];
     artworks.forEach((artwork, index) => {
@@ -46,7 +39,6 @@ const GalleryContainer: React.FC = () => {
     const isSecondToLastArtwork =
       columnArtworks.length > 1 && columnArtworks[columnArtworks.length - 2];
     if (isLastColumn && isSecondToLastArtwork && hasMoreArtworks) {
-      console.log("loading more artworks in gallery container!!!!!!!!!!!!!!!");
       loadMoreArtworks();
     }
   };

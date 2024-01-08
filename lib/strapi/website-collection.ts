@@ -28,8 +28,6 @@ export const fetchWebsiteCollections = async (
       queryParams || query,
     ); // Transforming the response if necessary
 
-    console.log("Data in fetchWebsiteCollections: ", data);
-
     return data.map((item: any) => ({
       ...item,
       artworks: item.artworks.data,

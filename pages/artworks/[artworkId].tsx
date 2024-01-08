@@ -56,7 +56,6 @@ const ArtworkPage: React.FC<{ artwork: Artwork }> = ({ artwork }) => {
   }
 
   const handleIndexChange = (newIndex: number) => {
-    console.log("newIndex passed to artwork page: ", newIndex);
     setCurrentIndex(newIndex);
     // Update the URL if needed
     const newArtworkId = artworks[newIndex].id;

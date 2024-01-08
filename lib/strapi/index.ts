@@ -37,7 +37,7 @@ export const fetchStrapi = async (
   pageSize?: number,
   queryParams?: QueryParams,
 ): Promise<any[]> => {
-  console.log("Query Params in fetchStrapi", queryParams);
+  //   console.log("Query Params in fetchStrapi", queryParams);
   // Construct the query
   const query = serialize({
     ...(queryParams || {}),
@@ -53,7 +53,7 @@ export const fetchStrapi = async (
       throw new Error(`API responded with status ${response.status}`);
     }
     const { data } = await response.json();
-    console.log(`Fetched from ${url} and got:`, data);
+    // console.log(`Fetched from ${url} and got:`, data);
     return data.map((item: any) => ({
       id: item.id,
       ...item.attributes,

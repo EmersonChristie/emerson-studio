@@ -1,9 +1,8 @@
 import { QueryParams } from "types/global";
 
-const artworksQueryParams = {
+export const artworksQueryParams = {
   filters: {
     sendToWebsite: { $eq: true },
-    featuredArtwork: { $eq: true },
   },
   populate: {
     dimensions: {

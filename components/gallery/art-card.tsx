@@ -36,11 +36,6 @@ const ArtCard: React.FC<ArtCardProps> = ({ artwork, index, onNearEnd }) => {
 
   const ref = useRef(null);
 
-  // const entry = useIntersectionObserver(ref, {
-  //   threshold: [0, 0.25, 0.5, 0.75, 1], // Example of multiple thresholds
-  //   rootMargin: "50px 0px", // Example root margin; adjust as needed
-  // });
-
   const entry = useIntersectionObserver(ref, {
     threshold: 0,
   });

@@ -1,0 +1,11 @@
+.gradientText {
+  background: linear-gradient(
+    to right,
+    #777777,
+    #b7b7b7
+  ); /* dark gray to light gray gradient */
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent; /* This makes the text transparent, showing only the background */
+  display: inline; /* or 'inline-block', required for the gradient to apply to text */
+}
