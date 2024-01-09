@@ -103,7 +103,7 @@ const HeroSection: React.FC<{ collections: CollectionProps[] }> = ({
   const heroContainerClass = cx(
     styles.wallGradient,
     styles.wallTexture,
-    "h-full w-full relative ",
+    "relative",
   );
 
   return (
@@ -131,7 +131,7 @@ const HeroSection: React.FC<{ collections: CollectionProps[] }> = ({
       </motion.div>
       <motion.div
         className="prev text-gray-500"
-        onClick={() => goToPreviousSlide}
+        onClick={() => goToPreviousSlide()}
         style={{
           ...arrowStyle,
           left: getArrowPadX(),

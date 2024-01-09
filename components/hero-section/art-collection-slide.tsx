@@ -40,11 +40,11 @@ const ArtCollectionSlide: React.FC<ArtCollectionSlideProps> = ({
           opacity: 1,
           scale: 1,
           zIndex: 1,
-          transition: { duration: 1.0, ease: "easeInOut" },
+          transition: { duration: 1, ease: "easeInOut" },
         });
         await controls.start({
           opacity: 0,
-          scale: 3.5,
+          scale: 4,
           zIndex: 0,
           transition: { duration: 2.7, delay: 1.3, ease: "easeInOut" },
         });
@@ -84,7 +84,7 @@ const ArtCollectionSlide: React.FC<ArtCollectionSlideProps> = ({
           src={artwork.src}
           alt={artwork.alt}
           className="absolute cursor-pointer md:max-w-3/5"
-          initial={{ opacity: 0, scale: 0.9 }}
+          initial={{ opacity: 0, scale: 0.97 }}
           animate={controls}
           onLoad={() => handleArtworkLoad(artwork.id)}
           onClick={() => routeToArtworkPage(artwork.id)}

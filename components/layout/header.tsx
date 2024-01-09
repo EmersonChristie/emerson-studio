@@ -93,11 +93,11 @@ const Header: React.FC = () => {
       <SignInModal />
       <div
         className="fixed top-0 z-20 w-full "
-        style={{
-          background:
-            "linear-gradient(to bottom, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0))",
-          border: "none",
-        }}
+        // style={{
+        //   background:
+        //     "linear-gradient(to bottom, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0))",
+        //   border: "none",
+        // }}
       >
         <div className="flex items-center justify-between p-6 py-4 md:mx-2 ">
           <Link href="/" className="flex items-center font-display">
