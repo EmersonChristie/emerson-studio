@@ -17,15 +17,19 @@ const PageHeader: React.FC<PageHeaderProps> = ({
   classNames,
 }) => {
   const containerClass = cx(
-    "mt-3 flex flex-col pb-8 px-3 pt-28 text-left md:pb-16 md:pt-36",
+    "mt-1 flex flex-col pb-8 px-3 pt-20 text-left md:pb-16 md:pt-36",
     classNames,
   );
   return (
     <div className={containerClass}>
-      <h1 className="text-xl font-400 uppercase tracking-wider text-gray-600">
+      <h1 className="text-xl font-400 uppercase tracking-wider text-gray-600 lg:text-3xl">
         {title}
       </h1>
-      {subheading && <p className="mt-2 text-xl text-gray-600">{subheading}</p>}
+      {subheading && (
+        <p className="md:text-md mt-2 text-sm text-gray-500 xl:text-lg">
+          {subheading}
+        </p>
+      )}
       <Divider animated={true} className="py-4" />
       {description && (
         <div className="my-6">

@@ -12,7 +12,6 @@ import Layout from "@/components/layout";
 import { UserProvider } from "@/lib/context/user-context";
 import { ArtworksProvider } from "@/lib/context/artworks-context";
 import { ToastProvider } from "@/lib/context/toast-context";
-
 // const sfPro = localFont({
 //   src: "../styles/SF-Pro-Display-Medium.otf",
 //   variable: "--font-sf",

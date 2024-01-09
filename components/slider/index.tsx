@@ -149,7 +149,7 @@ const Slider: React.FC<SliderProps> = ({ currentIndex, onIndexChange }) => {
 
   useEffect(() => {
     updateUrl(currentIndex);
-  }, [currentIndex]);
+  }, [currentIndex, updateUrl]);
 
   const onTap = () => {
     console.log("image clicked");

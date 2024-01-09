@@ -17,7 +17,7 @@ const PageLayout: React.FC<PageLayoutProps> = ({
   children,
 }) => {
   return (
-    <div className="flex w-full flex-col px-3 md:px-10">
+    <div className="flex w-full max-w-1920 flex-col px-3 md:px-10">
       <PageHeader
         title={title}
         subheading={subHeading}

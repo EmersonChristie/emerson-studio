@@ -58,7 +58,7 @@ export default function HomePage({
       <HeroSection collections={artCollectionSlides} />
       <PageHeader
         title="Current Works"
-        classNames="pt-5 flex flex-col pb-0 px-12 text-left md:pb-11 md:pt-11 w-full"
+        classNames="pt-8 flex flex-col pb-0 px-12 text-left md:pb-11 md:pt-11 w-full"
       />
       <GalleryContainer />
     </>

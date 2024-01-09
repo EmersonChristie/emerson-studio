@@ -21,21 +21,16 @@ const items = [
   },
   {
     id: 2,
-    title: "Artworks",
+    title: "Works",
     href: "/artworks",
   },
   {
     id: 3,
-    title: "Contact",
-    href: "/contact",
+    title: "Info",
+    href: "/artist",
   },
   {
     id: 4,
-    title: "About",
-    href: "/about",
-  },
-  {
-    id: 5,
     title: "Saved Works",
     href: "/saved-artworks",
   },

@@ -1,6 +1,6 @@
 import Head from "next/head";
 
-const DOMAIN = "https://precedent.dev";
+const DOMAIN = "https://emersoncontemporary.art";
 
 export default function Meta({
   title = "Emerson Studio - Contemporary Art",
