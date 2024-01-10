@@ -17,16 +17,16 @@ const PageHeader: React.FC<PageHeaderProps> = ({
   classNames,
 }) => {
   const containerClass = cx(
-    "mt-1 flex flex-col pb-8 px-3 pt-20 text-left md:pb-16 md:pt-36",
+    "mt-1 flex flex-col pb-8 px-3 pt-1 text-left md:pb-16 ",
     classNames,
   );
   return (
     <div className={containerClass}>
-      <h1 className="text-xl font-400 uppercase tracking-wider text-gray-600 lg:text-3xl">
+      <h1 className="font-display text-xl font-400 uppercase tracking-wider text-gray-700 lg:text-3xl">
         {title}
       </h1>
       {subheading && (
-        <p className="md:text-md mt-2 text-sm text-gray-500 xl:text-lg">
+        <p className="md:text-md mt-2 text-sm text-gray-600 xl:text-lg">
           {subheading}
         </p>
       )}

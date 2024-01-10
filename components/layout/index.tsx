@@ -31,11 +31,14 @@ export default function Layout({ meta, children }: LayoutProps) {
       <Meta {...meta} />
       <div
         id="container"
-        className="flex h-screen flex-col bg-gradient-to-b from-white to-gray-300"
+        className="flex flex-col bg-gradient-to-b from-white to-gray-300"
         style={{ height: "calc(var(--vh, 1vh) * 100)" }}
       >
         <Header />
-        <main className="xl:pt-18 mx-1 flex h-full w-full flex-col items-center justify-start self-center overflow-auto lg:mx-10">
+        <main
+          className="xl:pt-18 mx-1 flex h-full w-full flex-col items-center justify-start self-center overflow-auto lg:mx-10"
+          // style={{ height: "calc(var(--vh, 1vh) * 100)" }}
+        >
           {children}
         </main>
       </div>
