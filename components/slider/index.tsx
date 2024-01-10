@@ -1,4 +1,10 @@
-import React, { useState, useEffect, useRef, CSSProperties } from "react";
+import React, {
+  useState,
+  useEffect,
+  useRef,
+  useCallback,
+  CSSProperties,
+} from "react";
 import { useRouter } from "next/router";
 import {
   motion,
@@ -142,14 +148,25 @@ const Slider: React.FC<SliderProps> = ({ currentIndex, onIndexChange }) => {
   };
 
   const updateUrl = (newIndex: number) => {
+    console.log(`updating url to: /artworks/${newIndex}`);
     const newArtwork = artworks[newIndex];
     const newUrl = `/artworks/${newArtwork.id}`;
     router.replace(newUrl, undefined, { shallow: true });
   };
 
+  // const updateUrl = useCallback(
+  //   (newIndex: number) => {
+  //     console.log(`updating url to: /artworks/${newIndex}`);
+  //     const newArtwork = artworks[newIndex];
+  //     const newUrl = `/artworks/${newArtwork.id}`;
+  //     router.replace(newUrl, undefined, { shallow: true });
+  //   },
+  //   [router, artworks],
+  // );
+
   useEffect(() => {
     updateUrl(currentIndex);
-  }, [currentIndex, updateUrl]);
+  }, [currentIndex]);
 
   const onTap = () => {
     console.log("image clicked");
