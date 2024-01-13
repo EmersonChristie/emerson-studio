@@ -11,6 +11,7 @@
       "@/lib/*": ["lib/*"],
       "@/styles/*": ["styles/*"]
     },
+    "types": ["google.maps"],
     "strict": true,
     "forceConsistentCasingInFileNames": true,
     "noEmit": true,

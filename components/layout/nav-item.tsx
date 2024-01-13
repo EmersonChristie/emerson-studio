@@ -58,12 +58,13 @@ export default function NavItem({
         key={key}
         onClick={handleItemClick}
         className="3xl:py-24 3xl:text-9xl flex items-center justify-center py-6 font-sans text-4xl font-500 uppercase
-        leading-tight tracking-wide md:py-16 md:text-6xl lg:py-20 lg:text-7xl xl:py-20 xl:text-8xl"
+        leading-tight tracking-wide md:py-12 md:text-6xl lg:py-14 lg:text-7xl xl:py-16 xl:text-8xl"
       >
         <motion.p
-          className="text-center leading-3"
+          className="text-center tracking-wide"
           whileHover={{ scale: 1.05, x: -15 }}
           whileTap={{ scale: 0.95 }}
+          style={{ lineHeight: 0.1 }}
         >
           {title}
         </motion.p>

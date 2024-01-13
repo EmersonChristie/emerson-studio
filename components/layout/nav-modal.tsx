@@ -26,9 +26,15 @@ const items = [
   },
   {
     id: 3,
-    title: "Info",
-    href: "/artist",
+    title: "About",
+    href: "/about",
   },
+  {
+    id: 4,
+    title: "Contact",
+    href: "/contact",
+  },
+
   {
     id: 4,
     title: "Saved Works",

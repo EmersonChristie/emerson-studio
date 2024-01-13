@@ -497,6 +497,11 @@
   dependencies:
     "@types/ms" "*"
 
+"@types/google.maps@^3.54.10":
+  version "3.54.10"
+  resolved "https://registry.npmjs.org/@types/google.maps/-/google.maps-3.54.10.tgz"
+  integrity sha512-N6gwM01mKhooXaw+IKbUH7wJcIJCn8U60VoaVvom5EiQjmfgevhQ+0+/r17beXW5j8ad2x+WPr0iyOUodCw4/w==
+
 "@types/hast@^2.0.0":
   version "2.3.4"
   resolved "https://registry.npmjs.org/@types/hast/-/hast-2.3.4.tgz"

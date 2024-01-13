@@ -52,6 +52,8 @@ const ArtCard: React.FC<ArtCardProps> = ({ artwork, index, onNearEnd }) => {
     }
   }, [entry, onNearEnd]);
 
+  // TODO set max width based on image dimensions if width >= 1/2 height
+  const getMaxWidth = (width: number, height: number) => {};
   return (
     <motion.div
       ref={ref}
