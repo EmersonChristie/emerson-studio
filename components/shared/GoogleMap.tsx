@@ -176,12 +176,16 @@ const mapStyles = [
   },
 ];
 
-const GoogleMap: React.FC<GoogleMapProps> = ({ center, zoom }) => {
+const GoogleMap: React.FC<GoogleMapProps & { isScriptLoaded: boolean }> = ({
+  center,
+  zoom,
+  isScriptLoaded,
+}) => {
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (!window.google) {
-      console.error("Google Maps API script not loaded");
+    if (!window.google || !isScriptLoaded) {
+      console.error("Google Maps API script not loaded or script is not ready");
       return;
     }
 
@@ -200,9 +204,18 @@ const GoogleMap: React.FC<GoogleMapProps> = ({ center, zoom }) => {
       map: map,
       title: "Emerson Studio - Contemporary Art", // Optional: add your business name
     });
-  }, [center, zoom]);
+  }, [center, zoom, isScriptLoaded]);
 
-  return <div ref={ref} style={{ height: "50vw", width: "100%" }} />;
+  return (
+    <div
+      ref={ref}
+      className="map-container"
+      style={{
+        height: "500px",
+        width: "100%",
+      }}
+    />
+  );
 };
 
 export default GoogleMap;

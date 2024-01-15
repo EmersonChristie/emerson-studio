@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import ImageSlider from "@/components/shared/image-slider";
 import { contactImages } from "@/lib/contactImageData";
 import {
@@ -18,13 +18,17 @@ const studioLocation = {
 };
 
 const ContactPage = () => {
+  const [scriptLoaded, setScriptLoaded] = useState(false);
+
   const GOOGLE_MAPS_API_KEY = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY;
-  console.log("Api key: ", GOOGLE_MAPS_API_KEY);
+  // console.log("Api key: ", GOOGLE_MAPS_API_KEY);
+
   return (
     <>
       <Script
-        src={`https://maps.googleapis.com/maps/api/js?key=${GOOGLE_MAPS_API_KEY}&callback=initMap`}
+        src={`https://maps.googleapis.com/maps/api/js?key=${GOOGLE_MAPS_API_KEY}`}
         strategy="beforeInteractive"
+        onLoad={() => setScriptLoaded(true)}
       />
       <PageLayout title="Contact">
         <div id="main-content" className="flex flex-col gap-20">
@@ -38,7 +42,7 @@ const ContactPage = () => {
               <ImageSlider images={contactImages} interval={3000} />
             </motion.div>
             <motion.div className="md:w-1/2" {...FADE_IN_ANIMATION_SETTINGS}>
-              <p className="lg:text-md text-sm text-gray-600 2xl:text-lg">
+              <p className="lg:text-md  text-sm text-gray-600 2xl:text-lg ">
                 Nestled in the heart of Carmel Valley Village, Emerson Studio is
                 the space in which I bring my inspirations to life. Most days,
                 you&apos;ll find me at my &apos;wall of creation&apos; in the
@@ -68,14 +72,64 @@ const ContactPage = () => {
               </p>
             </motion.div>
           </div>
-          <div id="location" className="flex flex-col gap-20 md:flex-row">
+          <div id="location" className="flex flex-col gap-20 pt-10 md:flex-row">
+            <motion.div className="md:w-1/2" {...FADE_IN_ANIMATION_SETTINGS}>
+              <p className="lg:text-md text-center text-sm text-gray-600 2xl:text-lg ">
+                <span className="text-md font-bold text-gray-600 lg:text-lg 2xl:text-xl">
+                  Email
+                </span>
+                <br />
+                <a
+                  href="mailto:info@emersoncontemporary.art"
+                  className="text-gray-600 hover:text-gray-800"
+                >
+                  info@emersoncontemporary.art
+                </a>
+                <br />
+                <br />
+                <span className="text-md font-bold text-gray-600 lg:text-lg 2xl:text-xl">
+                  Location
+                </span>
+                <br />
+                Emerson Studio
+                <br />
+                13 W Carmel Valley Rd, Ste. B
+                <br />
+                Carmel Valley, CA 93924
+                <br />
+                <br />
+                <span className="text-md font-bold text-gray-600 lg:text-lg 2xl:text-xl">
+                  Phone
+                </span>
+                <br />
+                <a
+                  href="tel:831-747-0994"
+                  className="text-gray-600 hover:text-gray-800"
+                >
+                  (831) 747-0994
+                </a>
+                <br />
+                <br />
+                <span className="text-md font-bold text-gray-600 lg:text-lg 2xl:text-xl">
+                  Hours
+                </span>
+                <br />
+                Monday - Saturday: 11am - 5pm
+                <br />
+              </p>
+            </motion.div>
+
             <motion.div
               variants={FADE_UP_ANIMATION_VARIANTS}
               initial="hidden"
               animate="show"
               className=" md:w-1/2"
             >
-              <GoogleMap center={studioLocation} zoom={15} />
+              <GoogleMap
+                center={studioLocation}
+                zoom={15}
+                isScriptLoaded={scriptLoaded}
+              />
             </motion.div>
           </div>
         </div>
