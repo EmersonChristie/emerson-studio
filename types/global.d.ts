@@ -140,3 +140,14 @@ export interface QueryParams {
   publicationState?: string;
   sort?: string[];
 }
+
+declare global {
+  interface Window {
+    Tawk_API?: {
+      showWidget: () => void;
+      hideWidget: () => void;
+    };
+  }
+}
+
+export {};

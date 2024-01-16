@@ -13,6 +13,8 @@ import { MenuButton } from "@/components/shared/icons";
 import DisplayText from "@/components/shared/display-text";
 import Header from "./header";
 import useViewportHeight from "@/lib/hooks/use-viewport-height";
+import useTawkTo from "@/lib/hooks/use-tawk-to";
+import { useChat } from "@/lib/context/chat-context";
 
 interface LayoutProps {
   meta?: {
@@ -24,6 +26,10 @@ interface LayoutProps {
 }
 
 export default function Layout({ meta, children }: LayoutProps) {
+  // Chat Widget
+  const { isChatVisible } = useChat();
+  useTawkTo(isChatVisible);
+
   // Dynamic view height hook
   useViewportHeight();
   return (

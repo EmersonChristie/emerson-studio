@@ -60,7 +60,7 @@ const ArtCollectionSlide: React.FC<ArtCollectionSlideProps> = ({
   };
 
   const handleArtworkLoad = (id: number) => {
-    console.log(`Artwork with ID ${id} loaded successfully`);
+    // console.log(`Artwork with ID ${id} loaded successfully`);
   };
 
   const textClass = cx(

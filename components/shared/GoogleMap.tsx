@@ -199,10 +199,15 @@ const GoogleMap: React.FC<GoogleMapProps & { isScriptLoaded: boolean }> = ({
     console.log("Map initialized: ", map);
 
     // Add a marker for your business
-    new google.maps.Marker({
+    const marker = new google.maps.Marker({
       position: center,
       map: map,
       title: "Emerson Studio - Contemporary Art", // Optional: add your business name
+    });
+
+    marker.addListener("click", () => {
+      const url = `https://www.google.com/maps/?q=${center.lat},${center.lng}`;
+      window.open(url, "_blank");
     });
   }, [center, zoom, isScriptLoaded]);
 
@@ -211,7 +216,7 @@ const GoogleMap: React.FC<GoogleMapProps & { isScriptLoaded: boolean }> = ({
       ref={ref}
       className="map-container"
       style={{
-        height: "500px",
+        height: "450px",
         width: "100%",
       }}
     />
