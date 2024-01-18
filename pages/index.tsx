@@ -9,6 +9,7 @@ import { fetchWebsiteCollections } from "@/lib/strapi/website-collection";
 import { useArtworks } from "@/lib/context/artworks-context";
 import Head from "next/head";
 import PageHeader from "@/components/shared/page-header";
+import PageLayout from "@/components/shared/page-layout";
 
 import { HomePageSlider } from "@/components/home-page-slider/slider";
 
@@ -56,11 +57,13 @@ export default function HomePage({
         )}
       </Head>
       <HeroSection collections={artCollectionSlides} />
-      <PageHeader
+      {/* <PageHeader
         title="Current Works"
-        classNames="pt-16 flex flex-col pb-0 px-12 text-left md:pb-11 md:pt-20 w-full"
-      />
-      <GalleryContainer />
+        classNames="flex pt-16 flex-col pb-0 px-12 text-left md:pb-11 md:pt-20 w-full"
+      /> */}
+      <PageLayout title="Current Works">
+        <GalleryContainer />
+      </PageLayout>
     </>
   );
 }

@@ -56,11 +56,14 @@ const ContactPage = () => {
               variants={FADE_UP_ANIMATION_VARIANTS}
               initial="hidden"
               animate="show"
-              className="md:w-1/2"
+              className="w-full md:w-1/2"
             >
               <ImageSlider images={contactImages} interval={3000} />
             </motion.div>
-            <motion.div className="md:w-1/2" {...FADE_IN_ANIMATION_SETTINGS}>
+            <motion.div
+              className="w-full md:w-1/2"
+              {...FADE_IN_ANIMATION_SETTINGS}
+            >
               <p className="lg:text-md  text-sm text-gray-600 2xl:text-lg ">
                 Nestled in the heart of Carmel Valley Village, Emerson Studio is
                 the space in which I bring my inspirations to life. Most days,
@@ -96,7 +99,7 @@ const ContactPage = () => {
             className="flex flex-col items-center justify-center gap-20 pt-10 md:flex-row"
           >
             <motion.div className="md:w-1/2" {...FADE_IN_ANIMATION_SETTINGS}>
-              <p className="lg:text-md text-center text-sm text-gray-600 2xl:text-lg ">
+              <p className="lg:text-md text-center text-sm tracking-wide text-gray-600 2xl:text-lg ">
                 <span className="text-md font-bold text-gray-600 lg:text-lg 2xl:text-xl">
                   Email
                 </span>
@@ -125,10 +128,10 @@ const ContactPage = () => {
                 </span>
                 <br />
                 <a
-                  href="tel:831-747-0994"
+                  href="tel:831-620-2136"
                   className="text-gray-600 hover:text-gray-800"
                 >
-                  (831) 747-0994
+                  (831) 620-2136
                 </a>
                 <br />
                 <br />
@@ -145,7 +148,7 @@ const ContactPage = () => {
               variants={FADE_UP_ANIMATION_VARIANTS}
               initial="hidden"
               animate="show"
-              className=" md:w-1/2"
+              className="w-full md:w-1/2"
             >
               <GoogleMap
                 center={studioLocation}

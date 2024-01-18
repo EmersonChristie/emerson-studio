@@ -8,7 +8,6 @@ import Divider from "../shared/divider";
 import HeadingText from "../shared/headingText";
 import { useUser } from "@/lib/context/user-context";
 import PageHeader from "../shared/page-header";
-import InquiryModal from "./inquiry-modal";
 import FloatingButton from "./floating-button";
 import { useInquiryModal } from "./inquiry-modal";
 import PageLayout from "../shared/page-layout";
@@ -23,14 +22,8 @@ const SavedArtworksContainer = () => {
   const [artworks, setArtworks] = useState<Artwork[]>([]);
   const [inquiryArtworks, setInquiryArtworks] = useState<Artwork[]>([]);
 
-  const postInquiry = (data: any) => {
-    console.log("Inquiry data", data);
-  };
-
-  const { setShowInquiryModal, InquiryModal } = useInquiryModal(
-    inquiryArtworks,
-    postInquiry,
-  );
+  const { setShowInquiryModal, InquiryModal } =
+    useInquiryModal(inquiryArtworks);
 
   const router = useRouter();
 
@@ -62,12 +55,6 @@ const SavedArtworksContainer = () => {
           // TODO: Add a loading state
           <div className="flex h-full w-full flex-col items-center justify-center">
             <p className="text-center text-gray-600">No Saved Artworks</p>
-            <button
-              className="mt-10 rounded-sm border border-gray-600 bg-gray-600 px-4 py-2 uppercase tracking-wide text-gray-100 hover:text-white"
-              onClick={() => router.push("/artworks")}
-            >
-              Browse Artworks
-            </button>
           </div>
         ) : (
           <ResponsiveGrid>
@@ -81,6 +68,12 @@ const SavedArtworksContainer = () => {
         {inquiryArtworks?.length > 0 && (
           <FloatingButton onClick={handleFloatingButtonCLick} />
         )}
+        <button
+          className="my-10 rounded-sm border border-gray-600 bg-gray-600 px-4 py-2 uppercase tracking-wide text-gray-100 hover:text-white"
+          onClick={() => router.push("/artworks")}
+        >
+          Browse Artworks
+        </button>
         <InquiryModal />
       </PageLayout>
     </LayoutGroup>

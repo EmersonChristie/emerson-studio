@@ -35,8 +35,6 @@ export const InquiryForm: React.FC<InquiryFormProps> = ({
 
   const { showToast } = useToast();
 
-  //TODO: Add postInquiry function from context
-
   const validateEmail = (email: string) => {
     // Regular expression for email validation
     const re = /\S+@\S+\.\S+/;
@@ -110,7 +108,11 @@ export const InquiryForm: React.FC<InquiryFormProps> = ({
     } finally {
       stopLoading();
       setShowInquiryModal(false);
-      showToast(<p>Your Inquiry has been Submitted</p>);
+      showToast(
+        <p className="flex items-center justify-center p-4">
+          Your Inquiry has been Submitted
+        </p>,
+      );
       setSelectedInquireArtworks([]);
     }
   };

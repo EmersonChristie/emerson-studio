@@ -8,14 +8,12 @@ interface InquiryModalProps {
   showInquiryModal: boolean;
   setShowInquiryModal: React.Dispatch<React.SetStateAction<boolean>>;
   inquiryArtworks: Artwork[];
-  postInquiry: (data: any) => void;
   backdropClass?: string;
 }
 
 const InquiryModal: React.FC<InquiryModalProps> = ({
   showInquiryModal,
   setShowInquiryModal,
-  postInquiry,
   backdropClass,
 }) => {
   return (
@@ -37,7 +35,6 @@ export default InquiryModal;
 
 export function useInquiryModal(
   inquiryArtworks: Artwork[],
-  postInquiry: (data: any) => void,
   backDropClass?: string,
 ) {
   const [showInquiryModal, setShowInquiryModal] = useState(false);
@@ -48,17 +45,10 @@ export function useInquiryModal(
         showInquiryModal={showInquiryModal}
         setShowInquiryModal={setShowInquiryModal}
         inquiryArtworks={inquiryArtworks}
-        postInquiry={postInquiry}
         backdropClass={backDropClass}
       />
     );
-  }, [
-    showInquiryModal,
-    setShowInquiryModal,
-    inquiryArtworks,
-    postInquiry,
-    backDropClass,
-  ]);
+  }, [showInquiryModal, setShowInquiryModal, inquiryArtworks, backDropClass]);
 
   return useMemo(
     () => ({

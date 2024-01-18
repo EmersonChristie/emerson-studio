@@ -10,7 +10,7 @@ import PageLayout from "@/components/shared/page-layout";
 
 const ArtistPage = () => {
   return (
-    <div className="container">
+    <>
       <PageLayout title="The Artist" subHeading="EMERSON • b. 1986 • USA">
         <div id="main-content" className="flex flex-col gap-20 md:flex-row">
           <motion.div
@@ -89,7 +89,7 @@ const ArtistPage = () => {
           </motion.div>
         </div>
       </PageLayout>
-    </div>
+    </>
   );
 };
 

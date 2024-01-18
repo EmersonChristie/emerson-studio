@@ -37,7 +37,7 @@ export default function Layout({ meta, children }: LayoutProps) {
       <Meta {...meta} />
       <div
         id="container"
-        className="flex flex-col bg-gradient-to-b from-white to-gray-300"
+        className="flex flex-col bg-gradient-to-b from-white to-gray-200"
         style={{ height: "calc(var(--vh, 1vh) * 100)" }}
       >
         <Header />

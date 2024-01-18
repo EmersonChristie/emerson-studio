@@ -4,6 +4,7 @@ import { Artwork } from "types/global";
 import GalleryContainer from "@/components/gallery";
 import { fetchArtworks } from "@/lib/strapi/artworks";
 import { useArtworks } from "@/lib/context/artworks-context";
+import PageLayout from "@/components/shared/page-layout";
 import Head from "next/head";
 
 interface HomePageProps {
@@ -31,7 +32,9 @@ export default function HomePage({ initialArtworks }: HomePageProps) {
           />
         ))}
       </Head> */}
-      <GalleryContainer />
+      <PageLayout title="Artworks">
+        <GalleryContainer />
+      </PageLayout>
     </>
   );
 }
