@@ -100,7 +100,7 @@ const ContactPage = () => {
           >
             <motion.div className="md:w-1/2" {...FADE_IN_ANIMATION_SETTINGS}>
               <p className="lg:text-md text-center text-sm tracking-wide text-gray-600 2xl:text-lg ">
-                <span className="text-md font-bold text-gray-600 lg:text-lg 2xl:text-xl">
+                <span className="text-md font-bold uppercase tracking-wider text-gray-600 lg:text-lg 2xl:text-xl">
                   Email
                 </span>
                 <br />
@@ -112,7 +112,7 @@ const ContactPage = () => {
                 </a>
                 <br />
                 <br />
-                <span className="text-md font-bold text-gray-600 lg:text-lg 2xl:text-xl">
+                <span className="text-md font-bold uppercase tracking-wider text-gray-600 lg:text-lg 2xl:text-xl">
                   Location
                 </span>
                 <br />
@@ -123,7 +123,7 @@ const ContactPage = () => {
                 Carmel Valley, CA 93924
                 <br />
                 <br />
-                <span className="text-md font-bold text-gray-600 lg:text-lg 2xl:text-xl">
+                <span className="text-md font-bold uppercase tracking-wider text-gray-600 lg:text-lg 2xl:text-xl">
                   Phone
                 </span>
                 <br />
@@ -135,7 +135,7 @@ const ContactPage = () => {
                 </a>
                 <br />
                 <br />
-                <span className="text-md font-bold text-gray-600 lg:text-lg 2xl:text-xl">
+                <span className="text-md font-bold uppercase tracking-wider text-gray-600 lg:text-lg 2xl:text-xl">
                   Hours
                 </span>
                 <br />

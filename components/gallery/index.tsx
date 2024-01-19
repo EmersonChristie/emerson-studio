@@ -47,7 +47,7 @@ const GalleryContainer: React.FC = () => {
     <LayoutGroup>
       <motion.div
         id="gallery-container"
-        className="mb-30 flex w-full max-w-1920 flex-grow flex-col  px-10 pt-10  md:m-3 md:flex-row md:space-x-20 lg:m-7 lg:space-x-32 xl:m-10 xl:space-x-36 2xl:space-x-44"
+        className="mb-30 flex w-full max-w-1920 flex-grow flex-col px-4 pt-10 md:m-3  md:flex-row md:space-x-20 md:px-10 lg:m-7 lg:space-x-32 xl:m-10 xl:space-x-36 2xl:space-x-44"
       >
         {artworks?.length === 0 ? (
           <div className="flex h-full w-full flex-col items-center justify-center">

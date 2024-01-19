@@ -276,7 +276,7 @@ export const InquiryForm: React.FC<InquiryFormProps> = ({
       {/* Submit Button */}
       <button
         type="submit"
-        className="my-4 w-full rounded bg-gray-700 py-2 uppercase tracking-wide text-white md:my-6"
+        className="my-4 w-full bg-gray-600 py-2 uppercase tracking-wide text-white md:my-6"
       >
         {isLoading ? <LoadingSpinner /> : "Submit Inquiry"}
       </button>
