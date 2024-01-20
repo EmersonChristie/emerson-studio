@@ -21,7 +21,7 @@ const useObserveHeroSection = (heroSectionRef: RefObject<HTMLElement>) => {
           observer.disconnect();
         };
       }
-    }, 0); // Delay in milliseconds
+    }, 500); // Delay in milliseconds
 
     return () => clearTimeout(timer);
   }, [heroSectionRef, setChatVisible]);
