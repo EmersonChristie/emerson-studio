@@ -59,9 +59,9 @@ export default function HomePage({
           )),
         )}
       </Head>
-      <div className="h-full w-full" ref={heroSectionRef}>
+      <section className="h-auto w-full" ref={heroSectionRef}>
         <HeroSection collections={artCollectionSlides} />
-      </div>
+      </section>
       {/* <PageHeader
         title="Current Works"
         classNames="flex pt-16 flex-col pb-0 px-12 text-left md:pb-11 md:pt-20 w-full"

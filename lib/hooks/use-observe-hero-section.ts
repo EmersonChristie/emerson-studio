@@ -1,30 +1,29 @@
-// useObserveHeroSection.js
-import { RefObject, useEffect } from "react";
+import { useEffect, RefObject } from "react";
 import { useChat } from "@/lib/context/chat-context";
 
 const useObserveHeroSection = (heroSectionRef: RefObject<HTMLElement>) => {
   const { setChatVisible } = useChat();
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        setChatVisible(!entry.isIntersecting);
-      },
-      {
-        root: null, // observing for viewport
-        threshold: 0.1, // percentage of target's visibility
-      },
-    );
-
-    if (heroSectionRef.current) {
-      observer.observe(heroSectionRef.current);
-    }
-
-    return () => {
+    // Delay initialization
+    const timer = setTimeout(() => {
       if (heroSectionRef.current) {
-        observer.unobserve(heroSectionRef.current);
+        const observer = new IntersectionObserver(
+          ([entry]) => {
+            setChatVisible(!entry.isIntersecting);
+          },
+          { root: null, threshold: 0.1 },
+        );
+
+        observer.observe(heroSectionRef.current);
+
+        return () => {
+          observer.disconnect();
+        };
       }
-    };
+    }, 0); // Delay in milliseconds
+
+    return () => clearTimeout(timer);
   }, [heroSectionRef, setChatVisible]);
 
   return null;

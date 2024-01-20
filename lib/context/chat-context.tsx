@@ -4,16 +4,20 @@ import React, { createContext, useContext, useState, ReactNode } from "react";
 interface ChatContextType {
   isChatVisible: boolean;
   setChatVisible: (visible: boolean) => void;
+  isLoaded: boolean;
+  setLoaded: (loaded: boolean) => void;
 }
 
 const ChatContext = createContext<ChatContextType | undefined>(undefined);
 
 export const ChatProvider = ({ children }: { children: ReactNode }) => {
   const [isChatVisible, setChatVisible] = useState(false);
-  const [isSliderOpen, setSliderOpen] = useState(false);
+  const [isLoaded, setLoaded] = useState(false);
 
   return (
-    <ChatContext.Provider value={{ isChatVisible, setChatVisible }}>
+    <ChatContext.Provider
+      value={{ isChatVisible, setChatVisible, isLoaded, setLoaded }}
+    >
       {children}
     </ChatContext.Provider>
   );
