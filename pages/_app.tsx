@@ -13,6 +13,8 @@ import { UserProvider } from "@/lib/context/user-context";
 import { ArtworksProvider } from "@/lib/context/artworks-context";
 import { ToastProvider } from "@/lib/context/toast-context";
 import { ChatProvider } from "@/lib/context/chat-context";
+import RouteChatHandler from "@/components/route-chat-handler";
+
 // const sfPro = localFont({
 //   src: "../styles/SF-Pro-Display-Medium.otf",
 //   variable: "--font-sf",
@@ -33,10 +35,11 @@ export default function MyApp({
   pageProps: { session, ...pageProps },
 }: AppProps<{ session: Session }>) {
   return (
-    <SessionProvider session={session}>
-      <RWBProvider>
-        <div className={cx(josefinSans.variable, inter.variable)}>
-          <ChatProvider>
+    <ChatProvider>
+      <SessionProvider session={session}>
+        <RouteChatHandler />
+        <RWBProvider>
+          <div className={cx(josefinSans.variable, inter.variable)}>
             <ToastProvider>
               <UserProvider>
                 <ArtworksProvider>
@@ -46,10 +49,10 @@ export default function MyApp({
                 </ArtworksProvider>
               </UserProvider>
             </ToastProvider>
-          </ChatProvider>
-        </div>
-      </RWBProvider>
-      <Analytics />
-    </SessionProvider>
+          </div>
+        </RWBProvider>
+        <Analytics />
+      </SessionProvider>
+    </ChatProvider>
   );
 }

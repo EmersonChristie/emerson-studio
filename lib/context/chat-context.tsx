@@ -10,6 +10,7 @@ const ChatContext = createContext<ChatContextType | undefined>(undefined);
 
 export const ChatProvider = ({ children }: { children: ReactNode }) => {
   const [isChatVisible, setChatVisible] = useState(false);
+  const [isSliderOpen, setSliderOpen] = useState(false);
 
   return (
     <ChatContext.Provider value={{ isChatVisible, setChatVisible }}>
