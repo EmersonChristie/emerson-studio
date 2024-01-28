@@ -17,7 +17,7 @@ const ArtworkThumbnails = () => {
   const { isMobile } = useWindowSize();
 
   return (
-    <div className="flex w-full items-center justify-center pr-2 md:pr-6">
+    <div className="flex w-full items-center justify-end pr-2 md:pr-6">
       {/* Thumbnails Container */}
       <div className="flex overflow-hidden">
         {inquireArtworks.map((artwork: Artwork, index: number) => (
