@@ -1,16 +1,12 @@
 import "@/styles/globals.css";
 import type { AppProps } from "next/app";
 import { Analytics } from "@vercel/analytics/react";
-import { SpeedInsights } from "@vercel/speed-insights/react";
 import type { Session } from "next-auth";
 import { SessionProvider } from "next-auth/react";
 import { Provider as RWBProvider } from "react-wrap-balancer";
 import cx from "classnames";
 import localFont from "@next/font/local";
 import { Inter } from "@next/font/google";
-
-import { useRouter } from "next/router";
-
 import Layout from "@/components/layout";
 import { UserProvider } from "@/lib/context/user-context";
 import { ArtworksProvider } from "@/lib/context/artworks-context";
@@ -37,7 +33,6 @@ export default function MyApp({
   Component,
   pageProps: { session, ...pageProps },
 }: AppProps<{ session: Session }>) {
-  const router = useRouter();
   return (
     <ChatProvider>
       <SessionProvider session={session}>
@@ -49,7 +44,6 @@ export default function MyApp({
                 <ArtworksProvider>
                   <Layout>
                     <Component {...pageProps} />
-                    <SpeedInsights route={router.pathname} />
                   </Layout>
                 </ArtworksProvider>
               </UserProvider>

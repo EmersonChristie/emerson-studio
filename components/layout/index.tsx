@@ -11,6 +11,8 @@ import useWindowSize from "@/lib/hooks/use-window-size";
 import UserDropdown from "./user-dropdown";
 import { MenuButton } from "@/components/shared/icons";
 import DisplayText from "@/components/shared/display-text";
+import { SpeedInsights } from "@vercel/speed-insights/react";
+import { useRouter } from "next/router";
 import Header from "./header";
 import useViewportHeight from "@/lib/hooks/use-viewport-height";
 import useTawkTo from "@/lib/hooks/use-tawk-to";
@@ -28,6 +30,7 @@ interface LayoutProps {
 }
 
 export default function Layout({ meta, children }: LayoutProps) {
+  const router = useRouter();
   const [showModal, setShowModal] = useModalWithDelay();
 
   const handleCloseModal = () => {
@@ -43,6 +46,8 @@ export default function Layout({ meta, children }: LayoutProps) {
   return (
     <>
       <Meta {...meta} />
+      <SpeedInsights route={router.pathname} />
+
       <div
         id="container"
         className="flex flex-col bg-gradient-to-b from-white to-gray-200"
