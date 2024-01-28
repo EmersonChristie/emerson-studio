@@ -26,6 +26,7 @@
     "@types/react-dom": "18.0.10",
     "@vercel/analytics": "^0.1.11",
     "@vercel/og": "^0.0.26",
+    "@vercel/speed-insights": "^1.0.8",
     "axios": "^1.6.2",
     "bezier-easing": "^2.1.0",
     "classnames": "^2.3.2",
