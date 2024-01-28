@@ -148,21 +148,12 @@ const Slider: React.FC<SliderProps> = ({ currentIndex, onIndexChange }) => {
   };
 
   const updateUrl = (newIndex: number) => {
-    console.log(`updating url to: /artworks/${newIndex}`);
     const newArtwork = artworks[newIndex];
     const newUrl = `/artworks/${newArtwork.id}`;
+    console.log(`updating url to: ${newUrl}`);
+
     router.replace(newUrl, undefined, { shallow: true });
   };
-
-  // const updateUrl = useCallback(
-  //   (newIndex: number) => {
-  //     console.log(`updating url to: /artworks/${newIndex}`);
-  //     const newArtwork = artworks[newIndex];
-  //     const newUrl = `/artworks/${newArtwork.id}`;
-  //     router.replace(newUrl, undefined, { shallow: true });
-  //   },
-  //   [router, artworks],
-  // );
 
   useEffect(() => {
     updateUrl(currentIndex);

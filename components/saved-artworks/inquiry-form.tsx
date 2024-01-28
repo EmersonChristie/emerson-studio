@@ -134,7 +134,7 @@ export const InquiryForm: React.FC<InquiryFormProps> = ({
         <Divider animated={true} className="py-2 md:py-3" />
       </div>
       {/* Artwork Grid  */}
-      <div className="md:gapy-y-2 grid grid-cols-6 gap-y-1 rounded-lg object-cover pt-3 md:gap-y-3">
+      <div className="grid grid-cols-6 gap-y-1 rounded-lg object-cover pt-3  md:gap-y-6">
         {selectedArtworks.map((artwork) => (
           <div className="relative flex" key={artwork.id}>
             {/* X Circle Button */}
@@ -150,7 +150,7 @@ export const InquiryForm: React.FC<InquiryFormProps> = ({
             <img
               src={artwork.mainImage.data.attributes.url}
               alt={`Artwork ${artwork.id}`}
-              className="mr-2 h-10 w-10 rounded-lg object-cover md:h-16 md:w-16" // Adjust size as needed
+              className=" mr-2 h-10 w-10 rounded-lg object-cover md:h-16 md:w-16" // Adjust size as needed
             />
           </div>
         ))}

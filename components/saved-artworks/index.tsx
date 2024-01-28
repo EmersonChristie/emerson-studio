@@ -69,7 +69,7 @@ const SavedArtworksContainer = () => {
           <FloatingButton onClick={handleFloatingButtonCLick} />
         )}
         <button
-          className="my-10 rounded-sm border border-gray-600 bg-gray-600 px-4 py-2 uppercase tracking-wide text-gray-100 hover:text-white"
+          className="md-px-8 md-py-4 my-10 mb-16 rounded-sm border border-gray-600 bg-gray-600 px-4 py-2 uppercase tracking-wide text-gray-100 hover:text-white lg:text-lg"
           onClick={() => router.push("/artworks")}
         >
           Browse Artworks

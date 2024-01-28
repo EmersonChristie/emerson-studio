@@ -91,14 +91,7 @@ const Header: React.FC = () => {
     <>
       <NavModal />
       <SignInModal />
-      <div
-        className="fixed top-0 z-20 w-full "
-        // style={{
-        //   background:
-        //     "linear-gradient(to bottom, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0))",
-        //   border: "none",
-        // }}
-      >
+      <nav className="fixed top-0 z-20 w-full bg-gradient-to-br from-white/40 via-transparent to-transparent backdrop-blur-sm ">
         <div className="flex items-center justify-between p-6 py-4 md:mx-2 ">
           <Link href="/" className="flex items-center font-display">
             <DisplayText
@@ -137,7 +130,7 @@ const Header: React.FC = () => {
             )} */}
           </div>
         </div>
-      </div>
+      </nav>
     </>
   );
 };

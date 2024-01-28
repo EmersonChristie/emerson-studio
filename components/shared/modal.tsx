@@ -10,6 +10,7 @@ import cx from "classnames";
 import { AnimatePresence, motion } from "framer-motion";
 import Leaflet from "./leaflet";
 import useWindowSize from "@/lib/hooks/use-window-size";
+import { useChat } from "@/lib/context/chat-context";
 
 export default function Modal({
   children,
@@ -26,9 +27,12 @@ export default function Modal({
 }) {
   const desktopModalRef = useRef(null);
 
+  const { isChatVisible, setChatVisible } = useChat();
+
   const closeButton = () => {
     if (handleClose) {
       handleClose();
+      setChatVisible(true);
     }
   };
 
@@ -46,6 +50,13 @@ export default function Modal({
     document.addEventListener("keydown", onKeyDown);
     return () => document.removeEventListener("keydown", onKeyDown);
   }, [onKeyDown]);
+
+  // turn off chat when modal is open
+  useEffect(() => {
+    if (showModal) {
+      setChatVisible(false);
+    }
+  }, [showModal, setChatVisible]);
 
   const { isMobile, isDesktop } = useWindowSize();
 

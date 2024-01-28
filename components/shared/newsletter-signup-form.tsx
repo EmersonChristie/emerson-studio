@@ -4,7 +4,13 @@ import { LoadingSpinner } from "@/components/shared/icons";
 import { postNewsletterSignup } from "@/lib/strapi/contacts";
 import Divider from "./divider";
 
-export const NewsletterSignupForm: React.FC = () => {
+interface NewsletterSignupFormProps {
+  onSuccess?: () => void; // Optional callback function
+}
+
+export const NewsletterSignupForm: React.FC<NewsletterSignupFormProps> = ({
+  onSuccess,
+}) => {
   const [email, setEmail] = useState("");
   const [emailError, setEmailError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -31,6 +37,11 @@ export const NewsletterSignupForm: React.FC = () => {
       console.log("Submitting email:", email);
       await postNewsletterSignup(email);
 
+      // Clear the form
+      setEmail("");
+
+      onSuccess?.(); // Call the callback function if it exists
+
       showToast(
         <p className="flex items-center justify-center p-4">
           Thank you for signing up!
@@ -53,7 +64,7 @@ export const NewsletterSignupForm: React.FC = () => {
           artworks, upcoming exhibitions, and other news.
         </p>
       </div>
-      <div id="iputs" className="flex flex-col gap-4 md:w-1/3">
+      <div id="iputs" className="flex flex-col gap-4 md:w-1/2">
         <div className="mt-4 ">
           <label
             htmlFor="email"
@@ -87,10 +98,8 @@ export const NewsletterSignupForm: React.FC = () => {
       </div>
       <Divider animated={true} className="py-2" />
       <p className="pt-3 text-xs text-gray-400 ">
-        You can unsubscribe at any time by clicking the unsubscribe link in the
-        footer of any email you receive from me, or by contacting me via email.
-        <br />
-        Your information will never be shared with any third party.
+        You can unsubscribe at any time with Unsubscribe link in emails. Your
+        information will never be shared with a third party.
       </p>
     </form>
   );
