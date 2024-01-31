@@ -47,7 +47,7 @@ export default function HomePage({
   }, [initialArtworks, addToArtworks, artworks]);
   return (
     <>
-      <Head>
+      {/* <Head>
         {artCollectionSlides.map((collection) =>
           collection.artworks.map((artwork) => (
             <link
@@ -58,14 +58,10 @@ export default function HomePage({
             />
           )),
         )}
-      </Head>
+      </Head> */}
       <section className="h-auto w-full" ref={heroSectionRef}>
         <HeroSection collections={artCollectionSlides} />
       </section>
-      {/* <PageHeader
-        title="Current Works"
-        classNames="flex pt-16 flex-col pb-0 px-12 text-left md:pb-11 md:pt-20 w-full"
-      /> */}
       <PageLayout title="Current Works">
         <GalleryContainer />
       </PageLayout>

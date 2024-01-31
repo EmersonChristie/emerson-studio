@@ -44,18 +44,18 @@ const HeroSection: React.FC<{ collections: CollectionProps[] }> = ({
   };
 
   // Function to preload images
-  const preloadImages = () => {
-    collections.forEach((collection) => {
-      collection.artworks.forEach((artwork) => {
-        const img = new Image();
-        img.src = artwork.src;
-      });
-    });
-  };
+  // const preloadImages = () => {
+  //   collections.forEach((collection) => {
+  //     collection.artworks.forEach((artwork) => {
+  //       const img = new Image();
+  //       img.src = artwork.src;
+  //     });
+  //   });
+  // };
 
-  useEffect(() => {
-    preloadImages();
-  }, [collections]);
+  // useEffect(() => {
+  //   preloadImages();
+  // }, [collections]);
 
   useEffect(() => {
     if (isAutoPlaying) {
@@ -148,22 +148,6 @@ const HeroSection: React.FC<{ collections: CollectionProps[] }> = ({
           strokeWidth={isMobile ? 1.5 : 1.6}
         />
       </motion.div>
-      {/* <button
-        className="absolute bottom-4 left-4 z-10"
-        onClick={() => {
-          goToPreviousSlide();
-        }}
-      >
-        Previous
-      </button>
-      <button
-        className="absolute bottom-4 right-4 z-10"
-        onClick={() => {
-          goToNextSlide();
-        }}
-      > 
-        Next
-      </button>*/}
     </div>
   );
 };

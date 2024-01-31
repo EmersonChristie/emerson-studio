@@ -22,16 +22,6 @@ export default function HomePage({ initialArtworks }: HomePageProps) {
   }, [initialArtworks, addToArtworks, artworks]);
   return (
     <>
-      {/* <Head>
-        {initialArtworks.slice(0, 6).map((artwork) => (
-          <link
-            key={artwork.id}
-            rel="preload"
-            href={artwork.mainImage.data.attributes.url}
-            as="image"
-          />
-        ))}
-      </Head> */}
       <PageLayout title="Artworks">
         <GalleryContainer />
       </PageLayout>
